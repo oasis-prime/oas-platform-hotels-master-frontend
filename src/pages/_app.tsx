@@ -1,10 +1,13 @@
-import "@styles/globals.css";
+import '@styles/globals.css'
+import '@styles/datepicker.css'
 
-import type { AppProps } from "next/app";
-import { AuthProvider } from "@auth/auth";
-import Head from "next/head";
-import { Provider } from "react-redux";
-import { reduxStoreMain } from "@store/core";
+import type { AppProps } from 'next/app'
+import { AuthProvider } from '@auth/auth'
+import Head from 'next/head'
+import { MainLayout } from '@components/layout'
+import { Provider } from 'react-redux'
+import { appWithTranslation } from 'next-i18next'
+import { reduxStoreMain } from '@store/core'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -14,11 +17,13 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <Provider store={reduxStoreMain}>
         <AuthProvider>
-          <Component {...pageProps} />
+          <MainLayout>
+            <Component {...pageProps} />
+          </MainLayout>
         </AuthProvider>
       </Provider>
     </>
-  );
+  )
 }
 
-export default MyApp;
+export default appWithTranslation(MyApp)

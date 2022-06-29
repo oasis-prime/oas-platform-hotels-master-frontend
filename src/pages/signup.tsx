@@ -1,52 +1,53 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useState } from 'react'
 
-import { Button } from "@components/button";
-import Head from "next/head";
-import Link from "next/link";
-import type { NextPage } from "next";
-import { TextField } from "@components/textField";
-import { setErrorMessage } from "@auth/error.message";
-import { useAuth } from "@auth/auth";
-import { useRouter } from "next/router";
-import { useSelector } from "@utils/main.hooks";
+import { Button } from '@components/misc/button'
+import { Element } from 'react-scroll'
+import Head from 'next/head'
+import Link from 'next/link'
+import type { NextPage } from 'next'
+import { TextField } from '@components/misc/textField'
+import { setErrorMessage } from '@auth/error.message'
+import { useAuth } from '@auth/auth'
+import { useRouter } from 'next/router'
+import { useSelector } from '@utils/main.hooks'
 
 const Signup: NextPage = () => {
-  const router = useRouter();
-  const auth = useAuth();
+  const router = useRouter()
+  const auth = useAuth()
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const storeAuth = useSelector((s) => s.auth);
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const storeAuth = useSelector((s) => s.auth)
 
   const signUp = (
     event: FormEvent<HTMLFormElement>,
     email: string,
     password: string
   ) => {
-    event.preventDefault();
+    event.preventDefault()
 
     auth
       ?.signUp(email, password)
       .then(() => {
         // do something after signing in. For example, router.push("/");
-        router.push("/");
+        router.push('/')
       })
       .catch((error) => {
-        let { title, description } = setErrorMessage(error);
+        let { title, description } = setErrorMessage(error)
         // do something with error title and description here
-        alert(title + ": " + description);
-      });
-  };
+        alert(title + ': ' + description)
+      })
+  }
 
   // loading state
   if (storeAuth.loading) {
-    return <p>Loading...</p>;
+    return <p>Loading...</p>
   }
 
   // // if a user is logged in, redirect to a page of your liking
   if (storeAuth.user) {
-    router.push("/");
-    return null;
+    router.push('/')
+    return null
   }
 
   return (
@@ -60,9 +61,12 @@ const Signup: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <Element name="signup" className="element h-96">
+        test 1
+      </Element>
       <main className={`container`}>
         <h1 className={`text-3xl`}>Signup</h1>
-        <br />
+        {/* <br /> */}
         <form onSubmit={(event) => signUp(event, email, password)}>
           <label htmlFor="email">Email Address</label>
           <TextField
@@ -81,16 +85,15 @@ const Signup: NextPage = () => {
           <Button
             type="submit"
             onClick={() => {
-              console.log("A");
-            }}
-          >
+              console.log('A')
+            }}>
             Submit123
           </Button>
         </form>
         <Link href="/">&larr; Go back</Link>
       </main>
     </div>
-  );
-};
+  )
+}
 
-export default Signup;
+export default Signup
