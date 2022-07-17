@@ -1,10 +1,10 @@
+import { Button, ButtonOutline, ButtonText } from '@components/misc/button'
 import { useEffect, useState } from 'react'
 
-import { ButtonOutline } from '@components/misc/button'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Link as LinkScroll } from 'react-scroll'
 import classNames from 'classnames'
+import useModal from '@store/useModal'
 import { useRouter } from 'next/router'
 
 type MainHeaderProps = {
@@ -13,22 +13,22 @@ type MainHeaderProps = {
 
 const DataNavigation = [
   {
-    label: 'about',
-    active: 'about',
+    label: 'Hotels & Homes',
+    active: 'home',
     icon: '',
     url: '/'
   },
   {
-    label: 'signup',
-    active: 'signup',
+    label: 'Coupons & Deals',
+    active: 'coupons',
     icon: '',
-    url: '/signup'
+    url: '/coupons'
   },
   {
-    label: 'signup',
-    active: 'signup',
+    label: 'Activities',
+    active: 'activities',
     icon: '',
-    url: '/signup'
+    url: '/activities'
   }
 ]
 
@@ -36,7 +36,8 @@ const MainHeader: React.FC<MainHeaderProps> = () => {
   // State
   const [activeLink, setActiveLink] = useState<string | null>(null)
   const [scrollActive, setScrollActive] = useState(false)
-
+  const { signIn, signUp, setSignIn, setSignUp } = useModal()
+  // const [signIn, setSignIn] = useState(false)
   // Hooks
   const router = useRouter()
 
@@ -50,7 +51,7 @@ const MainHeader: React.FC<MainHeaderProps> = () => {
     <>
       <header
         className={classNames(
-          'fixed top-0 w-full z-30 bg-white-500 transition-all',
+          'fixed top-0 w-full z-30 bg-white transition-all',
           scrollActive ? ' shadow-md pt-0' : ''
         )}>
         <nav className="flex px-6 sm:px-8 lg:px-8 mx-auto py-3 sm:py-4">
@@ -84,52 +85,59 @@ const MainHeader: React.FC<MainHeaderProps> = () => {
                 </Link>
               ))}
             </ul>
-            <div className="col-start-10 col-end-12 font-medium flex justify-end items-center">
-              <Link href="/">
-                <a className="text-black-600 mx-2 sm:mx-4 capitalize tracking-wide hover:text-primary transition-all">
-                  Sign In
-                </a>
-              </Link>
-              <ButtonOutline>Sign Up</ButtonOutline>
+            <div className="col-start-10 col-span-1">
+              <ButtonText
+                onClick={() => {
+                  setSignIn(!signIn)
+                }}>
+                Sign In
+              </ButtonText>
+            </div>
+            <div className="col-start-11 col-span-1">
+              <ButtonOutline
+                onClick={() => {
+                  setSignUp(!signUp)
+                }}>
+                Sign Up
+              </ButtonOutline>
             </div>
           </div>
         </nav>
       </header>
       {/* Mobile Navigation */}
 
-      <nav className="fixed lg:hidden bottom-0 left-0 right-0 z-20 px-4 sm:px-8 shadow-t ">
-        <div className="bg-white-500 sm:px-3">
-          <ul className="flex w-full justify-between items-center text-black-500">
-            {/* <LinkScroll
-              activeClass="active"
-              to="about"
-              spy={true}
-              smooth={true}
-              duration={1000}
-              onSetActive={() => {
-                setActiveLink('about')
-              }}
-              className={
-                'mx-1 sm:mx-2 px-3 sm:px-4 py-2 flex flex-col items-center text-xs border-t-2 transition-all ' +
-                (activeLink === 'about'
-                  ? '  border-primary text-primary'
-                  : ' border-transparent')
-              }>
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              About
-            </LinkScroll> */}
+      <nav className="fixed lg:hidden bottom-0 left-0 right-0 z-20 shadow-t">
+        <div className="bg-white sm:px-3">
+          <ul className="grid grid-cols-3 divide-x divide-gray-200 text-black">
+            {DataNavigation.map((data, index) => (
+              <div
+                key={index}
+                onClick={() => {
+                  router.push('/')
+                }}
+                className={classNames(
+                  'mx-1 sm:mx-2 px-3 sm:px-4 py-2',
+                  'flex flex-col items-center text-xs transition-all',
+                  activeLink === 'about'
+                    ? '  border-primary text-primary'
+                    : ' border-transparent'
+                )}>
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                {data.label}
+              </div>
+            ))}
           </ul>
         </div>
       </nav>

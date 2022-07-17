@@ -1,10 +1,8 @@
 import type { GetStaticProps, NextPage } from 'next'
 
-import { Button } from '@components/misc/button'
-import { Element } from 'react-scroll'
+import { Carousel } from '@components/misc/carousel'
 import { HomeSearch } from '@components/search/home.search'
 import Image from 'next/image'
-import { Modal } from '@components/misc/modal'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
@@ -13,25 +11,32 @@ const Home: NextPage = () => {
   const [open, setOpen] = useState(false)
   const { t } = useTranslation()
   return (
-    <div className="columns-2">
-      <div>
-        <Image
-          src="/images/main/home.png"
-          layout="responsive"
-          width={100}
-          height={100}
-          alt="promotion-index"
-        />
+    <>
+      <div className="text-2xl text-center">
+        <h2>จองโรงแรม รีสอร์ต โฮสเทล และอีกมากมาย</h2>
       </div>
-      <div>
-        <HomeSearch />
+      <div className="text-2xl text-center">
+        <h3>จองที่พักราคาพิเศษกว่า 2 ล้านแห่งทั่วโลก</h3>
       </div>
-      {/* <Element name="about" className="element h-96">
-        test 1
-      </Element>
-      <Modal isOpen={open} onClose={() => setOpen(false)} />
-      <Button onClick={() => setOpen(true)}>{t('home:open')}</Button> */}
-    </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+        <div className="md:block hidden">
+          <Image
+            src="/images/main/home.png"
+            layout="responsive"
+            width={100}
+            height={100}
+            alt="promotion-index"
+          />
+        </div>
+        <div className="">
+          <HomeSearch />
+        </div>
+      </div>
+
+      <div className="mt-6">
+        <Carousel />
+      </div>
+    </>
   )
 }
 

@@ -13,22 +13,12 @@ const data = {
     {
       title: 'Welcome to Ark Labs',
       link: 'https://ark-labs.co.uk',
-      imageUrl: '/images/carousel/carousel-2.svg'
+      imageUrl: '/images/carousel/banner-2.jpeg'
     },
     {
       title: 'Some sort of third title',
       link: 'https://twitter.com/kendalmintcode',
-      imageUrl: '/images/carousel/carousel-3.svg'
-    },
-    {
-      title: 'A personal site perhaps?',
-      link: 'https://robkendal.co.uk',
-      imageUrl: '/images/carousel/carousel-4.svg'
-    },
-    {
-      title: 'Super item number five',
-      link: 'https://twitter.com/kendalmintcode',
-      imageUrl: '/images/carousel/carousel-5.svg'
+      imageUrl: '/images/carousel/banner-3.png'
     }
   ]
 }
@@ -98,7 +88,7 @@ const Carousel: React.FC<CarouselProsp> = () => {
 
   return (
     <div
-      className="mx-auto"
+      className="max-w-screen-xl mx-auto"
       onMouseOver={() => setMousedOver(true)}
       onMouseOut={() => setMousedOver(false)}>
       <div className="relative overflow-hidden">
@@ -161,7 +151,7 @@ const Carousel: React.FC<CarouselProsp> = () => {
               <div
                 key={index}
                 className={classNames(
-                  'w-full h-64',
+                  'xs:max-h-28 sm:max-h-40 md:max-h-72 lg:max-h-96',
                   'text-center relative snap-start'
                 )}>
                 <a
@@ -169,21 +159,15 @@ const Carousel: React.FC<CarouselProsp> = () => {
                   className={classNames(
                     'h-full w-screen aspect-square block',
                     'bg-origin-padding bg-left-top bg-cover bg-no-repeat z-0'
-                  )}
-                  // style={{
-                  //   backgroundImage: `url(${resource.imageUrl || ''})`
-                  // }}
-                >
-                  <div className="w-full aspect-square">
-                    <Image
-                      className="w-screen"
-                      src={resource.imageUrl || ''}
-                      alt={resource.title}
-                      layout="fill"
-                      width={100}
-                      height={100}
-                    />
-                  </div>
+                  )}>
+                  <Image
+                    src={resource.imageUrl || ''}
+                    alt={resource.title}
+                    layout="fill"
+                    objectFit="cover"
+                    // width={100}
+                    // height={100}
+                  />
                 </a>
                 {/* <a
                   href={resource.link}

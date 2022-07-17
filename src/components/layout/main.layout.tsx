@@ -1,4 +1,5 @@
 import { Carousel } from '@components/misc/carousel'
+import { MainFooter } from '@components/footer'
 import { MainHeader } from '@components/header'
 import classNames from 'classnames'
 
@@ -10,14 +11,11 @@ const MainLayout: React.FC<MainLayoutProsp> = (props) => {
   return (
     <>
       <MainHeader />
-      <div className={classNames('flex flex-col', 'gap-6')}>
-        <div className="mt-20">
-          <Carousel />
-        </div>
-        <div className="max-w-screen-xl px-8 mx-auto" id="about">
-          {props.children}
-        </div>
+      <div className="mt-20" />
+      <div className={classNames('my-6', 'px-1')}>
+        <div className="max-w-screen-xl mx-auto">{props.children}</div>
       </div>
+      <MainFooter />
     </>
   )
 }

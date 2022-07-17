@@ -27,10 +27,10 @@ const HomeSearch: React.FC = () => {
       <div className="col-span-4">
         <p>จำนวนผู้เข้าพักและห้องพัก</p>
       </div>
-      <div className="col-start-1 col-span-3">
+      <div className="col-start-1 lg:col-span-3 col-span-4">
         <TextField />
       </div>
-      <div className="col-start-4 col-span-1">
+      <div className="lg:col-start-4 lg:col-span-1 col-span-4">
         <Button>ค้นหาโรงแรม</Button>
       </div>
     </div>
