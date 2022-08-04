@@ -1,5 +1,6 @@
 import type { GetStaticProps, NextPage } from 'next'
 
+import { AppConfig } from '@utils/app.config'
 import { Carousel } from '@components/misc/carousel'
 import { HomeSearch } from '@components/search/home.search'
 import Image from 'next/image'
@@ -33,7 +34,7 @@ const Home: NextPage = () => {
         </div>
       </div>
 
-      <div className="mt-6">
+      <div className="mt-6 max-w-screen-xl">
         <Carousel />
       </div>
     </>
@@ -43,7 +44,10 @@ const Home: NextPage = () => {
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale as string, ['home']))
+      ...(await serverSideTranslations(locale as string, [
+        ...AppConfig.default_translations,
+        'home'
+      ]))
     }
   }
 }
