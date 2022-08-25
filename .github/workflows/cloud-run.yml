@@ -60,7 +60,8 @@ jobs:
             --region ${{ env.REGION }} \
             --image gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} \
             --platform "managed" \
-            --port=3000 \ 
-            --cpu=1 \
-            --memory=1Gi \
+            --port "3000" \ 
+            --cpu "1" \
+            --memory "1Gi" \
+            --allow-unauthenticated \
             --quiet
