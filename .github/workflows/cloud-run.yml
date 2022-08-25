@@ -22,15 +22,6 @@ env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT }}
   SERVICE: hotels-online-travel-agency
   REGION: asia-southeast1
-  NEXT_PUBLIC_API_GRAPHQL: ""
-  NEXT_PUBLIC_FIREBASE_API_KEY: AIzaSyCZxy_LNGr7dn17eiXlaBRYT4TdrU_V2JI
-  NEXT_PUBLIC_FIREBASE_APP_ID: 1:261377799143:web:4319e57b8e5df301f20342
-  NEXT_PUBLIC_FIREBASE_PROJECT_ID: oas-platform
-  NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: oas-platform.firebaseapp.com
-  NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: oas-platform.appspot.com
-  NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: G-5EG5H7WB2H
-  NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: 261377799143
-  I18NEXUS_API_KEY: ROJ9P6fy2ajjzBJRhwBsvg
 
 jobs:
   deploy:
@@ -57,21 +48,6 @@ jobs:
 
       - name: Authorize Docker push
         run: gcloud auth configure-docker
-      - name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: g2idocker/auth:latest
-          secrets: |
-            "NEXT_PUBLIC_API_GRAPHQL=${{ env.NEXT_PUBLIC_API_GRAPHQL }}"
-            "NEXT_PUBLIC_FIREBASE_API_KEY=${{ env.NEXT_PUBLIC_FIREBASE_API_KEY }}"
-            "NEXT_PUBLIC_FIREBASE_PROJECT_ID=${{ env.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}"
-            "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${{ env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}"
-            "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=${{ env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}"
-            "NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=${{ env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}"
-            "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=${{ env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID }}"
-            "I18NEXUS_API_KEY=${{ env.I18NEXUS_API_KEY }}"
 
       - name: Build and Push Container
         run: |-
