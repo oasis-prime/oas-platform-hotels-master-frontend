@@ -1,94 +1,70 @@
-name: oas-platform-hotels-master-frontend
+# Copyright 2019 Google, LLC.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 on:
   push:
     branches:
-      - main
+      - example
 
+name: Build and Deploy to Cloud Run
 env:
-  CLOUD_RUN_PROJECT_ID: ${{ secrets.CLOUD_RUN_PROJECT_NAME }}
-  CLOUD_RUN_REGION: asia-northeast1
-  # project-name but it can be anything you want
-  REPO_NAME: oas-platform-hotels-master-frontend
-  NEXT_PUBLIC_API_GRAPHQL: ""
-
-  NEXT_PUBLIC_FIREBASE_API_KEY: AIzaSyCZxy_LNGr7dn17eiXlaBRYT4TdrU_V2JI
-  NEXT_PUBLIC_FIREBASE_APP_ID: 1:261377799143:web:4319e57b8e5df301f20342
-  NEXT_PUBLIC_FIREBASE_PROJECT_ID: oas-platform
-  NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: oas-platform.firebaseapp.com
-  NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: oas-platform.appspot.com
-  NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: G-5EG5H7WB2H
-  NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: 261377799143
-
-  I18NEXUS_API_KEY: ROJ9P6fy2ajjzBJRhwBsvg
+  PROJECT_ID: ${{ secrets.GCP_PROJECT }}
+  SERVICE: hotels-online-travel-agency
+  REGION: asia-southeast1
 
 jobs:
-  build-and-deploy:
-    name: Setup, Build, and Deploy
+  deploy:
     runs-on: ubuntu-latest
+
+    # Add "id-token" with the intended permissions.
+    permissions:
+      contents: "read"
+      id-token: "write"
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Google Auth
-        id: auth
+      # Configure Workload Identity Federation and generate an access token.
+      - id: "auth"
+        name: "Authenticate to Google Cloud"
         uses: "google-github-actions/auth@v0"
         with:
-          credentials_json: "${{ secrets.CLOUD_RUN_SERVICE_ACCOUNT }}"
-      - name: Enable the necessary APIs and enable docker auth
-        run: |-
-          gcloud services enable containerregistry.googleapis.com
-          gcloud services enable run.googleapis.com
-          gcloud --quiet auth configure-docker
+          workload_identity_provider: "projects/144644461406/locations/global/workloadIdentityPools/github-pool/providers/github-provider"
+          service_account: "github-service-account@smartgo-life-prod.iam.gserviceaccount.com"
+
+      # Alternative option - authentication via credentials json
+      # - id: 'auth'
+      #   uses: 'google-github-actions/auth@v0'
+      #   with:
+      #     credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      # Setup gcloud CLI
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0
+
+      - name: Authorize Docker push
+        run: gcloud auth configure-docker
 
       - name: Build and Push Container
         run: |-
-          docker build . --tag "gcr.io/$CLOUD_RUN_PROJECT_ID/$REPO_NAME:$GITHUB_SHA"
-      - name: Push image to GCR
+          docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} .
+          docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }}
+      - name: Deploy to Cloud Run
         run: |-
-          docker push gcr.io/$CLOUD_RUN_PROJECT_ID/$REPO_NAME:$GITHUB_SHA
-      - name: Deploy
-        run: |-
-          gcloud components install beta --quiet
-          gcloud beta run deploy $REPO_NAME --image gcr.io/$CLOUD_RUN_PROJECT_ID/$REPO_NAME:$GITHUB_SHA \
-            --project $CLOUD_RUN_PROJECT_ID \
-            --platform managed \
-            --region $CLOUD_RUN_REGION \
-            --allow-unauthenticated \
+          gcloud run deploy ${{ env.SERVICE }} \
+            --region ${{ env.REGION }} \
+            --image gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} \
+            --platform "managed" \
             --quiet
-      - name: Show Output
-        run: echo ${{ steps.deploy.outputs.url }}
-    # steps:
-    #   - name: Checkout
-    #     uses: actions/checkout@v2
-
-    #   # This step is where our service account will be authenticated
-    #   - uses: google-github-actions/setup-gcloud@v0.2.0
-    #     with:
-    #       project_id: ${{ secrets.CLOUD_RUN_PROJECT_NAME }}
-    #       service_account_key: ${{ secrets.CLOUD_RUN_SERVICE_ACCOUNT }}
-    #       service_account_email: ${{ secrets.CLOUD_RUN_SERVICE_ACCOUNT_EMAIL }}
-
-    #   - name: Enable the necessary APIs and enable docker auth
-    #     run: |-
-    #       gcloud services enable containerregistry.googleapis.com
-    #       gcloud services enable run.googleapis.com
-    #       gcloud --quiet auth configure-docker
-
-    #   - name: Build and tag image
-    #     run: |-
-    #       docker build . --tag "gcr.io/$CLOUD_RUN_PROJECT_ID/$REPO_NAME:$GITHUB_SHA"
-
-    #   - name: Push image to GCR
-    #     run: |-
-    #       docker push gcr.io/$CLOUD_RUN_PROJECT_ID/$REPO_NAME:$GITHUB_SHA
-
-    #   - name: Deploy
-    #     run: |-
-    #       gcloud components install beta --quiet
-    #       gcloud beta run deploy $REPO_NAME --image gcr.io/$CLOUD_RUN_PROJECT_ID/$REPO_NAME:$GITHUB_SHA \
-    #         --project $CLOUD_RUN_PROJECT_ID \
-    #         --platform managed \
-    #         --region $CLOUD_RUN_REGION \
-    #         --allow-unauthenticated \
-    #         --quiet
