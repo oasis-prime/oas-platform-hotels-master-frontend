@@ -42,6 +42,7 @@ jobs:
         with:
           workload_identity_provider: "projects/144644461406/locations/global/workloadIdentityPools/github-pool/providers/github-provider"
           service_account: "github-service-account@smartgo-life-prod.iam.gserviceaccount.com"
+          credentials_json: "${{ secrets.GOOGLE_CREDENTIALS }}"
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v0
