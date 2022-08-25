@@ -45,7 +45,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # Configure Workload Identity Federation and generate an access token.
       - id: "auth"
         name: "Authenticate to Google Cloud"
         uses: "google-github-actions/auth@v0"
@@ -53,13 +52,6 @@ jobs:
           workload_identity_provider: "projects/144644461406/locations/global/workloadIdentityPools/github-pool/providers/github-provider"
           service_account: "github-service-account@smartgo-life-prod.iam.gserviceaccount.com"
 
-      # Alternative option - authentication via credentials json
-      # - id: 'auth'
-      #   uses: 'google-github-actions/auth@v0'
-      #   with:
-      #     credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
-
-      # Setup gcloud CLI
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v0
 
@@ -67,6 +59,18 @@ jobs:
         run: gcloud auth configure-docker
 
       - name: Build and Push Container
+        with:
+          push: true
+          tags: g2idocker/auth:latest
+          secrets: |
+            "NEXT_PUBLIC_API_GRAPHQL=${{ env.NEXT_PUBLIC_API_GRAPHQL }}"
+            "NEXT_PUBLIC_FIREBASE_API_KEY=${{ env.NEXT_PUBLIC_FIREBASE_API_KEY }}"
+            "NEXT_PUBLIC_FIREBASE_PROJECT_ID=${{ env.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}"
+            "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${{ env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}"
+            "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=${{ env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}"
+            "NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=${{ env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}"
+            "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=${{ env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID }}"
+            "I18NEXUS_API_KEY=${{ env.I18NEXUS_API_KEY }}"
         run: |-
           docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} .
           docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }}
