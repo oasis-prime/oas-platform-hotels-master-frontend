@@ -1,6 +1,6 @@
 import type { GetStaticProps, NextPage } from 'next'
 
-import { HomeSearch } from '@components/search/home.search'
+import { HotelSearch } from '@components/search/index.search'
 import Image from 'next/image'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'

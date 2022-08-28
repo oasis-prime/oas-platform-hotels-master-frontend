@@ -13,3 +13,7 @@ export const AppConfig = {
   site_name: '',
   default_translations: ['footer', 'header', 'layout', 'misc']
 }
+
+export const AppUrl = {
+  hotels: '/hotels'
+}
