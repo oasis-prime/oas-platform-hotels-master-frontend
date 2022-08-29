@@ -15,7 +15,7 @@ const Button = React.forwardRef<HTMLButtonElement, TButton>((props, ref) => {
       className={classNames(
         'w-full bg-transparent border p-3 rounded-lg font-semibold outline-none',
         'placeholder-gray-400',
-        'focus:border-free700'
+        'focus:border-primary hover:border-primary'
       )}
       {...props}
     />

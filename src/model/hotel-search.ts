@@ -1,5 +1,8 @@
-type IHomeSearch = {
+type IHotelsSearch = {
   name: string
+  rooms: number
+  adults: number
+  children: number
 }
 
-export type { IHomeSearch }
+export type { IHotelsSearch }
