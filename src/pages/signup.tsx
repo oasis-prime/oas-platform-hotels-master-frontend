@@ -22,7 +22,7 @@ const Signup: NextPage = () => {
   const signUp = (
     event: FormEvent<HTMLFormElement>,
     email: string,
-    password: string
+    password: string,
   ) => {
     event.preventDefault()
 
@@ -33,7 +33,7 @@ const Signup: NextPage = () => {
         router.push('/')
       })
       .catch((error) => {
-        let { title, description } = setErrorMessage(error)
+        const { title, description } = setErrorMessage(error)
         // do something with error title and description here
         alert(title + ': ' + description)
       })
@@ -51,22 +51,28 @@ const Signup: NextPage = () => {
   }
 
   return (
-    <div className={`container`}>
+    <div className={'container'}>
       <Head>
         <title>NextJS Firebase Auth Starter Kit</title>
         <meta
           name="description"
           content="A starter kit created by @official-carledwardfp"
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link
+          rel="icon"
+          href="/favicon.ico"
+        />
       </Head>
 
-      <Element name="signup" className="element h-96">
+      <Element
+        name="signup"
+        className="element h-96"
+      >
         test 1
       </Element>
-      <main className={`container`}>
-        <h1 className={`text-3xl`}>Signup</h1>
-        {/* <br /> */}
+      <main className={'container'}>
+        <h1 className={'text-3xl'}>Signup</h1>
+        { /* <br /> */ }
         <form onSubmit={(event) => signUp(event, email, password)}>
           <label htmlFor="email">Email Address</label>
           <TextField
@@ -86,7 +92,8 @@ const Signup: NextPage = () => {
             type="submit"
             onClick={() => {
               console.log('A')
-            }}>
+            }}
+          >
             Submit123
           </Button>
         </form>

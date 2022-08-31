@@ -13,8 +13,8 @@ const ConfirmPage: NextPage = () => {
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale as string, ['confirm']))
-    }
+      ...(await serverSideTranslations(locale as string, ['confirm'])),
+    },
   }
 }
 

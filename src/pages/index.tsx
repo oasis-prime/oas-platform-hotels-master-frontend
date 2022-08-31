@@ -11,8 +11,9 @@ import { useTranslation } from 'next-i18next'
 const Home: NextPage = () => {
   const [open, setOpen] = useState(false)
   const { t } = useTranslation()
+
   return (
-    <>
+    <div className="max-w-screen-xl mx-auto">
       <div className="text-2xl text-center">
         <h2>จองโรงแรม รีสอร์ต โฮสเทล และอีกมากมาย</h2>
       </div>
@@ -37,7 +38,7 @@ const Home: NextPage = () => {
       <div className="mt-6 max-w-screen-xl">
         <Carousel />
       </div>
-    </>
+    </div>
   )
 }
 
@@ -46,9 +47,9 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     props: {
       ...(await serverSideTranslations(locale as string, [
         ...AppConfig.default_translations,
-        'home'
-      ]))
-    }
+        'home',
+      ])),
+    },
   }
 }
 
