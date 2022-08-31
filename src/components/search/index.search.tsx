@@ -15,16 +15,16 @@ const HotelSearch: React.FC = () => {
       name: '',
       adults: 1,
       children: 0,
-      rooms: 1
-    }
+      rooms: 1,
+    },
   })
   const router = useRouter()
   const onSubmit = (data: IHotelsSearch) => {
     router.push({
       pathname: AppUrl.hotels,
       query: {
-        name: data.name
-      }
+        name: data.name,
+      },
     })
   }
 
@@ -62,8 +62,9 @@ const HotelSearch: React.FC = () => {
               className={classNames(
                 'w-full h-full bg-transparent border rounded font-semibold outline-none',
                 'placeholder-gray-400',
-                'focus:border-primary hover:border-primary hover:border-2'
-              )}>
+                'focus:border-primary hover:border-primary hover:border-2',
+              )}
+            >
               ค้นหาโรงแรม
             </Button>
           </div>

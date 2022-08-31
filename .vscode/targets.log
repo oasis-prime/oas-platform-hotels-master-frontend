@@ -6,11 +6,8 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
- 
-make: *** No rule to make target `all'.  Stop.
 
-
-# Make data base, printed on Mon Aug 29 14:49:01 2022
+# Make data base, printed on Wed Aug 31 09:37:12 2022
 
 # Variables
 
@@ -18,7 +15,6 @@ make: *** No rule to make target `all'.  Stop.
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
 ?F = $(notdir $?)
- 
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -42,7 +38,7 @@ VSCODE_CWD = /
 # environment
 PATH = /Users/sittha/gsutil/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/sittha/go/bin:/usr/local/go/bin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/sittha/Library/Android/sdk/emulator:/Users/sittha/Library/Android/sdk/tools:/Users/sittha/Library/Android/sdk/tools/bin:/Users/sittha/Library/Android/sdk/platform-tools
 # environment
-LaunchInstanceID = 2F20DD6F-FD20-43D9-9F2A-41D6C3ECFFCF
+LaunchInstanceID = 72FE4D65-2546-4E37-BAD9-62650A46308A
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
@@ -50,7 +46,7 @@ ANDROID_HOME = /Users/sittha/Library/Android/sdk
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.lh4mCvmVsx/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.emKNsTB3yw/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -136,7 +132,7 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 433
+VSCODE_PID = 425
 # variable set hash-table stats:
 # Load=61/1024=6%, Rehash=0, Collisions=1/84=1%
 
@@ -146,10 +142,9 @@ VSCODE_PID = 433
 
 # Directories
 
-# . (device 16777223, inode 91252635): 27 files, no impossibilities.
+# . (device 16777225, inode 91252635): 30 files, no impossibilities.
 
- 
-# 27 files, no impossibilities in 1 directories.
+# 30 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -200,6 +195,8 @@ Makefile:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Mon Aug 29 14:49:01 2022
+# Finished Make data base on Wed Aug 31 09:37:12 2022
 
  
+make: *** No rule to make target `all'.  Stop.
+
