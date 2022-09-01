@@ -2,6 +2,7 @@ import type { GetStaticProps, NextPage } from 'next'
 
 import { AppConfig } from '@utils/app.config'
 import { HotelCardMain } from '@components/hotels/card'
+import { TopBarSearch } from '@components/search/topbar.search'
 import classNames from 'classnames'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
@@ -18,14 +19,28 @@ const HotelsPage: NextPage = () => {
       )}
       >
         <div className="max-w-screen-xl mx-auto">
-           ค้นหาโรงแรม
+          <TopBarSearch />
         </div>
       </div>
-      <div className="max-w-screen-xl mx-auto">
-        <div className="grid grid-cols-7 gap-4">
-          <div className="min-h-md bg-gray-400 col-span-2 w-full"></div>
-          <div className="min-h-md col-span-5 bg-gray-600 w-full">
-            <HotelCardMain />
+      <div className="max-w-screen-xl mx-auto mt-2">
+        <div className="grid gap-2">
+          <div className="text-2xl">
+        แค่<span className="text-primary">คลิก</span> แล้ว<span className="text-primary">ไป</span>
+          </div>
+          <div className="">
+            <div className="grid grid-cols-7 gap-4">
+              <div className={classNames(
+                'min-h-md transition w-full',
+                'col-span-7 xl:col-span-2',
+                'ease-in-out delay-150',
+              )}
+              >
+                <div className="text-xl">กรองผลการค้นหา</div>
+              </div>
+              <div className="min-h-md col-span-5 w-full">
+                <HotelCardMain />
+              </div>
+            </div>
           </div>
         </div>
       </div>
