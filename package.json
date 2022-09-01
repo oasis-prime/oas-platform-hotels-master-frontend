@@ -6,7 +6,9 @@
     "dev": "i18nexus pull && next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "download-schema": "apollo client:download-schema --endpoint=http://localhost:8080/graphql schema.graphql",
+    "codegen": "apollo codegen:generate --localSchemaFile=schema.graphql --target=typescript --tagName=gql"
   },
   "dependencies": {
     "@apollo/client": "^3.6.8",
@@ -27,11 +29,14 @@
     "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {
+    "@graphql-eslint/eslint-plugin": "^3.10.7",
     "@types/node": "18.0.0",
     "@types/react": "18.0.13",
     "@types/react-datepicker": "^4.4.2",
     "@types/react-dom": "18.0.5",
     "@types/react-scroll": "^1.8.3",
+    "@typescript-eslint/eslint-plugin": "^5.36.0",
+    "@typescript-eslint/parser": "^5.36.0",
     "autoprefixer": "^10.4.7",
     "eslint": "8.17.0",
     "eslint-config-next": "12.1.6",

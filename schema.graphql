@@ -1,0 +1,265 @@
+directive @specifiedBy(url: String!) on SCALAR
+type Address {
+  content: String
+  street: String
+  number: String
+}
+
+type AvailabilityCancellationPolicies {
+  amount: String
+  from: String
+}
+
+type AvailabilityData {
+  availability: [AvailabilityHotels!]!
+}
+
+input AvailabilityFilterInput {
+  maxHotels: Int
+  maxRooms: Int
+  minRate: Int
+  maxRate: Int
+  maxRatesPerRoom: Int
+}
+
+input AvailabilityHotelInput {
+  hotel: [Int!]!
+}
+
+type AvailabilityHotels {
+  code: Int
+  name: String
+  categoryCode: String
+  categoryName: String
+  destinationCode: String
+  destinationName: String
+  zoneCode: Int
+  zoneName: String
+  latitude: String
+  longitude: String
+  minRate: String
+  maxRate: String
+  currency: String
+  rooms: [AvailabilityRooms]
+}
+
+input AvailabilityInput {
+  hotels: AvailabilityHotelInput!
+  stay: AvailabilityStayInput!
+  occupancies: [AvailabilityOccupanciesInput!]!
+  language: LanguageEnum!
+  filter: AvailabilityFilterInput
+}
+
+input AvailabilityOccupanciesInput {
+  rooms: Int!
+  adults: Int!
+  children: Int!
+}
+
+type AvailabilityRates {
+  rateKey: String
+  rateClass: String
+  rateType: String
+  net: String
+  discount: String
+  discountPCT: String
+  sellingRate: String
+  allotment: Int
+  paymentType: String
+  packaging: Boolean
+  boardCode: String
+  boardName: String
+  rooms: Int
+  adults: Int
+  children: Int
+  cancellationPolicies: [AvailabilityCancellationPolicies]
+}
+
+type AvailabilityRooms {
+  code: String
+  name: String
+  rates: [AvailabilityRates]
+}
+
+input AvailabilityStayInput {
+  checkIn: String!
+  checkOut: String!
+}
+
+type BookingData {
+  id: String
+}
+
+input BookingInput {
+  id: String
+}
+
+type City {
+  content: String
+}
+
+type Coordinates {
+  longitude: Float
+  latitude: Float
+}
+
+type Description {
+  content: String
+}
+
+type Facilities {
+  facilityCode: Int
+  facilityGroupCode: Int
+  order: Int
+  number: Int
+  voucher: Boolean
+}
+
+type Hotels {
+  language: LanguageEnum!
+  code: Int
+  type: HotelTypeEnum!
+  countryCode: String
+  stateCode: String
+  destinationCode: String
+  zoneCode: Int
+  categoryCode: String
+  categoryGroupCode: String
+  chainCode: String
+  accommodationTypeCode: String
+  postalCode: String
+  email: String
+  web: String
+  lastUpdate: String
+  S2C: String
+  ranking: Int
+  images: [Images]
+  interestPoints: [InterestPoints]
+  issues: [Issues]
+  facilities: [Facilities]
+  rooms: [Rooms]
+  phones: [Phones]
+  city: City
+  address: Address
+  amenityCodes: [Int]
+  segmentCodes: [Int]
+  boardCodes: [String]
+  coordinates: Coordinates
+  description: Description
+  name: Name
+}
+
+type HotelsData {
+  hotels: [Hotels!]!
+  pagination: PaginationType!
+}
+
+input HotelsGeolocationInput {
+  latitude: Float!
+  longitude: Float!
+  radius: Int!
+}
+
+input HotelsInput {
+  language: LanguageEnum!
+  pagination: PaginationInput!
+  geolocation: HotelsGeolocationInput!
+  id: Int!
+}
+
+enum HotelTypeEnum {
+  DE
+  HB
+  CG
+}
+
+type Images {
+  imageTypeCode: String
+  path: String
+  order: Int
+  visualOrder: Int
+}
+
+type InterestPoints {
+  facilityCode: Int
+  facilityGroupCode: Int
+  order: Int
+  poiName: String
+  distance: String
+}
+
+type Issues {
+  issueCode: String
+  issueType: String
+  dateFrom: String
+  dateTo: String
+  order: Int
+  alternative: Boolean
+}
+
+enum LanguageEnum {
+  TAI
+  ENG
+}
+
+type Name {
+  content: String
+}
+
+input PaginationInput {
+  page: Int!
+  pageSize: Int!
+  orderBy: String
+}
+
+type PaginationType {
+  page: Int!
+  pageSize: Int!
+  total: Int!
+}
+
+type Phones {
+  phoneNumber: String
+  phoneType: String
+}
+
+type Query {
+  availability(input: AvailabilityInput!): AvailabilityData!
+  getHotels(input: HotelsInput!): HotelsData!
+}
+
+type RoomFacilities {
+  facilityCode: Int
+  facilityGroupCode: Int
+  indLogic: Boolean
+  number: Int
+  voucher: Boolean
+}
+
+type Rooms {
+  roomCode: String
+  isParentRoom: Boolean
+  minPax: Int
+  maxPax: Int
+  maxAdults: Int
+  maxChildren: Int
+  minAdults: Int
+  roomType: String
+  characteristicCode: String
+  roomStays: [RoomStays]
+  roomFacilities: [RoomFacilities]
+}
+
+type RoomStayFacilities {
+  facilityCode: Int
+  facilityGroupCode: Int
+  number: Int
+}
+
+type RoomStays {
+  stayType: String
+  order: String
+  description: String
+  roomStayFacilities: [RoomStayFacilities]
+}

@@ -1,7 +1,5 @@
 import type { GetStaticProps, NextPage } from 'next'
 
-import { HotelSearch } from '@components/search/index.search'
-import Image from 'next/image'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
@@ -51,8 +49,8 @@ const About: NextPage = () => {
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale as string, ['home']))
-    }
+      ...(await serverSideTranslations(locale as string, ['home'])),
+    },
   }
 }
 

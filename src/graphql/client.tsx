@@ -5,9 +5,9 @@ export const apolloClientMain = new ApolloClient({
   ssrMode: true,
   link: ApolloLink.from([linkError, linkTokenHeader, linkMain]),
   cache: new InMemoryCache({
-    addTypename: false
+    addTypename: false,
   }),
-  connectToDevTools: true
+  connectToDevTools: true,
 })
 
 const inMemoryCache = new InMemoryCache()
@@ -16,5 +16,5 @@ export const apolloClientNonToken = new ApolloClient({
   //   AllowOrigins: '*'
   // },
   link: linkAuth,
-  cache: inMemoryCache
+  cache: inMemoryCache,
 })
