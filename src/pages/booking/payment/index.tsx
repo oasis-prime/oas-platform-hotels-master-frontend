@@ -4,7 +4,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
 
-const BookingPage: NextPage = () => {
+const PaymentPage: NextPage = () => {
   const [open, setOpen] = useState(false)
   const { t } = useTranslation()
   return <div className="columns-2"></div>
@@ -13,9 +13,9 @@ const BookingPage: NextPage = () => {
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale as string, ['booking']))
-    }
+      ...(await serverSideTranslations(locale as string, ['payment'])),
+    },
   }
 }
 
-export default BookingPage
+export default PaymentPage

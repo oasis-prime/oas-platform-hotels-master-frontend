@@ -1,8 +1,34 @@
 import { Button } from '@components/misc/button'
 import Image from 'next/image'
 import classNames from 'classnames'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
+
+type IHotelFacilities = {
+  code: number
+  name: string
+}
+
+const DEFAULT_HOTEL_FACILITIES: IHotelFacilities[] = [
+  { code: 1, name: 'นำสัตว์เลี้ยงเข้าพักได้' },
+  { code: 1, name: 'ที่จอดรถ' },
+  { code: 1, name: 'Wi-Fi ทุกห้อง (ฟรี)' },
+  { code: 1, name: 'บริการเช็คอิน/เช็คเอาต์แบบไร้การสัมผัส' },
+  { code: 1, name: 'บาร์' },
+  { code: 1, name: 'ห้องอาหาร' },
+  { code: 1, name: 'รูมเซอร์วิส' },
+  { code: 1, name: 'Wi-Fi ในพื้นที่สาธารณะ' },
+]
 
 const HotelCardMain = () => {
+  const [hotelFacilities, setHotelFacilities] = useState(DEFAULT_HOTEL_FACILITIES)
+
+  const router = useRouter()
+
+  const handleOnClick = () => {
+    router.push('TEST-SLUG/hotel')
+  }
+
   return (
     <div
       className={classNames(
@@ -107,6 +133,9 @@ const HotelCardMain = () => {
             </div>
             <div className="flex content-end justify-end">
               <Button
+                onClick={() => {
+                  handleOnClick()
+                }}
                 type="submit"
                 className={classNames(
                   'h-full bg-primary p-4 px-6 border rounded font-semibold outline-none',
