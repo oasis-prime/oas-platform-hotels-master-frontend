@@ -1,1 +1,2 @@
-export * from './main.search'
+export * from './filter.search'
+export * from './hotels.card'

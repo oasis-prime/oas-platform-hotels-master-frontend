@@ -2,7 +2,7 @@ import {
   Button,
   ButtonIcons,
   ButtonOutline,
-  ButtonPrimary
+  ButtonPrimary,
 } from '@components/misc/button'
 
 import { Checkbox } from '@components/misc/checkbox/main.checkbox'
@@ -20,13 +20,15 @@ const SigninModal: React.FC = () => {
         className={classNames(
           'justify-center items-center flex',
           'overflow-x-hidden overflow-y-auto',
-          'fixed inset-0 z-50 outline-none focus:outline-none'
-        )}>
+          'fixed inset-0 z-50 outline-none focus:outline-none',
+        )}
+      >
         <div
           className={classNames(
             'relative w-auto my-6 mx-auto max-w-3xl',
-            'lg:min-w-md'
-          )}>
+            'lg:min-w-md',
+          )}
+        >
           <div className="absolute top-0 right-0 z-10">
             <ButtonIcons onClick={() => setSignIn(false)}>
               <svg
@@ -36,10 +38,25 @@ const SigninModal: React.FC = () => {
                 stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
-                strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10" />
-                <line x1="15" y1="9" x2="9" y2="15" />
-                <line x1="9" y1="9" x2="15" y2="15" />
+                strokeLinejoin="round"
+              >
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="10"
+                />
+                <line
+                  x1="15"
+                  y1="9"
+                  x2="9"
+                  y2="15"
+                />
+                <line
+                  x1="9"
+                  y1="9"
+                  x2="15"
+                  y2="15"
+                />
               </svg>
             </ButtonIcons>
           </div>
@@ -47,19 +64,22 @@ const SigninModal: React.FC = () => {
             className={classNames(
               'relative flex flex-col',
               'border-0 rounded-lg shadow-lg w-full bg-white outline-none',
-              'focus:outline-none'
-            )}>
+              'focus:outline-none',
+            )}
+          >
             <div
               className={classNames(
                 'grid grid-flow-row-dense p-6',
                 'md:grid-cols-2 sm:grid-cols-1',
-                'gap-4'
-              )}>
+                'gap-4',
+              )}
+            >
               <div
                 className={classNames(
                   'col-span-1 relative h-full w-full min-h-md',
-                  'hidden sm:block'
-                )}>
+                  'hidden sm:block',
+                )}
+              >
                 <Image
                   src="/images/main/signin-image.jpeg"
                   layout="fill"

@@ -29,14 +29,12 @@ const HotelCardMain = () => {
                   'w-full h-14 overflow-hidden relative',
                 )}
               >
-                <div>
-                  <Image
-                    src="http://photos.hotelbeds.com/giata/13/137704/137704a_hb_a_003.jpg"
-                    alt=""
-                    layout="fill"
-                    objectFit="cover"
-                  />
-                </div>
+                <Image
+                  src="http://photos.hotelbeds.com/giata/13/137704/137704a_hb_a_003.jpg"
+                  alt=""
+                  layout="fill"
+                  objectFit="cover"
+                />
                 { i + 1 === row.length && (
                   <div className="bg-black opacity-60 w-full h-full absolute flex flex-wrap justify-center content-center">
                     <div className="text-white">ดูรูปที่พัก</div>
@@ -49,25 +47,30 @@ const HotelCardMain = () => {
           </div>
 
         </div>
-        <div className="col-span-5">
-          <div className="text-primary">The Rim Chiang Mai</div>
-          <div className="text-2xl">เดอะริม เชียงใหม่</div>
-          <div className="text-2xl text-orange-400 gap-1 flex">
-            <i className="bi bi-star-fill"></i>
-            <i className="bi bi-star-fill"></i>
-            <i className="bi bi-star-fill"></i>
-            <i className="bi bi-star-fill"></i>
-            <i className="bi bi-star-fill"></i>
+        <div className="col-span-5 grid justify-between">
+          <div>
+            <div className="text-primary">The Rim Chiang Mai</div>
+            <div className="text-2xl">เดอะริม เชียงใหม่</div>
+            <div className="text-2xl text-orange-400 gap-1 flex">
+              <i className="bi bi-star-fill"></i>
+              <i className="bi bi-star-fill"></i>
+              <i className="bi bi-star-fill"></i>
+              <i className="bi bi-star-fill"></i>
+              <i className="bi bi-star-fill"></i>
+            </div>
+            <div className="flex gap-1 items-center">
+              <i className="text-2xl bi bi-geo-alt"></i>
+              <div>Chiang Mai</div>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <div className="border border-gray-200 rounded-sm py-1 px-2">เครื่องปรับอากาศในพื้นที่สาธารณะ</div>
+              <div className="border border-gray-200 rounded-sm py-1 px-2">แผนกต้อนรับ 24 ชม.</div>
+              <div className="border border-gray-200 rounded-sm py-1 px-2">รูมเซอร์วิส</div>
+              <div className="border border-gray-200 rounded-sm py-1 px-2">+3</div>
+            </div>
           </div>
-          <div className="flex gap-1 items-center">
-            <i className="text-2xl bi bi-geo-alt"></i>
-            <div>Chiang Mai</div>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <div className="border border-gray-200 rounded-sm py-1 px-2">เครื่องปรับอากาศในพื้นที่สาธารณะ</div>
-            <div className="border border-gray-200 rounded-sm py-1 px-2">แผนกต้อนรับ 24 ชม.</div>
-            <div className="border border-gray-200 rounded-sm py-1 px-2">รูมเซอร์วิส</div>
-            <div className="border border-gray-200 rounded-sm py-1 px-2">+3</div>
+          <div className=" flex flex-wrap gap-2">
+            <div>จำนวนเตียง</div>
           </div>
         </div>
         <div className="col-span-3">
@@ -96,7 +99,7 @@ const HotelCardMain = () => {
 
             <div className="text-xl text-right">
               <div>
-                ราคารวม <span className="text-red-500">1</span> ห้อง <span className="text-red-500">3</span> คืน
+                ราคารวม <span className="text-red-500">1</span> ที่พัก <span className="text-red-500">3</span> คืน
               </div>
               <div className="text-red-500 text-4xl">
                 ฿ 3322

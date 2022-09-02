@@ -2,6 +2,7 @@ import type { GetStaticProps, NextPage } from 'next'
 
 import { AppConfig } from '@utils/app.config'
 import { HotelCardMain } from '@components/hotels/card'
+import { HotelsFilter } from '@components/hotels/filter'
 import { TopBarSearch } from '@components/search/topbar.search'
 import classNames from 'classnames'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -24,8 +25,13 @@ const HotelsPage: NextPage = () => {
       </div>
       <div className="max-w-screen-xl mx-auto mt-2">
         <div className="grid gap-2">
-          <div className="text-2xl">
-        แค่<span className="text-primary">คลิก</span> แล้ว<span className="text-primary">ไป</span>
+          <div className="grid gap-4 grid-cols-12">
+            <p className="text-2xl col-span-3">
+              แค่<span className="text-primary">คลิก</span> แล้ว<span className="text-primary">ไป</span>
+            </p>
+            <div className="col-span-9">
+              <p>เรียงตาม</p>
+            </div>
           </div>
           <div className="">
             <div className="grid grid-cols-12 gap-4">
@@ -35,7 +41,7 @@ const HotelsPage: NextPage = () => {
                 'ease-in-out delay-150',
               )}
               >
-                <div className="text-xl">กรองผลการค้นหา</div>
+                <HotelsFilter />
               </div>
               <div className="min-h-md col-span-9 w-full">
                 <HotelCardMain />
