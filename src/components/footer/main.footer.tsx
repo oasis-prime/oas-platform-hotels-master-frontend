@@ -6,75 +6,107 @@ const MainFooter: React.FC = () => {
   const { t } = useTranslation()
 
   return (
-    <div className="bg-primary pt-12 pb-24">
+    <div className="bg-primary  pt-6 pb-24">
       <div
         className={classNames(
-          'max-w-screen-xl w-full mx-auto px-6',
-          'grid grid-rows-6 grid-flow-row grid-cols-3 gap-4',
-          'sm:px-8 sm:grid-rows-1 sm:grid-flow-col sm:grid-cols-12',
-          'lg:px-16'
-        )}>
+          'max-w-screen-xl w-full mx-auto',
+          'grid gap-4',
+          'grid-rows-1 grid-flow-col grid-cols-12',
+        )}
+      >
         <div
           className={classNames(
-            'row-span-2 col-start-1 col-end-4 flex flex-col items-start',
-            'sm:col-span-3'
-          )}>
+            'row-span-2 flex flex-col items-start',
+            'col-span-4',
+          )}
+        >
           <LogoVPN />
         </div>
         <div
           className={classNames(
             'row-span-2 flex flex-col',
-            'sm:col-span-2 sm:col-start-5'
-          )}>
-          <p className="text-white mb-4 font-medium text-lg">
-            {t('footer:contact')}
+            'col-span-2',
+          )}
+        >
+          <p className="text-white font-medium text-xl">
+            { t('footer:contact') }
           </p>
           <ul className="text-white ">
-            <li
-              className={classNames(
-                'my-2 cursor-pointer transition-all',
-                'hover:text-orange-500'
-              )}>
-              Download{' '}
-            </li>
+            { ['ติดต่อเรา', 'นโยบายความเป็นส่วนตัว', 'เกี่ยวกับ Click and Go Thailand'].map((i, v) => (
+              <li
+                key={v}
+                className={classNames(
+                  'my-2 cursor-pointer transition-all',
+                  'hover:text-orange-500',
+                )}
+              >
+                { i }
+              </li>
+            )) }
+
           </ul>
         </div>
         <div
           className={classNames(
             'row-span-2 flex flex-col',
-            'sm:col-span-2 sm:col-start-7'
-          )}>
-          <p className="text-white mb-4 font-medium text-lg">
-            {t('footer:helpeCenter')}
+            'col-span-2',
+          )}
+        >
+          <p className="text-white font-medium text-xl">
+            { t('footer:helpeCenter') }
           </p>
           <ul className="text-white">
             <li
               className={classNames(
                 'my-2 cursor-pointer transition-all',
-                'hover:text-orange-500'
-              )}>
-              Download{' '}
+                'hover:text-orange-500',
+              )}
+            >
+              วิธีชำระเงิน
             </li>
           </ul>
         </div>
         <div
           className={classNames(
             'row-span-2 flex flex-col',
-            'sm:col-span-3 sm:col-start-9'
-          )}>
-          <p className="text-white mb-4 font-medium text-lg">
-            {t('footer:followUs')}
+            'col-span-2',
+          )}
+        >
+          <p className="text-white font-medium text-xl">
+            { t('footer:helpeCenter') }
+          </p>
+          <ul className="text-white">
+            <li
+              className={classNames(
+                'my-2 cursor-pointer transition-all',
+                'hover:text-orange-500',
+              )}
+            >
+              วิธีชำระเงิน
+            </li>
+          </ul>
+        </div>
+        <div
+          className={classNames(
+            'row-span-2 flex flex-col',
+            'col-span-2',
+            // 'grid justify-end text-right',
+          )}
+        >
+          <p className="text-white font-medium text-xl">
+            { t('footer:followUs') }
           </p>
           <div className={classNames('mt-2 mb-8 -mx-2 flex flex-wrap')}>
-            {['bi-facebook', 'bi-twitter', 'bi-instagram', 'bi-line'].map(
+            { ['bi-facebook', 'bi-twitter', 'bi-instagram', 'bi-line'].map(
               (v, i) => (
                 <div
                   key={`icon-${i}`}
-                  className={classNames('p-2 text-2xl text-white')}>
+                  className={classNames('p-2 text-2xl text-white')}
+                >
                   <i className={`bi ${v}`} />
                 </div>
-              )
-            )}
+              ),
+            ) }
           </div>
         </div>
       </div>
@@ -84,7 +116,7 @@ const MainFooter: React.FC = () => {
 
 const LogoVPN: React.FC = () => {
   return (
-    <div className="sticky h-12 w-full mb-6">
+    <div className="relative h-20 w-full">
       <Image
         src="/images/main/long-logo.png"
         layout="fill"

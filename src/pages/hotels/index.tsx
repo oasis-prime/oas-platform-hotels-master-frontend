@@ -28,16 +28,16 @@ const HotelsPage: NextPage = () => {
         แค่<span className="text-primary">คลิก</span> แล้ว<span className="text-primary">ไป</span>
           </div>
           <div className="">
-            <div className="grid grid-cols-7 gap-4">
+            <div className="grid grid-cols-12 gap-4">
               <div className={classNames(
                 'min-h-md transition w-full',
-                'col-span-7 xl:col-span-2',
+                'col-span-12 xl:col-span-3',
                 'ease-in-out delay-150',
               )}
               >
                 <div className="text-xl">กรองผลการค้นหา</div>
               </div>
-              <div className="min-h-md col-span-5 w-full">
+              <div className="min-h-md col-span-9 w-full">
                 <HotelCardMain />
               </div>
             </div>
