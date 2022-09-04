@@ -16,12 +16,13 @@ const TextFieldNumber = (prop: ITextFieldNumberProp) => {
         className={classNames(
           'bg-white text-gray-600 hover:text-gray-700 hover:border-gray-400',
           'h-full w-20 rounded-l cursor-pointer outline-none',
-          'border border-gray-200'
+          'border border-gray-200',
         )}
         onClick={() => {
           const sum = prop.value - 1 < 0 ? 0 : prop.value - 1
           prop.onChange(sum)
-        }}>
+        }}
+      >
         <span className="m-auto text-2xl font-thin">−</span>
       </button>
       <input
@@ -32,23 +33,25 @@ const TextFieldNumber = (prop: ITextFieldNumberProp) => {
           'outline-none focus:outline-none',
           'hover:text-black hover:border-gray-400 focus:text-black text-gray-700 outline-none',
           'md:text-basecursor-default',
-          'border border-gray-200'
+          'border border-gray-200',
         )}
         name={prop.name}
         value={prop.value}
-        onChange={prop.onChange}></input>
+        onChange={prop.onChange}
+      ></input>
       <button
         type="button"
         data-action="increment"
         className={classNames(
           'bg-white text-gray-600 hover:text-gray-700 hover:border-gray-400',
           'h-full w-20 rounded-l cursor-pointer outline-none',
-          'border border-gray-200'
+          'border border-gray-200',
         )}
         onClick={() => {
           const sum = prop.value + 1
           prop.onChange(sum)
-        }}>
+        }}
+      >
         <span className="m-auto text-2xl font-thin">+</span>
       </button>
     </div>

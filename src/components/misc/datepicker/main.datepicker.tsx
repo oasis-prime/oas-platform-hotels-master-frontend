@@ -11,7 +11,7 @@ const MainDatepicker: React.FC = () => {
         className={classNames(
           'w-full bg-transparent border p-3 rounded-lg',
           'font-semibold focus:border-free700 outline-none placeholder-gray-400',
-          'border-gray-200'
+          'border-gray-200',
         )}
         selected={startDate}
         onChange={(date: Date) => setStartDate(date)}

@@ -2,13 +2,13 @@ import React from 'react'
 import classNames from 'classnames'
 
 type TButton = React.DetailedHTMLProps<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  HTMLButtonElement
+React.ButtonHTMLAttributes<HTMLButtonElement>,
+HTMLButtonElement
 >
 
-type ButtonOutlineProps = {
+type ButtonOutlineProps = TButton & {
   children?: React.ReactNode
-} & TButton
+}
 
 const ButtonOutline: React.FC<ButtonOutlineProps> = (props) => {
   const { children, onClick } = props
@@ -20,10 +20,11 @@ const ButtonOutline: React.FC<ButtonOutlineProps> = (props) => {
         'outline-none rounded-l-full rounded-r-full capitalize transition-all',
         'border border-primary',
         'text-primary bg-white',
-        'hover:bg-primary hover:text-white hover:shadow-primary '
-      )}>
-      {' '}
-      {children}
+        'hover:bg-primary hover:text-white hover:shadow-primary ',
+      )}
+    >
+      { ' ' }
+      { children }
     </button>
   )
 }

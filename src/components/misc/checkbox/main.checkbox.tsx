@@ -2,8 +2,8 @@ import React from 'react'
 import classNames from 'classnames'
 
 type TextFieldProps = React.DetailedHTMLProps<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  HTMLInputElement
+React.InputHTMLAttributes<HTMLInputElement>,
+HTMLInputElement
 >
 
 const Checkbox = React.forwardRef<HTMLInputElement, TextFieldProps>(
@@ -20,7 +20,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, TextFieldProps>(
         {...childProps}
       />
     )
-  }
+  },
 )
 
 Checkbox.displayName = ''

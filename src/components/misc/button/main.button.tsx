@@ -3,8 +3,8 @@ import React, { ButtonHTMLAttributes, DetailedHTMLProps } from 'react'
 import classNames from 'classnames'
 
 type TButton = React.DetailedHTMLProps<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  HTMLButtonElement
+React.ButtonHTMLAttributes<HTMLButtonElement>,
+HTMLButtonElement
 >
 
 const Button = React.forwardRef<HTMLButtonElement, TButton>((props, ref) => {
@@ -15,7 +15,7 @@ const Button = React.forwardRef<HTMLButtonElement, TButton>((props, ref) => {
       className={classNames(
         'w-full bg-transparent border p-3 rounded-lg font-semibold outline-none',
         'placeholder-gray-400',
-        'focus:border-primary hover:border-primary'
+        'focus:border-primary hover:border-primary',
       )}
       {...props}
     />
