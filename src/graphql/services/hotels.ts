@@ -1,7 +1,9 @@
-import { gql } from '@apollo/client'
+import { HotelSearch, HotelSearchVariables } from './__generated__/HotelSearch'
+import { HotelsAutocomplete, HotelsAutocompleteVariables } from './__generated__/HotelsAutocomplete'
+import { gql, useLazyQuery } from '@apollo/client'
 
-const hotels = gql`
-  query HotelSearch($input: HotelsInput!) {
+const HOTEL_SEARCH = gql`
+  query HotelSearch($input: HotelsInput!, $imageOffset: Int!, $imageLimit: Int!, $facilitiesOffset: Int!, $facilitiesLimit: Int!) {
     getHotels(input: $input) {
       hotels {
         language
@@ -20,84 +22,24 @@ const hotels = gql`
         lastUpdate
         S2C
         ranking
-        images {
+        images (offset: $imageOffset, limit: $imageLimit) {
           imageTypeCode
           path
           order
           visualOrder
         }
-        # interestPoints {
-        #     facilityCode
-        #     facilityGroupCode
-        #     order
-        #     poiName
-        #     distance
-        # }
-        # issues {
-        #     issueCode
-        #     issueType
-        #     dateFrom
-        #     dateTo
-        #     order
-        #     alternative
-        # }
-        facilities {
+        facilities (offset: $facilitiesOffset, limit: $facilitiesLimit) {
           facilityCode
           facilityGroupCode
           order
           number
           voucher
         }
-        # rooms {
-        #     roomCode
-        #     isParentRoom
-        #     minPax
-        #     maxPax
-        #     maxAdults
-        #     maxChildren
-        #     minAdults
-        #     roomType
-        #     characteristicCode
-        #     roomStays {
-        #         stayType
-        #         order
-        #         description
-        #         roomStayFacilities {
-        #             facilityCode
-        #             facilityGroupCode
-        #             number
-        #         }
-        #     }
-        #     roomFacilities {
-        #         facilityCode
-        #         facilityGroupCode
-        #         indLogic
-        #         number
-        #         voucher
-        #     }
-        # }
-        # phones {
-        #     phoneNumber
-        #     phoneType
-        # }
-        # city {
-        #     content
-        # }
-        # address {
-        #     content
-        #     street
-        #     number
-        # }
-        # amenityCodes
-        # segmentCodes
-        # boardCodes
-        # coordinates {
-        #     longitude
-        #     latitude
-        # }
-        # description {
-        #     content
-        # }
+        address {
+            content
+            street
+            number
+        }
         name {
           content
         }
@@ -111,4 +53,38 @@ const hotels = gql`
   }
 `
 
-export { hotels }
+const HOTELS_AUTOCOMPLETE = gql`
+  query HotelsAutocomplete($input: HotelsInput!) {
+    getHotels(input: $input) {
+      hotels {
+        hotelName
+        language
+        code
+        countryCode
+        stateCode
+        destinationCode
+        zoneCode
+        categoryCode
+        categoryGroupCode
+        chainCode
+        accommodationTypeCode
+        postalCode
+        email
+        web
+        lastUpdate
+        S2C
+        ranking
+      }
+      pagination {
+        page
+        pageSize
+        total
+      }
+    }
+  }
+`
+
+const useHotels = () => useLazyQuery<HotelSearch, HotelSearchVariables>(HOTEL_SEARCH)
+const useHotelsAutocomplete = () => useLazyQuery<HotelsAutocomplete, HotelsAutocompleteVariables>(HOTELS_AUTOCOMPLETE)
+
+export { useHotels, useHotelsAutocomplete }

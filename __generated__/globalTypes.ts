@@ -21,8 +21,13 @@ export interface HotelsGeolocationInput {
 export interface HotelsInput {
   language: LanguageEnum;
   pagination: PaginationInput;
-  geolocation: HotelsGeolocationInput;
-  id: number;
+  geolocation?: HotelsGeolocationInput | null;
+  keywords?: HotelsKeywordsInput | null;
+  id?: number;
+}
+
+export interface HotelsKeywordsInput {
+  keyword: string[];
 }
 
 export interface PaginationInput {

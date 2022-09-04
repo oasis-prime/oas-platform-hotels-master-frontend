@@ -2,23 +2,23 @@ import {
   ApolloClient,
   ApolloProvider,
   NormalizedCacheObject,
-} from "@apollo/client";
+} from '@apollo/client'
 
-import React from "react";
-import { apolloClientMain } from "./client";
+import React from 'react'
+import { apolloClientMain } from './client'
 
 type Props = {
-  children?: React.ReactNode;
-};
+  children?: React.ReactNode
+}
 
 const ApolloProviderWithJWT: React.FC<Props> = ({ children }) => {
-  const client = React.useRef<ApolloClient<NormalizedCacheObject>>();
+  const client = React.useRef<ApolloClient<NormalizedCacheObject>>()
 
   if (!client.current) {
-    client.current = apolloClientMain;
+    client.current = apolloClientMain
   }
 
-  return <ApolloProvider client={client.current}>{children}</ApolloProvider>;
-};
+  return <ApolloProvider client={client.current}>{ children }</ApolloProvider>
+}
 
-export { ApolloProviderWithJWT };
+export { ApolloProviderWithJWT }

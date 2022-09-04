@@ -26,6 +26,13 @@ export interface HotelSearch_getHotels_hotels_facilities {
   voucher: boolean | null;
 }
 
+export interface HotelSearch_getHotels_hotels_address {
+  __typename: "Address";
+  content: string | null;
+  street: string | null;
+  number: string | null;
+}
+
 export interface HotelSearch_getHotels_hotels_name {
   __typename: "Name";
   content: string | null;
@@ -51,6 +58,7 @@ export interface HotelSearch_getHotels_hotels {
   ranking: number | null;
   images: (HotelSearch_getHotels_hotels_images | null)[] | null;
   facilities: (HotelSearch_getHotels_hotels_facilities | null)[] | null;
+  address: HotelSearch_getHotels_hotels_address | null;
   name: HotelSearch_getHotels_hotels_name | null;
 }
 
@@ -73,4 +81,8 @@ export interface HotelSearch {
 
 export interface HotelSearchVariables {
   input: HotelsInput;
+  imageOffset: number;
+  imageLimit: number;
+  facilitiesOffset: number;
+  facilitiesLimit: number;
 }

@@ -1,16 +1,24 @@
 import type { GetStaticProps, NextPage } from 'next'
 
+import { AppConfig } from '@utils/app.config'
 import { Button } from '@components/misc/button'
 import { Checkbox } from '@components/misc/checkbox/main.checkbox'
 import { TextField } from '@components/misc/textField'
 import classNames from 'classnames'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
 
 const BookingPage: NextPage = () => {
   const [open, setOpen] = useState(false)
   const { t } = useTranslation()
+
+  const router = useRouter()
+
+  const onHandler = () => {
+    router.push('/booking/payment')
+  }
 
   return (
     <div className="max-w-screen-xl mx-auto">
@@ -34,6 +42,9 @@ const BookingPage: NextPage = () => {
             <div className="flex gap-2"><Checkbox /><p>ท่านยอมรับ ข้อกำหนดการใช้งานและนโยบายความเป็นส่วนตัว เพื่อดำเนินการ</p></div>
             <div>
               <Button
+                onClick={() => {
+                  onHandler()
+                }}
                 type="submit"
                 className={classNames(
                   'p-3 px-7 float-right bg-primary text-white border rounded font-semibold outline-none',
@@ -71,10 +82,21 @@ const BookingPage: NextPage = () => {
   )
 }
 
+// export const getStaticProps: GetStaticProps = async ({ locale }) => {
+//   return {
+//     props: {
+//       ...(await serverSideTranslations(locale as string, ['booking'])),
+//     },
+//   }
+// }
+
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale as string, ['booking'])),
+      ...(await serverSideTranslations(locale as string, [
+        ...AppConfig.default_translations,
+        'booking',
+      ])),
     },
   }
 }

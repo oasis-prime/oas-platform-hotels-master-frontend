@@ -13,8 +13,8 @@ const SearchPage: NextPage = () => {
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale as string, ['search']))
-    }
+      ...(await serverSideTranslations(locale as string, ['search'])),
+    },
   }
 }
 

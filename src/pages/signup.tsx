@@ -91,7 +91,7 @@ const Signup: NextPage = () => {
           <Button
             type="submit"
             onClick={() => {
-              console.log('A')
+              //
             }}
           >
             Submit123

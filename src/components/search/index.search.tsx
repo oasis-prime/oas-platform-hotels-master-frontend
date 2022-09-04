@@ -2,6 +2,7 @@ import { Button, ButtonOutline } from '@components/misc/button'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import { AppUrl } from '@utils/app.config'
+import { HotelSearchInput } from './hotel.search.input'
 import { IHotelsSearch } from '@model/hotel-search'
 import { MainDatepicker } from '@components/misc/datepicker/main.datepicker'
 import { OccupanciesSearch } from './occupancies.search'
@@ -36,7 +37,7 @@ const HotelSearch: React.FC = () => {
             <p>ค้นหาโรงแรมในประเทศ/ต่างประเทศ</p>
           </div>
           <div className="col-span-4">
-            <TextField placeholder="สถานที่, โรงแรม, เมือง, ประเทศ" />
+            <HotelSearchInput />
           </div>
           <div className="col-start-1 col-span-2">
             <p>เช็คอิน</p>
@@ -60,12 +61,15 @@ const HotelSearch: React.FC = () => {
             <Button
               type="submit"
               className={classNames(
-                'w-full h-full bg-transparent border rounded font-semibold outline-none',
+                'w-full lg:h-full min-h-[4rem] bg-transparent border rounded font-semibold outline-none',
                 'placeholder-gray-400',
                 'focus:border-primary hover:border-primary hover:border-2',
+                'whitespace-pre',
               )}
             >
-              ค้นหาโรงแรม
+              <p className="whitespace-pre-wrap">
+                ค้นหาโรงแรม
+              </p>
             </Button>
           </div>
         </div>
