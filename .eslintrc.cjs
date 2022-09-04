@@ -136,7 +136,7 @@ module.exports = {
       // Setup GraphQL Parser
       files: '*.{graphql,gql}',
       parser: '@graphql-eslint/eslint-plugin',
-      plugins: ['@graphql-eslint'],
+      // plugins: ['@graphql-eslint'],
       parserOptions: {
         schema: 'schema.graphql',
         operations: 'src/graphql/**/*.{tsx,gql,ts}'
