@@ -48,6 +48,9 @@ const HotelDescription: NextPage = () => {
               )}
             >
               <Image
+                unoptimized
+                placeholder="blur"
+                blurDataURL="http://photos.hotelbeds.com/giata/13/137704/137704a_hb_a_003.jpg"
                 src="http://photos.hotelbeds.com/giata/13/137704/137704a_hb_a_003.jpg"
                 alt=""
                 layout="fill"
@@ -102,6 +105,9 @@ const HotelDescription: NextPage = () => {
               <div className="relative h-32">
                 <div className="absolute w-full h-32 rounded-md file:border border-gray-400 shadow-sm">
                   <Image
+                    unoptimized
+                    placeholder="blur"
+                    blurDataURL="/images/main/search-on-map.jpeg"
                     src="/images/main/search-on-map.jpeg"
                     alt="search-map"
                     layout="fill"

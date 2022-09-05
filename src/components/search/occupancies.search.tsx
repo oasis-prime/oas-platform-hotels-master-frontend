@@ -1,5 +1,5 @@
 import { Controller, useFormContext } from 'react-hook-form'
-import React, { ButtonHTMLAttributes, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 import { IHotelsSearch } from '@model/hotel-search'
 import { TextFieldNumber } from '@components/misc/textField/number.main'
@@ -90,7 +90,7 @@ const OccupanciesSearch = () => {
                 <Controller
                   control={control}
                   name="rooms"
-                  render={({ field: { onChange, onBlur, value, ref }}) => (
+                  render={({ field: { onChange, value }}) => (
                     <TextFieldNumber
                       name="rooms-input"
                       onChange={onChange}
@@ -113,7 +113,7 @@ const OccupanciesSearch = () => {
                 <Controller
                   control={control}
                   name="adults"
-                  render={({ field: { onChange, onBlur, value, ref }}) => (
+                  render={({ field: { onChange, value }}) => (
                     <TextFieldNumber
                       name="adults-input"
                       onChange={onChange}
@@ -136,7 +136,7 @@ const OccupanciesSearch = () => {
                 <Controller
                   control={control}
                   name="children"
-                  render={({ field: { onChange, onBlur, value, ref }}) => (
+                  render={({ field: { onChange, value }}) => (
                     <TextFieldNumber
                       name="children-input"
                       onChange={onChange}

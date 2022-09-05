@@ -52,6 +52,9 @@ const HotelsFilter = () => {
       <div className="relative h-32">
         <div className="absolute w-full h-32 rounded-md file:border border-gray-400 shadow-sm">
           <Image
+            unoptimized
+            placeholder="blur"
+            blurDataURL="/images/main/search-on-map.jpeg"
             src="/images/main/search-on-map.jpeg"
             alt="search-map"
             layout="fill"

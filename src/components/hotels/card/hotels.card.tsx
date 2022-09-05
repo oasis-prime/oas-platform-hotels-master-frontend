@@ -40,6 +40,9 @@ const HotelCardMain = () => {
         <div className="col-span-4 flex flex-col gap-1">
           <div className="w-full h-full overflow-hidden relative">
             <Image
+              unoptimized
+              placeholder="blur"
+              blurDataURL="http://photos.hotelbeds.com/giata/13/137704/137704a_hb_a_003.jpg"
               src="http://photos.hotelbeds.com/giata/13/137704/137704a_hb_a_003.jpg"
               alt=""
               layout="fill"
@@ -56,6 +59,9 @@ const HotelCardMain = () => {
                 )}
               >
                 <Image
+                  unoptimized
+                  placeholder="blur"
+                  blurDataURL="http://photos.hotelbeds.com/giata/13/137704/137704a_hb_a_003.jpg"
                   src="http://photos.hotelbeds.com/giata/13/137704/137704a_hb_a_003.jpg"
                   alt=""
                   layout="fill"

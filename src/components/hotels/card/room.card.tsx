@@ -32,6 +32,9 @@ const HotelRoomCard = () => {
                   )}
                 >
                   <Image
+                    unoptimized
+                    placeholder="blur"
+                    blurDataURL="http://photos.hotelbeds.com/giata/13/137704/137704a_hb_a_003.jpg"
                     src="http://photos.hotelbeds.com/giata/13/137704/137704a_hb_a_003.jpg"
                     alt=""
                     layout="fill"

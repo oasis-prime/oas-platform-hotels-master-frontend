@@ -12,6 +12,8 @@ const Home: NextPage = () => {
   const [open, setOpen] = useState(false)
   const { t } = useTranslation()
 
+  // const { base64, img } = await getPlaiceholder('/path-to-your-image.jpg')
+
   return (
     <div className="max-w-screen-xl mx-auto">
       <div className="text-2xl text-center">
@@ -23,6 +25,10 @@ const Home: NextPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
         <div className="md:block hidden">
           <Image
+            unoptimized
+            placeholder="blur"
+            blurDataURL="/images/main/home.png"
+            priority={true}
             src="/images/main/home.png"
             layout="responsive"
             width={100}

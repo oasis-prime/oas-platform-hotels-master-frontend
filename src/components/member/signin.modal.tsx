@@ -81,6 +81,9 @@ const SigninModal: React.FC = () => {
                 )}
               >
                 <Image
+                  unoptimized
+                  placeholder="blur"
+                  blurDataURL="/images/main/signin-image.jpeg"
                   src="/images/main/signin-image.jpeg"
                   layout="fill"
                   objectFit="cover"

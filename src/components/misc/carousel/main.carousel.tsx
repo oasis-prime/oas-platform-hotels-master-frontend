@@ -170,6 +170,9 @@ const Carousel: React.FC<CarouselProsp> = () => {
                   )}
                 >
                   <Image
+                    unoptimized
+                    placeholder="blur"
+                    blurDataURL={resource.imageUrl || ''}
                     src={resource.imageUrl || ''}
                     alt={resource.title}
                     layout="fill"

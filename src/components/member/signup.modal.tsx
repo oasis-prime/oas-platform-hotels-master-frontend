@@ -55,6 +55,9 @@ const SignupModal: React.FC = () => {
                 >
                   <div className="col-span-1 h-full relative w-full">
                     <Image
+                      unoptimized
+                      placeholder="blur"
+                      blurDataURL="/images/main/signin-image.jpeg"
                       src="/images/main/signin-image.jpeg"
                       layout="fill"
                       objectFit="cover"
