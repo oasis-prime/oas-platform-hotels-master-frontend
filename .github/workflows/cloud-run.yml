@@ -1,9 +1,11 @@
+name: Build and Deploy to Cloud Run
+
 on:
   push:
-    branches:
-      - main
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
 
-name: Build and Deploy to Cloud Run
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT }}
   SERVICE: hotels-online-travel-agency
@@ -37,7 +39,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          file: ./build/Dockerfile
+          file: ./Dockerfile
           push: true
           tags: gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }}
           build-args: |-
