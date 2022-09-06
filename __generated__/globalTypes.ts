@@ -37,7 +37,7 @@ export interface HotelsInput {
   keywords?: HotelsKeywordsInput | null;
   id?: number | null;
   IsPrice?: boolean | null;
-  occupancies: HotelsOccupanciesInput;
+  occupancies?: HotelsOccupanciesInput | null;
 }
 
 export interface HotelsKeywordsInput {
