@@ -12,6 +12,9 @@ const HotelCardEmpty = () => {
           )}
         >
           <Image
+            unoptimized
+            placeholder="blur"
+            blurDataURL="/images/main/non-available.gif"
             src="/images/main/non-available.gif"
             alt=""
             layout="fill"

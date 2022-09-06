@@ -109,7 +109,9 @@ type Description {
 }
 
 type Facilities {
+  facilityName: String
   facilityCode: Int
+  facilityGroupName: String
   facilityGroupCode: Int
   order: Int
   number: Int
@@ -118,6 +120,37 @@ type Facilities {
 
 input GetPlacesInput {
   query: String
+}
+
+input HotelFacilitiesInput {
+  groupCode: Int!
+  offset: Int!
+  limit: Int!
+}
+
+input HotelImagesInput {
+  offset: Int!
+  limit: Int!
+}
+
+input HotelInterestPointsInput {
+  offset: Int!
+  limit: Int!
+}
+
+input HotelIssuesInput {
+  offset: Int!
+  limit: Int!
+}
+
+input HotelPhonesInput {
+  offset: Int!
+  limit: Int!
+}
+
+input HotelRoomsInput {
+  offset: Int!
+  limit: Int!
 }
 
 type Hotels {
@@ -139,12 +172,12 @@ type Hotels {
   lastUpdate: String
   S2C: String
   ranking: Int
-  images(offset: Int!, limit: Int!): [Images]
-  interestPoints(offset: Int!, limit: Int!): [InterestPoints]
-  issues(offset: Int!, limit: Int!): [Issues]
-  facilities(offset: Int!, limit: Int!): [Facilities]
-  rooms(offset: Int!, limit: Int!): [Rooms]
-  phones(offset: Int!, limit: Int!): [Phones]
+  images(input: HotelImagesInput): [Images]
+  interestPoints(input: HotelInterestPointsInput): [InterestPoints]
+  issues(input: HotelIssuesInput): [Issues]
+  facilities(input: HotelFacilitiesInput): [Facilities]
+  rooms(input: HotelRoomsInput): [Rooms]
+  phones(input: HotelPhonesInput): [Phones]
   city: City
   address: Address
   amenityCodes: [Int]
@@ -171,7 +204,7 @@ input HotelsInput {
   pagination: PaginationInput!
   geolocation: HotelsGeolocationInput
   keywords: HotelsKeywordsInput
-  id: Int!
+  id: Int
 }
 
 input HotelsKeywordsInput {

@@ -59,6 +59,9 @@ const MainHeader: React.FC<MainHeaderProps> = () => {
           <div className="flex-none pr-4">
             <div className="h-12 w-12">
               <Image
+                unoptimized
+                placeholder="blur"
+                blurDataURL="/images/main/mini-logo.png"
                 onClick={() => {
                   router.push('/')
                 }}

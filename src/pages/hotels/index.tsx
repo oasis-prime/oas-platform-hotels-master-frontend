@@ -6,10 +6,13 @@ import { HotelsFilter } from '@components/hotels/filter'
 import { TopBarSearch } from '@components/search/topbar.search'
 import classNames from 'classnames'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useHotels } from '@graphql/services/hotels'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
 
 const HotelsPage: NextPage = () => {
+  const [hotelsQuery] = useHotels()
+
   const [open, setOpen] = useState(false)
   const { t } = useTranslation()
 

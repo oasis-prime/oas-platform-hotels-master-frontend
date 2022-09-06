@@ -116,8 +116,11 @@ const MainFooter: React.FC = () => {
 
 const LogoVPN: React.FC = () => {
   return (
-    <div className="relative h-20 w-full">
+    <div className="relative h-48 w-full">
       <Image
+        unoptimized
+        placeholder="blur"
+        blurDataURL="/images/main/long-logo.png"
         src="/images/main/long-logo.png"
         layout="fill"
         objectFit="contain"

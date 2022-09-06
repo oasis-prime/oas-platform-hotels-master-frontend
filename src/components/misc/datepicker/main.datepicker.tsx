@@ -2,9 +2,12 @@ import DatePicker from 'react-datepicker'
 import classNames from 'classnames'
 import { useState } from 'react'
 
-const MainDatepicker: React.FC = () => {
-  const [startDate, setStartDate] = useState(new Date())
+type MainDatepicker = {
+  onChange: (val: Date) => void
+  value: Date
+}
 
+const MainDatepicker: React.FC<MainDatepicker> = ({ onChange, value }: MainDatepicker) => {
   return (
     <>
       <DatePicker
@@ -13,8 +16,8 @@ const MainDatepicker: React.FC = () => {
           'font-semibold focus:border-free700 outline-none placeholder-gray-400',
           'border-gray-200',
         )}
-        selected={startDate}
-        onChange={(date: Date) => setStartDate(date)}
+        selected={value}
+        onChange={(date: Date) => onChange(date)}
       />
     </>
   )

@@ -1,5 +1,5 @@
 import { Button, ButtonOutline } from '@components/misc/button'
-import { FormProvider, useForm } from 'react-hook-form'
+import { Controller, FormProvider, useForm } from 'react-hook-form'
 
 import { AppUrl } from '@utils/app.config'
 import { HotelSearchInput } from './hotel.search.input'
@@ -17,6 +17,8 @@ const HotelSearch: React.FC = () => {
       adults: 1,
       children: 0,
       rooms: 1,
+      checkIn: new Date(),
+      checkOut: new Date(),
     },
   })
   const router = useRouter()
@@ -25,6 +27,11 @@ const HotelSearch: React.FC = () => {
       pathname: AppUrl.hotels,
       query: {
         name: data.name,
+        adults: data.adults,
+        children: data.children,
+        rooms: data.rooms,
+        checkIn: data.checkIn.toISOString(),
+        checkOut: data.checkOut.toISOString(),
       },
     })
   }
@@ -46,10 +53,29 @@ const HotelSearch: React.FC = () => {
             <p>เช็คเอ้าท์</p>
           </div>
           <div className="col-start-1 col-span-2">
-            <MainDatepicker />
+            <Controller
+              render={({ field: { onChange, value }}) => (
+                <MainDatepicker
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+              name="checkIn"
+              control={methods.control}
+            />
+
           </div>
           <div className="col-start-3 col-span-2">
-            <MainDatepicker />
+            <Controller
+              render={({ field: { onChange, value }}) => (
+                <MainDatepicker
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+              name="checkOut"
+              control={methods.control}
+            />
           </div>
           <div className="col-span-4">
             <p>จำนวนผู้เข้าพักและห้องพัก</p>

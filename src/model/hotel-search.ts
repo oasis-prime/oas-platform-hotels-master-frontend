@@ -3,6 +3,8 @@ type IHotelsSearch = {
   rooms: number
   adults: number
   children: number
+  checkIn: Date
+  checkOut: Date
 }
 
 export type { IHotelsSearch }

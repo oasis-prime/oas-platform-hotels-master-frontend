@@ -13,7 +13,7 @@ const data = {
     {
       title: 'Welcome to Ark Labs',
       link: 'https://ark-labs.co.uk',
-      imageUrl: '/images/carousel/banner-2.jpeg',
+      imageUrl: '/images/carousel/banner-2.png',
     },
     {
       title: 'Some sort of third title',

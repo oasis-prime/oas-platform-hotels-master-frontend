@@ -1,9 +1,7 @@
 FROM node:alpine AS build
-# FROM jarredsumner/bun:edge AS build
 WORKDIR /app
 COPY package.json ./
 RUN yarn install
-# RUN bun install
 COPY . .
 
 ARG NEXT_PUBLIC_API_GRAPHQL \
@@ -26,23 +24,10 @@ ENV NEXT_PUBLIC_API_GRAPHQL $NEXT_PUBLIC_API_GRAPHQL \
   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID $NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID \
   I18NEXUS_API_KEY $I18NEXUS_API_KEY
 
-# ENV NEXT_PUBLIC_API_GRAPHQL "https://api.smartgo.life/graphql" \
-#   NEXT_PUBLIC_FIREBASE_API_KEY AIzaSyCZxy_LNGr7dn17eiXlaBRYT4TdrU_V2JI \
-#   NEXT_PUBLIC_FIREBASE_APP_ID 1:261377799143:web:4319e57b8e5df301f20342 \
-#   NEXT_PUBLIC_FIREBASE_PROJECT_ID oas-platform \
-#   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN oas-platform.firebaseapp.com \
-#   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET oas-platform.appspot.com \
-#   NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID G-5EG5H7WB2H \
-#   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID 261377799143 \
-#   I18NEXUS_API_KEY ROJ9P6fy2ajjzBJRhwBsvg
-
 RUN yarn run build
-# RUN bun run build
 
 FROM node:alpine AS runner
-# FROM jarredsumner/bun:edge AS runner
 WORKDIR /app
 COPY --from=build /app /app
 EXPOSE 3000
 CMD ["yarn", "run", "start"]
-# CMD ["bun", "run", "start"]

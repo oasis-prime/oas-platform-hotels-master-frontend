@@ -1,18 +1,20 @@
+import { Controller, useFormContext } from 'react-hook-form'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 
+import { HotelsAutocomplete_getHotels_hotels } from '@graphql/services/__generated__/HotelsAutocomplete'
 import { IHotelsSearch } from '@model/hotel-search'
 import { LanguageEnum } from '__generated__/globalTypes'
 import { TextField } from '@components/misc/textField'
 import classNames from 'classnames'
 import { debounce } from 'lodash'
-import { useFormContext } from 'react-hook-form'
 import { useHotelsAutocomplete } from '@graphql/services/hotels'
 import { usePopper } from 'react-popper'
 
 const HotelSearchInput = () => {
-  const { watch, control } = useFormContext<IHotelsSearch>()
+  const { watch, control, setValue } = useFormContext<IHotelsSearch>()
 
-  const [value, setValue] = useState('')
+  // const [value, setValue] = useState('')
+  const [selected, setSelected] = useState<HotelsAutocomplete_getHotels_hotels>()
 
   const [autocompleteQuery, { data, loading }] = useHotelsAutocomplete()
 
@@ -27,11 +29,6 @@ const HotelSearchInput = () => {
   const handleDebounceFn = async (e: string) => {
     handleQuery(e)
     setDropdownPopoverShow(true)
-  }
-
-  function handleChange (e: React.ChangeEvent<HTMLInputElement>) {
-    setValue(e.target.value)
-    debounceFn(e.target.value)
   }
 
   const debounceFn = useCallback(debounce(handleDebounceFn, 500), [])
@@ -70,12 +67,22 @@ const HotelSearchInput = () => {
   return (
     <div className="flex flex-wrap w-full">
       <div className="relative inline-flex align-middle w-full">
-        <TextField
-          value={value}
-          placeholder="สถานที่, โรงแรม, เมือง, ประเทศ"
-          ref={referenceElement}
-          onChange={handleChange}
+        <Controller
+          render={({ field: { onChange, value }}) => (
+            <TextField
+              value={value}
+              placeholder="สถานที่, โรงแรม, เมือง, ประเทศ"
+              ref={referenceElement}
+              onChange={(e) => {
+                onChange(e)
+                debounceFn(e.target.value)
+              }}
+            />
+          )}
+          name="name"
+          control={control}
         />
+
 
         { /* Dialog */ }
         <div
@@ -109,7 +116,13 @@ const HotelSearchInput = () => {
                     <div
                       key={v.code}
                       data-code={v.code}
-                      className="p-2"
+                      className="p-2 cursor-pointer hover:bg-gray-100"
+                      onClick={() => {
+                        setSelected(v)
+                        setDropdownPopoverShow(false)
+
+                        v.hotelName != null && setValue('name', v.hotelName)
+                      }}
                     >
                       <div>{ v.hotelName }</div>
                     </div>
