@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { HotelsInput, LanguageEnum } from "./../../../../__generated__/globalTypes";
+import { ImagesInput, FacilitiesInput, HotelsInput, LanguageEnum, HotelTypeEnum } from "./../../../../__generated__/globalTypes";
 
 // ====================================================
 // GraphQL query operation: HotelSearch
@@ -19,11 +19,18 @@ export interface HotelSearch_getHotels_hotels_images {
 
 export interface HotelSearch_getHotels_hotels_facilities {
   __typename: "Facilities";
+  facilityName: string | null;
   facilityCode: number | null;
+  facilityGroupName: string | null;
   facilityGroupCode: number | null;
   order: number | null;
   number: number | null;
   voucher: boolean | null;
+}
+
+export interface HotelSearch_getHotels_hotels_city {
+  __typename: "City";
+  content: string | null;
 }
 
 export interface HotelSearch_getHotels_hotels_address {
@@ -33,15 +40,18 @@ export interface HotelSearch_getHotels_hotels_address {
   number: string | null;
 }
 
-export interface HotelSearch_getHotels_hotels_name {
-  __typename: "Name";
-  content: string | null;
+export interface HotelSearch_getHotels_hotels_coordinates {
+  __typename: "Coordinates";
+  longitude: number | null;
+  latitude: number | null;
 }
 
 export interface HotelSearch_getHotels_hotels {
   __typename: "Hotels";
+  hotelName: string | null;
   language: LanguageEnum;
   code: number | null;
+  type: HotelTypeEnum;
   countryCode: string | null;
   stateCode: string | null;
   destinationCode: string | null;
@@ -58,8 +68,12 @@ export interface HotelSearch_getHotels_hotels {
   ranking: number | null;
   images: (HotelSearch_getHotels_hotels_images | null)[] | null;
   facilities: (HotelSearch_getHotels_hotels_facilities | null)[] | null;
+  city: HotelSearch_getHotels_hotels_city | null;
   address: HotelSearch_getHotels_hotels_address | null;
-  name: HotelSearch_getHotels_hotels_name | null;
+  amenityCodes: (number | null)[] | null;
+  segmentCodes: (number | null)[] | null;
+  boardCodes: (string | null)[] | null;
+  coordinates: HotelSearch_getHotels_hotels_coordinates | null;
 }
 
 export interface HotelSearch_getHotels_pagination {
@@ -80,9 +94,7 @@ export interface HotelSearch {
 }
 
 export interface HotelSearchVariables {
-  input: HotelsInput;
-  imageOffset: number;
-  imageLimit: number;
-  facilitiesOffset: number;
-  facilitiesLimit: number;
+  imagesInput?: ImagesInput | null;
+  facilitiesInput?: FacilitiesInput | null;
+  hotelsInput: HotelsInput;
 }

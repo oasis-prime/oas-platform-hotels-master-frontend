@@ -1,4 +1,18 @@
+directive @extends on OBJECT | INTERFACE
+directive @external on FIELD_DEFINITION
+directive @key(fields: _FieldSet!) on OBJECT | INTERFACE
+directive @provides(fields: _FieldSet!) on FIELD_DEFINITION
+directive @requires(fields: _FieldSet!) on FIELD_DEFINITION
+
 directive @specifiedBy(url: String!) on SCALAR
+scalar _Any
+
+scalar _FieldSet
+
+type _Service {
+  sdl: String
+}
+
 type Address {
   content: String
   street: String
@@ -118,19 +132,14 @@ type Facilities {
   voucher: Boolean
 }
 
-input GetPlacesInput {
-  query: String
-}
-
-input HotelFacilitiesInput {
+input FacilitiesInput {
   groupCode: Int!
   offset: Int!
   limit: Int!
 }
 
-input HotelImagesInput {
-  offset: Int!
-  limit: Int!
+input GetPlacesInput {
+  query: String
 }
 
 input HotelInterestPointsInput {
@@ -172,10 +181,10 @@ type Hotels {
   lastUpdate: String
   S2C: String
   ranking: Int
-  images(input: HotelImagesInput): [Images]
+  images(input: ImagesInput): [Images]
   interestPoints(input: HotelInterestPointsInput): [InterestPoints]
   issues(input: HotelIssuesInput): [Issues]
-  facilities(input: HotelFacilitiesInput): [Facilities]
+  facilities(input: FacilitiesInput): [Facilities]
   rooms(input: HotelRoomsInput): [Rooms]
   phones(input: HotelPhonesInput): [Phones]
   city: City
@@ -205,10 +214,18 @@ input HotelsInput {
   geolocation: HotelsGeolocationInput
   keywords: HotelsKeywordsInput
   id: Int
+  IsPrice: Boolean
+  occupancies: HotelsOccupanciesInput!
 }
 
 input HotelsKeywordsInput {
   keyword: [String!]!
+}
+
+input HotelsOccupanciesInput {
+  rooms: Int!
+  adults: Int!
+  children: Int!
 }
 
 enum HotelTypeEnum {
@@ -222,6 +239,12 @@ type Images {
   path: String
   order: Int
   visualOrder: Int
+}
+
+input ImagesInput {
+  typeCode: String!
+  offset: Int!
+  limit: Int!
 }
 
 type InterestPoints {
@@ -278,12 +301,15 @@ type PlacesData {
 
 type Query {
   getPlaces(input: GetPlacesInput!): PlacesData!
-  availability(input: AvailabilityInput!): AvailabilityData!
+  getAvailability(input: AvailabilityInput!): AvailabilityData!
   getHotels(input: HotelsInput!): HotelsData!
+  _service: _Service!
 }
 
 type RoomFacilities {
+  facilityName: String
   facilityCode: Int
+  facilityGroupName: String
   facilityGroupCode: Int
   indLogic: Boolean
   number: Int
@@ -291,6 +317,8 @@ type RoomFacilities {
 }
 
 type Rooms {
+  hotelCode: Int
+  hotelType: HotelTypeEnum!
   roomCode: String
   isParentRoom: Boolean
   minPax: Int
@@ -300,12 +328,15 @@ type Rooms {
   minAdults: Int
   roomType: String
   characteristicCode: String
-  roomStays: [RoomStays]
-  roomFacilities: [RoomFacilities]
+  roomStays(input: StaysInput): [RoomStays]
+  roomFacilities(input: FacilitiesInput): [RoomFacilities]
+  roomImages(input: ImagesInput): [Images]
 }
 
 type RoomStayFacilities {
+  facilityName: String
   facilityCode: Int
+  facilityGroupName: String
   facilityGroupCode: Int
   number: Int
 }
@@ -315,4 +346,9 @@ type RoomStays {
   order: String
   description: String
   roomStayFacilities: [RoomStayFacilities]
+}
+
+input StaysInput {
+  offset: Int!
+  limit: Int!
 }

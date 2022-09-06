@@ -14,6 +14,12 @@ export const AppConfig = {
   default_translations: ['footer', 'header', 'layout', 'misc'],
 }
 
+export const AppHotelbeds = {
+  standard: 'http://photos.hotelbeds.com/giata/',
+  medium: 'http://photos.hotelbeds.com/giata/xl/',
+  full: 'http://photos.hotelbeds.com/giata/xxl/',
+}
+
 export const AppUrl = {
   hotels: '/hotels',
 }

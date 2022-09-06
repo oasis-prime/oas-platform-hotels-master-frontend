@@ -1,13 +1,22 @@
 import { HotelSearch, HotelSearchVariables } from './__generated__/HotelSearch'
-import { HotelsAutocomplete, HotelsAutocompleteVariables } from './__generated__/HotelsAutocomplete'
+import {
+  HotelsAutocomplete,
+  HotelsAutocompleteVariables,
+} from './__generated__/HotelsAutocomplete'
 import { gql, useLazyQuery } from '@apollo/client'
 
 const HOTEL_SEARCH = gql`
-  query HotelSearch($input: HotelsInput!, $imageOffset: Int!, $imageLimit: Int!, $facilitiesOffset: Int!, $facilitiesLimit: Int!) {
-    getHotels(input: $input) {
+  query HotelSearch(
+    $imagesInput: ImagesInput
+    $facilitiesInput: FacilitiesInput
+    $hotelsInput: HotelsInput!
+  ) {
+    getHotels(input: $hotelsInput) {
       hotels {
+        hotelName
         language
         code
+        type
         countryCode
         stateCode
         destinationCode
@@ -22,26 +31,35 @@ const HOTEL_SEARCH = gql`
         lastUpdate
         S2C
         ranking
-        images (offset: $imageOffset, limit: $imageLimit) {
+        images(input: $imagesInput) {
           imageTypeCode
           path
           order
           visualOrder
         }
-        facilities (offset: $facilitiesOffset, limit: $facilitiesLimit) {
+        facilities(input: $facilitiesInput) {
+          facilityName
           facilityCode
+          facilityGroupName
           facilityGroupCode
           order
           number
           voucher
         }
-        address {
-            content
-            street
-            number
-        }
-        name {
+        city {
           content
+        }
+        address {
+          content
+          street
+          number
+        }
+        amenityCodes
+        segmentCodes
+        boardCodes
+        coordinates {
+          longitude
+          latitude
         }
       }
       pagination {
@@ -84,7 +102,11 @@ const HOTELS_AUTOCOMPLETE = gql`
   }
 `
 
-const useHotels = () => useLazyQuery<HotelSearch, HotelSearchVariables>(HOTEL_SEARCH)
-const useHotelsAutocomplete = () => useLazyQuery<HotelsAutocomplete, HotelsAutocompleteVariables>(HOTELS_AUTOCOMPLETE)
+const useHotels = () =>
+  useLazyQuery<HotelSearch, HotelSearchVariables>(HOTEL_SEARCH)
+const useHotelsAutocomplete = () =>
+  useLazyQuery<HotelsAutocomplete, HotelsAutocompleteVariables>(
+    HOTELS_AUTOCOMPLETE,
+  )
 
 export { useHotels, useHotelsAutocomplete }

@@ -1,4 +1,6 @@
+import { AppHotelbeds } from '@utils/app.config'
 import { Button } from '@components/misc/button'
+import { HotelSearch_getHotels_hotels } from '@graphql/services/__generated__/HotelSearch'
 import Image from 'next/image'
 import classNames from 'classnames'
 import { useRouter } from 'next/router'
@@ -20,7 +22,11 @@ const DEFAULT_HOTEL_FACILITIES: IHotelFacilities[] = [
   { code: 1, name: 'Wi-Fi ในพื้นที่สาธารณะ' },
 ]
 
-const HotelCardMain = () => {
+type IHotelCardMain = {
+  data: HotelSearch_getHotels_hotels
+}
+
+const HotelCardMain = (prop: IHotelCardMain) => {
   const [hotelFacilities, setHotelFacilities] = useState(DEFAULT_HOTEL_FACILITIES)
 
   const router = useRouter()
@@ -39,50 +45,58 @@ const HotelCardMain = () => {
       <div className="grid grid-cols-12 gap-2 h-full w-full">
         <div className="col-span-4 flex flex-col gap-1">
           <div className="w-full h-full overflow-hidden relative">
-            <Image
-              unoptimized
-              placeholder="blur"
-              blurDataURL="http://photos.hotelbeds.com/giata/13/137704/137704a_hb_a_003.jpg"
-              src="http://photos.hotelbeds.com/giata/13/137704/137704a_hb_a_003.jpg"
-              alt=""
-              layout="fill"
-              objectFit="cover"
-              className="rounded-tl-md"
-            />
+            { prop?.data?.images?.[0] && (
+              <Image
+                unoptimized
+                placeholder="blur"
+                blurDataURL={AppHotelbeds.standard + prop?.data?.images?.[0]?.path}
+                src={AppHotelbeds.standard + prop?.data?.images?.[0]?.path}
+                alt=""
+                layout="fill"
+                objectFit="cover"
+                className="rounded-tl-md"
+              />)
+            }
+
           </div>
           <div className="h-14 grid grid-cols-4 gap-1">
-            { [1, 2, 3, 4].map((rank, i, row) => (
-              <div
-                key={i}
-                className={classNames(
-                  'w-full h-14 overflow-hidden relative',
-                )}
-              >
-                <Image
-                  unoptimized
-                  placeholder="blur"
-                  blurDataURL="http://photos.hotelbeds.com/giata/13/137704/137704a_hb_a_003.jpg"
-                  src="http://photos.hotelbeds.com/giata/13/137704/137704a_hb_a_003.jpg"
-                  alt=""
-                  layout="fill"
-                  objectFit="cover"
-                />
-                { i + 1 === row.length && (
-                  <div className="bg-black opacity-60 w-full h-full absolute flex flex-wrap justify-center content-center">
-                    <div className="text-white">ดูรูปที่พัก</div>
-                  </div>
-                ) }
+            { [1, 2, 3, 4].map((v, i, row) => {
+              if (prop?.data?.images?.[v]?.path == null) {
+                return null
+              }
+              return (
+                <div
+                  key={i}
+                  className={classNames(
+                    'w-full h-14 overflow-hidden relative',
+                  )}
+                >
+                  <Image
+                    unoptimized
+                    placeholder="blur"
+                    blurDataURL={AppHotelbeds.standard + prop?.data?.images?.[v]?.path}
+                    src={AppHotelbeds.standard + prop?.data?.images?.[v]?.path}
+                    alt=""
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                  { i + 1 === row.length && (
+                    <div className="bg-black opacity-60 w-full h-full absolute flex flex-wrap justify-center content-center">
+                      <div className="text-white">ดูรูปที่พัก</div>
+                    </div>
+                  ) }
 
-              </div>
-            )) }
+                </div>
+              )
+            }) }
 
           </div>
 
         </div>
         <div className="col-span-5 grid justify-between">
           <div>
-            <div className="text-primary">The Rim Chiang Mai</div>
-            <div className="text-2xl">เดอะริม เชียงใหม่</div>
+            <div className="text-primary text-xl">{ prop.data.hotelName }</div>
+            { /* <div className="text-2xl">{ prop.data.hotelName }</div> */ }
             <div className="text-2xl text-orange-400 gap-1 flex">
               <i className="bi bi-star-fill"></i>
               <i className="bi bi-star-fill"></i>
@@ -95,10 +109,20 @@ const HotelCardMain = () => {
               <div>Chiang Mai</div>
             </div>
             <div className="flex flex-wrap gap-2">
-              <div className="border border-gray-200 rounded-sm py-1 px-2">เครื่องปรับอากาศในพื้นที่สาธารณะ</div>
-              <div className="border border-gray-200 rounded-sm py-1 px-2">แผนกต้อนรับ 24 ชม.</div>
-              <div className="border border-gray-200 rounded-sm py-1 px-2">รูมเซอร์วิส</div>
-              <div className="border border-gray-200 rounded-sm py-1 px-2">+3</div>
+              { [1, 2, 3, 4]?.map((v, i, r) => {
+                if (prop?.data?.facilities?.[v]?.facilityName == null) {
+                  return null
+                }
+                return (
+                  <div
+                    key={i}
+                    className="border border-gray-200 rounded-sm py-1 px-2"
+                  >{ prop?.data?.facilities?.[v]?.facilityName }</div>)
+              }) }
+
+              { prop?.data?.facilities && prop?.data?.facilities.length > 4 &&
+                <div className="border border-gray-200 rounded-sm py-1 px-2">+{ prop?.data?.facilities.length - 4 }</div>
+              }
             </div>
           </div>
           <div className=" flex flex-wrap gap-2">
