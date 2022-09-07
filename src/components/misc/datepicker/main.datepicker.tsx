@@ -11,6 +11,7 @@ const MainDatepicker: React.FC<MainDatepicker> = ({ onChange, value }: MainDatep
   return (
     <>
       <DatePicker
+        dateFormat={'dd/MM/yyyy'}
         className={classNames(
           'w-full bg-transparent border p-3 rounded-lg',
           'font-semibold focus:border-free700 outline-none placeholder-gray-400',

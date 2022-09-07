@@ -48,8 +48,8 @@ const HotelsFilter = () => {
   const [bedsType, setBedsType] = useState<IBedsType[]>(DEFAULT_BEDS_TYPE)
 
   return (
-    <div className="grid gap-y-6 divide-y-2 divide-gray-200">
-      <div className="relative h-32">
+    <div className="grid gap-y-6 divide-y-2 divide-gray-200 grid-cols-12 p-4 xl:grid-cols-1">
+      <div className="relative h-32 col-span-12">
         <div className="absolute w-full h-32 rounded-md file:border border-gray-400 shadow-sm">
           <Image
             unoptimized
@@ -68,7 +68,7 @@ const HotelsFilter = () => {
           </div>
         </div>
       </div>
-      <div className="grid gap-1">
+      <div className="grid gap-1 col-span-6 xl:col-span-12">
         <div className="text-xl mt-4">กรองผลการค้นหา</div>
         { facilities.slice(0, 3).map((v, i, row) => {
           return (<div
@@ -81,7 +81,7 @@ const HotelsFilter = () => {
         }) }
 
       </div>
-      <div className="grid gap-1">
+      <div className="grid gap-1 col-span-6 xl:col-span-12">
         <div className="text-xl mt-4">ระดับดาว</div>
         <div className="flex items-center">
           <Checkbox className="float-left mr-2" />
@@ -111,7 +111,7 @@ const HotelsFilter = () => {
           </div>
         </div>
       </div>
-      <div className="grid gap-1">
+      <div className="grid gap-1 col-span-6 xl:col-span-12">
         <div className="text-xl mt-4">ประเภทที่พัก</div>
         { hotelsType.map((v, i) => (
           <div
@@ -123,7 +123,7 @@ const HotelsFilter = () => {
           </div>
         )) }
       </div>
-      <div className="grid gap-1">
+      <div className="grid gap-1 col-span-6 xl:col-span-12">
         <div className="text-xl mt-4">ประเภทเตียง</div>
         { bedsType.map((v, i) => (
           <div
@@ -135,7 +135,7 @@ const HotelsFilter = () => {
           </div>
         )) }
       </div>
-      <div className="grid gap-1">
+      <div className="grid gap-1 col-span-6 xl:col-span-12">
         <div className="text-xl mt-4">สิ่งอำนวยความสะดวก/บริการ</div>
         { facilities.map((v, i, row) => {
           return (<div

@@ -10,7 +10,7 @@ const nextConfig = {
     // deviceSizes: [40, 68, 70, 120, 156, 180, 275, 422]
   },
   compiler: {
-    removeConsole: true,
+    // removeConsole: true,
     reactRemoveProperties: true,
     swcMinify: true
   }

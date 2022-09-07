@@ -1,5 +1,6 @@
 import { Button, ButtonOutline } from '@components/misc/button'
 import { Controller, FormProvider, useForm } from 'react-hook-form'
+import { getCheckIn, getCheckOut, toISOLocal } from '@utils/func'
 
 import { AppUrl } from '@utils/app.config'
 import { HotelSearchInput } from './hotel.search.input'
@@ -17,8 +18,8 @@ const HotelSearch: React.FC = () => {
       adults: 1,
       children: 0,
       rooms: 1,
-      checkIn: new Date(),
-      checkOut: new Date(),
+      checkIn: getCheckIn(new Date()),
+      checkOut: getCheckOut(new Date(), new Date()),
     },
   })
   const router = useRouter()
@@ -30,8 +31,8 @@ const HotelSearch: React.FC = () => {
         adults: data.adults,
         children: data.children,
         rooms: data.rooms,
-        checkIn: data.checkIn.toISOString(),
-        checkOut: data.checkOut.toISOString(),
+        checkIn: toISOLocal(data.checkIn).slice(0, 10),
+        checkOut: toISOLocal(data.checkOut).slice(0, 10),
       },
     })
   }

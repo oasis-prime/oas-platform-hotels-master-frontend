@@ -18,6 +18,37 @@ export enum LanguageEnum {
   TAI = "TAI",
 }
 
+export interface AvailabilityFilterInput {
+  maxHotels?: number | null;
+  maxRooms?: number | null;
+  minRate?: number | null;
+  maxRate?: number | null;
+  maxRatesPerRoom?: number | null;
+}
+
+export interface AvailabilityHotelInput {
+  hotel: number[];
+}
+
+export interface AvailabilityInput {
+  hotels: AvailabilityHotelInput;
+  stay: AvailabilityStayInput;
+  occupancies: AvailabilityOccupanciesInput[];
+  language: LanguageEnum;
+  filter?: AvailabilityFilterInput | null;
+}
+
+export interface AvailabilityOccupanciesInput {
+  rooms: number;
+  adults: number;
+  children: number;
+}
+
+export interface AvailabilityStayInput {
+  checkIn: string;
+  checkOut: string;
+}
+
 export interface FacilitiesInput {
   groupCode: number;
   offset: number;
@@ -36,7 +67,6 @@ export interface HotelsInput {
   geolocation?: HotelsGeolocationInput | null;
   keywords?: HotelsKeywordsInput | null;
   id?: number | null;
-  IsPrice?: boolean | null;
   occupancies?: HotelsOccupanciesInput | null;
 }
 
