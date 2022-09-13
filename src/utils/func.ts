@@ -60,7 +60,11 @@ function toISOLocal(d: Date) {
          sign + z(off / 60 | 0) + ':' + z(off % 60)
 }
 
+function makeSlug(str: string) {
+  str = str.toLowerCase()
+  str = str.replace(/[^a-z0-9]+/g, '-')
+  str = str.replace(/^-+|-+$/g, '')
+  return str
+}
 
-
-
-export { parseDate, toISOLocal, getCheckIn, getCheckOut, getCalculatorDays }
+export { parseDate, toISOLocal, getCheckIn, getCheckOut, getCalculatorDays, makeSlug }

@@ -1,3 +1,4 @@
+import { getCalculatorDays, makeSlug, toISOLocal } from '@utils/func'
 import { useEffect, useState } from 'react'
 
 import { AppHotelbeds } from '@utils/app.config'
@@ -7,7 +8,6 @@ import { HotelSearch_getHotels_hotels } from '@graphql/services/__generated__/Ho
 import { IHotelsSearch } from '@model/hotel-search'
 import Image from 'next/image'
 import classNames from 'classnames'
-import { getCalculatorDays } from '@utils/func'
 import { useFormContext } from 'react-hook-form'
 import { useRouter } from 'next/router'
 
@@ -42,7 +42,19 @@ const HotelCardMain = (prop: IHotelCardMain) => {
   const router = useRouter()
 
   const handleOnClick = () => {
-    router.push('TEST-SLUG/hotel')
+    router.push(`${makeSlug(prop.h.hotelName || '')}/hotel`, {
+      pathname: `${makeSlug(prop.h.hotelName || '')}/hotel`,
+      query: {
+        code: prop.h.code,
+        type: prop.h.type,
+        name: getValues('name'),
+        adults: getValues('adults'),
+        children: getValues('children'),
+        rooms: getValues('rooms'),
+        checkIn: toISOLocal(getValues('checkIn')).slice(0, 10),
+        checkOut: toISOLocal(getValues('checkOut')).slice(0, 10),
+      },
+    })
   }
 
   useEffect(() => {

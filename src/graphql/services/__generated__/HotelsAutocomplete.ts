@@ -10,7 +10,7 @@ import { HotelsInput, LanguageEnum } from "./../../../../__generated__/globalTyp
 // ====================================================
 
 export interface HotelsAutocomplete_getHotels_hotels {
-  __typename: "Hotels";
+  __typename: "Hotel";
   hotelName: string | null;
   language: LanguageEnum;
   code: number | null;

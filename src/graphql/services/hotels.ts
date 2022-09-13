@@ -3,10 +3,142 @@ import {
   HotelsAutocomplete,
   HotelsAutocompleteVariables,
 } from './__generated__/HotelsAutocomplete'
+import { HotelsSearch, HotelsSearchVariables } from './__generated__/HotelsSearch'
 import { gql, useLazyQuery } from '@apollo/client'
 
 const HOTEL_SEARCH = gql`
   query HotelSearch(
+    $hotelImagesInput: ImagesInput
+    $hotelInterestPointsInput: HotelInterestPointsInput
+    $hotelIssuesInput: HotelIssuesInput
+    $hotelFacilitiesInput: FacilitiesInput
+    $staysInput: StaysInput
+    $roomFacilitiesInput: FacilitiesInput
+    $roomImages: ImagesInput
+    $hotelRoomsInput: HotelRoomsInput
+    $hotelPhonesInput: HotelPhonesInput
+    $hotelInput: HotelInput!
+  ) {
+    getHotel(input: $hotelInput) {
+      hotelName
+      language
+      code
+      type
+      countryCode
+      stateCode
+      destinationCode
+      zoneCode
+      categoryCode
+      categoryGroupCode
+      chainCode
+      accommodationTypeCode
+      postalCode
+      email
+      web
+      lastUpdate
+      S2C
+      ranking
+      images(input: $hotelImagesInput) {
+        imageTypeCode
+        path
+        order
+        visualOrder
+      }
+      interestPoints(input: $hotelInterestPointsInput) {
+        facilityCode
+        facilityGroupCode
+        order
+        poiName
+        distance
+      }
+      issues(input: $hotelIssuesInput) {
+        issueCode
+        issueType
+        dateFrom
+        dateTo
+        order
+        alternative
+      }
+      facilities(input: $hotelFacilitiesInput) {
+        facilityName
+        facilityCode
+        facilityGroupName
+        facilityGroupCode
+        order
+        number
+        voucher
+      }
+      rooms(input: $hotelRoomsInput) {
+        hotelCode
+        hotelType
+        roomCode
+        isParentRoom
+        minPax
+        maxPax
+        maxAdults
+        maxChildren
+        minAdults
+        roomType
+        characteristicCode
+        roomStays(input: $staysInput) {
+          stayType
+          order
+          description
+          roomStayFacilities {
+            facilityName
+            facilityCode
+            facilityGroupName
+            facilityGroupCode
+            number
+          }
+        }
+        roomFacilities(input: $roomFacilitiesInput) {
+          facilityName
+          facilityCode
+          facilityGroupName
+          facilityGroupCode
+          indLogic
+          number
+          voucher
+        }
+        roomImages(input: $roomImages) {
+          imageTypeCode
+          path
+          order
+          visualOrder
+        }
+      }
+      phones(input: $hotelPhonesInput) {
+        phoneNumber
+        phoneType
+      }
+      city {
+        content
+      }
+      address {
+        content
+        street
+        number
+      }
+      amenityCodes
+      segmentCodes
+      boardCodes
+      coordinates {
+        longitude
+        latitude
+      }
+      description {
+        content
+      }
+      name {
+        content
+      }
+    }
+  }
+`
+
+const HOTELS_SEARCH = gql`
+  query HotelsSearch(
     $imagesInput: ImagesInput
     $facilitiesInput: FacilitiesInput
     $hotelsInput: HotelsInput!
@@ -101,12 +233,15 @@ const HOTELS_AUTOCOMPLETE = gql`
     }
   }
 `
+const useHotel = () =>
+  useLazyQuery<HotelSearch, HotelSearchVariables>(HOTEL_SEARCH)
 
 const useHotels = () =>
-  useLazyQuery<HotelSearch, HotelSearchVariables>(HOTEL_SEARCH)
+  useLazyQuery<HotelsSearch, HotelsSearchVariables>(HOTELS_SEARCH)
+
 const useHotelsAutocomplete = () =>
   useLazyQuery<HotelsAutocomplete, HotelsAutocompleteVariables>(
     HOTELS_AUTOCOMPLETE,
   )
 
-export { useHotels, useHotelsAutocomplete }
+export { useHotel, useHotels, useHotelsAutocomplete }

@@ -55,6 +55,31 @@ export interface FacilitiesInput {
   limit: number;
 }
 
+export interface HotelInput {
+  language: LanguageEnum;
+  id: number;
+}
+
+export interface HotelInterestPointsInput {
+  offset: number;
+  limit: number;
+}
+
+export interface HotelIssuesInput {
+  offset: number;
+  limit: number;
+}
+
+export interface HotelPhonesInput {
+  offset: number;
+  limit: number;
+}
+
+export interface HotelRoomsInput {
+  offset: number;
+  limit: number;
+}
+
 export interface HotelsGeolocationInput {
   latitude: number;
   longitude: number;
@@ -66,7 +91,6 @@ export interface HotelsInput {
   pagination: PaginationInput;
   geolocation?: HotelsGeolocationInput | null;
   keywords?: HotelsKeywordsInput | null;
-  id?: number | null;
   occupancies?: HotelsOccupanciesInput | null;
 }
 
@@ -90,6 +114,11 @@ export interface PaginationInput {
   page: number;
   pageSize: number;
   orderBy?: string | null;
+}
+
+export interface StaysInput {
+  offset: number;
+  limit: number;
 }
 
 //==============================================================

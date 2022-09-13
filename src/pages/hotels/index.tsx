@@ -32,7 +32,6 @@ const HotelsPage: NextPage = () => {
   }
 
   const handlerQuery = () => {
-    console.log('handlerQueryA')
     const query = getValues()
 
     hotelsQuery({

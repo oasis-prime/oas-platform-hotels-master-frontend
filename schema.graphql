@@ -186,27 +186,7 @@ input GetPlacesInput {
   query: String
 }
 
-input HotelInterestPointsInput {
-  offset: Int!
-  limit: Int!
-}
-
-input HotelIssuesInput {
-  offset: Int!
-  limit: Int!
-}
-
-input HotelPhonesInput {
-  offset: Int!
-  limit: Int!
-}
-
-input HotelRoomsInput {
-  offset: Int!
-  limit: Int!
-}
-
-type Hotels {
+type Hotel {
   hotelName: String
   language: LanguageEnum!
   code: Int
@@ -241,8 +221,33 @@ type Hotels {
   name: Name
 }
 
+input HotelInput {
+  language: LanguageEnum!
+  id: Int!
+}
+
+input HotelInterestPointsInput {
+  offset: Int!
+  limit: Int!
+}
+
+input HotelIssuesInput {
+  offset: Int!
+  limit: Int!
+}
+
+input HotelPhonesInput {
+  offset: Int!
+  limit: Int!
+}
+
+input HotelRoomsInput {
+  offset: Int!
+  limit: Int!
+}
+
 type HotelsData {
-  hotels: [Hotels!]!
+  hotels: [Hotel!]!
   pagination: PaginationType!
 }
 
@@ -257,7 +262,6 @@ input HotelsInput {
   pagination: PaginationInput!
   geolocation: HotelsGeolocationInput
   keywords: HotelsKeywordsInput
-  id: Int
   occupancies: HotelsOccupanciesInput
 }
 
@@ -317,6 +321,18 @@ enum LanguageEnum {
   ENG
 }
 
+type MemberVerifyEmailData {
+  message: String!
+}
+
+input MemberVerifyEmailInput {
+  email: String
+}
+
+type Mutation {
+  memberVerify(input: MemberVerifyEmailInput!): MemberVerifyEmailData!
+}
+
 type Name {
   content: String
 }
@@ -351,6 +367,7 @@ type Query {
   getPlaces(input: GetPlacesInput!): PlacesData!
   getAvailability(input: AvailabilityInput!): AvailabilityData!
   getHotels(input: HotelsInput!): HotelsData!
+  getHotel(input: HotelInput!): Hotel!
   _service: _Service!
 }
 
