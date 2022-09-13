@@ -223,7 +223,7 @@ type Hotel {
 
 input HotelInput {
   language: LanguageEnum!
-  id: Int!
+  code: Int!
 }
 
 input HotelInterestPointsInput {

@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "i18nexus pull && next dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "download-schema": "apollo client:download-schema --endpoint=http://localhost:8080/graphql schema.graphql",
+    "download-schema": "apollo client:download-schema --endpoint=http://localhost:9001/graphql schema.graphql",
     "codegen": "apollo codegen:generate --localSchemaFile=schema.graphql --target=typescript --tagName=gql"
   },
   "dependencies": {
