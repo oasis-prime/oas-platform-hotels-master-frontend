@@ -1,7 +1,9 @@
 import { Button, ButtonOutline } from '@components/misc/button'
-import { FormProvider, useForm } from 'react-hook-form'
+import { Controller, FormProvider, useForm } from 'react-hook-form'
+import { getCheckIn, getCheckOut, toISOLocal } from '@utils/func'
 
 import { AppUrl } from '@utils/app.config'
+import { HotelSearchInput } from './hotel.search.input'
 import { IHotelsSearch } from '@model/hotel-search'
 import { MainDatepicker } from '@components/misc/datepicker/main.datepicker'
 import { OccupanciesSearch } from './occupancies.search'
@@ -16,6 +18,8 @@ const HotelSearch: React.FC = () => {
       adults: 1,
       children: 0,
       rooms: 1,
+      checkIn: getCheckIn(new Date()),
+      checkOut: getCheckOut(new Date(), new Date()),
     },
   })
   const router = useRouter()
@@ -24,6 +28,11 @@ const HotelSearch: React.FC = () => {
       pathname: AppUrl.hotels,
       query: {
         name: data.name,
+        adults: data.adults,
+        children: data.children,
+        rooms: data.rooms,
+        checkIn: toISOLocal(data.checkIn).slice(0, 10),
+        checkOut: toISOLocal(data.checkOut).slice(0, 10),
       },
     })
   }
@@ -36,7 +45,7 @@ const HotelSearch: React.FC = () => {
             <p>ค้นหาโรงแรมในประเทศ/ต่างประเทศ</p>
           </div>
           <div className="col-span-4">
-            <TextField placeholder="สถานที่, โรงแรม, เมือง, ประเทศ" />
+            <HotelSearchInput />
           </div>
           <div className="col-start-1 col-span-2">
             <p>เช็คอิน</p>
@@ -45,10 +54,29 @@ const HotelSearch: React.FC = () => {
             <p>เช็คเอ้าท์</p>
           </div>
           <div className="col-start-1 col-span-2">
-            <MainDatepicker />
+            <Controller
+              render={({ field: { onChange, value }}) => (
+                <MainDatepicker
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+              name="checkIn"
+              control={methods.control}
+            />
+
           </div>
           <div className="col-start-3 col-span-2">
-            <MainDatepicker />
+            <Controller
+              render={({ field: { onChange, value }}) => (
+                <MainDatepicker
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+              name="checkOut"
+              control={methods.control}
+            />
           </div>
           <div className="col-span-4">
             <p>จำนวนผู้เข้าพักและห้องพัก</p>
@@ -60,12 +88,15 @@ const HotelSearch: React.FC = () => {
             <Button
               type="submit"
               className={classNames(
-                'w-full h-full bg-transparent border rounded font-semibold outline-none',
+                'w-full lg:h-full min-h-[4rem] bg-transparent border rounded font-semibold outline-none',
                 'placeholder-gray-400',
                 'focus:border-primary hover:border-primary hover:border-2',
+                'whitespace-pre',
               )}
             >
-              ค้นหาโรงแรม
+              <p className="whitespace-pre-wrap">
+                ค้นหาโรงแรม
+              </p>
             </Button>
           </div>
         </div>

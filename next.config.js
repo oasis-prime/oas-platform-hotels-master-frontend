@@ -5,7 +5,14 @@ const nextConfig = {
   i18n,
   reactStrictMode: true,
   images: {
-    domains: ['photos.hotelbeds.com']
+    domains: ['photos.hotelbeds.com'],
+    minimumCacheTTL: 60
+    // deviceSizes: [40, 68, 70, 120, 156, 180, 275, 422]
+  },
+  compiler: {
+    // removeConsole: true,
+    reactRemoveProperties: true,
+    swcMinify: true
   }
 }
 

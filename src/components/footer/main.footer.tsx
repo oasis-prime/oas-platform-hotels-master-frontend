@@ -6,18 +6,18 @@ const MainFooter: React.FC = () => {
   const { t } = useTranslation()
 
   return (
-    <div className="bg-primary  pt-6 pb-24">
+    <div className="bg-primary p-6 pb-24">
       <div
         className={classNames(
           'max-w-screen-xl w-full mx-auto',
           'grid gap-4',
-          'grid-rows-1 grid-flow-col grid-cols-12',
+          'grid-rows-1 md:grid-flow-col grid-cols-12',
         )}
       >
         <div
           className={classNames(
             'row-span-2 flex flex-col items-start',
-            'col-span-4',
+            'col-span-12 md:col-span-4',
           )}
         >
           <LogoVPN />
@@ -25,7 +25,7 @@ const MainFooter: React.FC = () => {
         <div
           className={classNames(
             'row-span-2 flex flex-col',
-            'col-span-2',
+            'col-span-12 md:col-span-2',
           )}
         >
           <p className="text-white font-medium text-xl">
@@ -49,7 +49,7 @@ const MainFooter: React.FC = () => {
         <div
           className={classNames(
             'row-span-2 flex flex-col',
-            'col-span-2',
+            'col-span-12 md:col-span-2',
           )}
         >
           <p className="text-white font-medium text-xl">
@@ -69,7 +69,7 @@ const MainFooter: React.FC = () => {
         <div
           className={classNames(
             'row-span-2 flex flex-col',
-            'col-span-2',
+            'col-span-12 md:col-span-2',
           )}
         >
           <p className="text-white font-medium text-xl">
@@ -89,7 +89,7 @@ const MainFooter: React.FC = () => {
         <div
           className={classNames(
             'row-span-2 flex flex-col',
-            'col-span-2',
+            'col-span-12 md:col-span-2',
             // 'grid justify-end text-right',
           )}
         >
@@ -116,8 +116,11 @@ const MainFooter: React.FC = () => {
 
 const LogoVPN: React.FC = () => {
   return (
-    <div className="relative h-20 w-full">
+    <div className="relative h-48 w-full">
       <Image
+        unoptimized
+        placeholder="blur"
+        blurDataURL="/images/main/long-logo.png"
         src="/images/main/long-logo.png"
         layout="fill"
         objectFit="contain"

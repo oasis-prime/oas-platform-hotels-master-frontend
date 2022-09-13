@@ -1,1 +1,1 @@
-export * from "./main.carousel";
+export * from './main.carousel'

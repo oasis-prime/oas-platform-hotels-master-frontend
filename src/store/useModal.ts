@@ -14,16 +14,16 @@ const useModal = create<modalState>((set) => ({
     set((state) => ({
       ...state,
       signUp: false,
-      signIn: show
+      signIn: show,
     }))
   },
   setSignUp: (show: boolean) => {
     set((state) => ({
       ...state,
       signUp: show,
-      signIn: false
+      signIn: false,
     }))
-  }
+  },
 }))
 
 export default useModal

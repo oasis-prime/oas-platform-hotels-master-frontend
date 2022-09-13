@@ -10,7 +10,7 @@ const SignupModal: React.FC = () => {
   const { signUp, setSignUp } = useModal()
   return (
     <>
-      {signUp ? (
+      { signUp ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
@@ -23,10 +23,25 @@ const SignupModal: React.FC = () => {
                     stroke="currentColor"
                     strokeWidth="2"
                     strokeLinecap="round"
-                    strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="15" y1="9" x2="9" y2="15" />
-                    <line x1="9" y1="9" x2="15" y2="15" />
+                    strokeLinejoin="round"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="10"
+                    />
+                    <line
+                      x1="15"
+                      y1="9"
+                      x2="9"
+                      y2="15"
+                    />
+                    <line
+                      x1="9"
+                      y1="9"
+                      x2="15"
+                      y2="15"
+                    />
                   </svg>
                 </ButtonIcons>
               </div>
@@ -35,10 +50,14 @@ const SignupModal: React.FC = () => {
                   className={classNames(
                     'grid grid-flow-row-dense p-6',
                     'md:grid-cols-2 sm:grid-cols-1',
-                    'gap-4'
-                  )}>
+                    'gap-4',
+                  )}
+                >
                   <div className="col-span-1 h-full relative w-full">
                     <Image
+                      unoptimized
+                      placeholder="blur"
+                      blurDataURL="/images/main/signin-image.jpeg"
                       src="/images/main/signin-image.jpeg"
                       layout="fill"
                       objectFit="cover"
@@ -71,7 +90,7 @@ const SignupModal: React.FC = () => {
                     <div className="mt-2">
                       <Checkbox className="float-left mr-2" />
                       <p className="">
-                        ท่านยอมรับ{' '}
+                        ท่านยอมรับ{ ' ' }
                         <span>ข้อกำหนดการใช้งานและนโยบายความเป็นส่วนตัว</span>
                         เพื่อดำเนินการ
                       </p>
@@ -86,7 +105,7 @@ const SignupModal: React.FC = () => {
           </div>
           <div className="opacity-60 fixed inset-0 z-40 bg-black"></div>
         </>
-      ) : null}
+      ) : null }
     </>
   )
 }

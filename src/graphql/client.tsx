@@ -13,7 +13,7 @@ export const apolloClientMain = new ApolloClient({
 const inMemoryCache = new InMemoryCache()
 export const apolloClientNonToken = new ApolloClient({
   // headers: {
-  //   AllowOrigins: '*'
+  //   AllowOrigins: '*',
   // },
   link: linkAuth,
   cache: inMemoryCache,

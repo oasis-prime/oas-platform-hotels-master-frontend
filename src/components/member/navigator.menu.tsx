@@ -1,5 +1,5 @@
 const NavigatorMenu: React.FC = () => {
-  return <></>;
-};
+  return <></>
+}
 
-export { NavigatorMenu };
+export { NavigatorMenu }

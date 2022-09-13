@@ -7,7 +7,7 @@ import {
   signOut as fSignOut,
   getAuth,
   onAuthStateChanged,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
 } from 'firebase/auth'
 import { getApps, initializeApp } from 'firebase/app'
 
@@ -37,7 +37,7 @@ type Props = {
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
   const auth = useAuthProvider()
-  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={auth}>{ children }</AuthContext.Provider>
 }
 const action = bindActionCreators(authSlice.actions, reduxStoreMain.dispatch)
 
@@ -88,6 +88,6 @@ const useAuthProvider: () => AppContextInterface = () => {
     signUp,
     signOut,
     sendPasswordResetEmail,
-    confirmPasswordReset
+    confirmPasswordReset,
   }
 }

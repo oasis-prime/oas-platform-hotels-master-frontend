@@ -1,1 +1,1 @@
-export * from "./main.footer";
+export * from './main.footer'

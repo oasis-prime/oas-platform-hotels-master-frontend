@@ -1,7 +1,6 @@
 import { FormEvent, useState } from 'react'
 
 import { Button } from '@components/misc/button'
-import { Element } from 'react-scroll'
 import Head from 'next/head'
 import Link from 'next/link'
 import type { NextPage } from 'next'
@@ -63,13 +62,6 @@ const Signup: NextPage = () => {
           href="/favicon.ico"
         />
       </Head>
-
-      <Element
-        name="signup"
-        className="element h-96"
-      >
-        test 1
-      </Element>
       <main className={'container'}>
         <h1 className={'text-3xl'}>Signup</h1>
         { /* <br /> */ }
@@ -91,7 +83,7 @@ const Signup: NextPage = () => {
           <Button
             type="submit"
             onClick={() => {
-              console.log('A')
+              //
             }}
           >
             Submit123

@@ -4,6 +4,7 @@ import '@styles/pentagon.css'
 
 import { SigninModal, SignupModal } from '@components/member'
 
+import { ApolloProviderWithJWT } from '@graphql/apollo'
 import type { AppProps } from 'next/app'
 import { AuthProvider } from '@auth/auth'
 import Head from 'next/head'
@@ -40,13 +41,15 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       </Head>
       <Provider store={reduxStoreMain}>
         <AuthProvider>
-          <Layout>
-            <>
-              <Component {...pageProps} />
-              <SigninModal />
-              <SignupModal />
-            </>
-          </Layout>
+          <ApolloProviderWithJWT>
+            <Layout>
+              <>
+                <Component {...pageProps} />
+                <SigninModal />
+                <SignupModal />
+              </>
+            </Layout>
+          </ApolloProviderWithJWT>
         </AuthProvider>
       </Provider>
     </>

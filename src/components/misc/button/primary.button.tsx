@@ -9,7 +9,7 @@ type ButtonPrimaryProps = {
 
 const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
   children,
-  addClass
+  addClass,
 }) => {
   return (
     <button
@@ -18,9 +18,10 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
         'text-white font-semibold',
         'bg-primary',
         'hover:shadow-primary transition-all outline-none',
-        addClass
-      )}>
-      {children}
+        addClass,
+      )}
+    >
+      { children }
     </button>
   )
 }
