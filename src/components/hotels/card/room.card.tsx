@@ -3,8 +3,14 @@ import { AdultsIcon, ChildrenIcon } from '@components/svg'
 import Image from 'next/image'
 import classNames from 'classnames'
 import { useRouter } from 'next/router'
+import { HotelSearch_getHotel_rooms } from '@graphql/services/__generated__/HotelSearch'
+import { AppHotelbeds } from '@utils/app.config'
 
-const HotelRoomCard = () => {
+type HotelRoomCardProps = {
+  data: HotelSearch_getHotel_rooms | null
+}
+
+const HotelRoomCard = (props: HotelRoomCardProps) => {
   const router = useRouter()
 
   const onHandle = () => {
@@ -16,7 +22,7 @@ const HotelRoomCard = () => {
 
       <div className="grid grid-flow-col grid-cols-12">
         <div className="col-span-10">
-          <div className="text-lg">พรีเมียร์ เตียงใหญ่ (Premiere Double Room)</div>
+          <div className="text-lg">{props.data?.roomCode}</div>
           <div className="grid grid-cols-10 items-stretch gap-4">
             <div className="col-span-2">ห้องพัก</div>
             <div className="col-span-4">สิทธิประโยชน์</div>
@@ -31,16 +37,22 @@ const HotelRoomCard = () => {
                     'overflow-hidden relative w-full',
                   )}
                 >
-                  <Image
-                    unoptimized
-                    placeholder="blur"
-                    blurDataURL="http://photos.hotelbeds.com/giata/13/137704/137704a_hb_a_003.jpg"
-                    src="http://photos.hotelbeds.com/giata/13/137704/137704a_hb_a_003.jpg"
-                    alt=""
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded-md"
-                  />
+                  {
+                    props.data?.roomImages?.map((v, i) => (
+                      <Image
+                        key={`${props.data?.roomCode}-room-images-${i}`}
+                        unoptimized
+                        placeholder="blur"
+                        blurDataURL={AppHotelbeds.standard + v?.path}
+                        src={AppHotelbeds.standard + v?.path}
+                        alt=""
+                        layout="fill"
+                        objectFit="cover"
+                        className="rounded-md"
+                      />
+                    ))
+                  }
+
                 </div>
               </div>
             </div>
@@ -57,13 +69,13 @@ const HotelRoomCard = () => {
                   <div className="w-8 h-8">
                     <AdultsIcon />
                   </div>
-                  <div>X 2</div>
+                  <div>X {props.data?.maxAdults}</div>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8">
                     <ChildrenIcon />
                   </div>
-                  <div>X 2</div>
+                  <div>X {props.data?.maxChildren}</div>
                 </div>
               </div>
             </div>

@@ -3,7 +3,7 @@ import { HotelDescriptionCard, HotelFacilitiesCard, HotelRoomCard } from '@compo
 import { getCheckIn, getCheckOut, parseDate, toISOLocal } from '@utils/func'
 import { useHotel, useHotels } from '@graphql/services/hotels'
 
-import { AppConfig } from '@utils/app.config'
+import { AppConfig, AppHotelbeds } from '@utils/app.config'
 import { IHotelsDetailSearch } from '@model/hotel-search'
 import Image from 'next/image'
 import { LanguageEnum } from '__generated__/globalTypes'
@@ -32,7 +32,7 @@ const HotelDescription: NextPage = () => {
     hotelQuery({
       variables: {
         hotelInput: {
-          id: query.code,
+          code: query.code,
           language: LanguageEnum.TAI,
         },
       },
@@ -98,7 +98,7 @@ const HotelDescription: NextPage = () => {
             <TopBarSearch />
           </div>
         </div>
-        { /* Bar */ }
+        { /* Bar */}
         <div>
           <nav className="rounded-md w-full">
             <ol className="list-reset flex max-w-screen-xl mx-auto">
@@ -112,10 +112,10 @@ const HotelDescription: NextPage = () => {
             </ol>
           </nav>
         </div>
-        { /* รูปภาพ */ }
+        { /* รูปภาพ */}
         <div>
           <div className="h-96 max-w-screen-xl mx-auto grid grid-cols-10 grid-rows-2 gap-2">
-            { [1, 2, 3, 4, 5, 6, 7].map((v, i, row) => (
+            {[1, 2, 3, 4, 5, 6, 7].map((v, i, row) => (
               <div
                 key={v}
                 className={classNames(
@@ -127,18 +127,18 @@ const HotelDescription: NextPage = () => {
                 <Image
                   unoptimized
                   placeholder="blur"
-                  blurDataURL="http://photos.hotelbeds.com/giata/13/137704/137704a_hb_a_003.jpg"
-                  src="http://photos.hotelbeds.com/giata/13/137704/137704a_hb_a_003.jpg"
+                  blurDataURL={AppHotelbeds.standard + hotelData?.getHotel.images?.[i]?.path || ''}
+                  src={AppHotelbeds.standard + hotelData?.getHotel.images?.[i]?.path || ''}
                   alt=""
                   layout="fill"
                   objectFit="cover"
                   className="rounded-md"
                 />
               </div>
-            )) }
+            ))}
           </div>
         </div>
-        { /* ลิงค์ */ }
+        { /* ลิงค์ */}
         <div className="h-14">
           <div className={classNames(
             'h-14 max-w-screen-xl mx-auto',
@@ -158,7 +158,7 @@ const HotelDescription: NextPage = () => {
             </div>
           </div>
         </div>
-        { /* ดีเทล */ }
+        { /* ดีเทล */}
         <div className="grid gap-2">
           <div className={classNames(
             'max-w-screen-xl mx-auto',
@@ -168,8 +168,8 @@ const HotelDescription: NextPage = () => {
           )}
           >
             <div className="col-span-9 grid gap-2">
-              <HotelDescriptionCard />
-              <HotelFacilitiesCard />
+              <HotelDescriptionCard data={hotelData?.getHotel} />
+              <HotelFacilitiesCard data={hotelData?.getHotel.facilities || []} />
             </div>
             <div className="col-span-3 grid gap-2">
               <div className="border border-gray-20 p-4 flex gap-4">
@@ -223,8 +223,12 @@ const HotelDescription: NextPage = () => {
                 <div>ห้องพัก 6 ประเภท | ข้อเสนอห้องพัก 17 ข้อเสนอ</div>
                 <div className="text-xs text-gray-300">ราคาไม่รวมภาษีและค่าธรรมเนียม</div>
               </div>
-              { /* <HotelCardEmpty /> */ }
-              <HotelRoomCard />
+              { /* <HotelCardEmpty /> */}
+              {hotelData?.getHotel.rooms?.map((v, i) => (
+                <HotelRoomCard
+                  key={`hotel-rooms-${i}`}
+                  data={v} />
+              ))}
             </div>
           </div>
         </div>

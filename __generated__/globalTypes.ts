@@ -57,7 +57,7 @@ export interface FacilitiesInput {
 
 export interface HotelInput {
   language: LanguageEnum;
-  id: number;
+  code: number;
 }
 
 export interface HotelInterestPointsInput {
