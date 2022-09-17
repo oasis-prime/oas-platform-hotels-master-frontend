@@ -8,11 +8,13 @@ const HotelFacilitiesCard: (props: HotelFacilities) => JSX.Element = (props: Hot
   return (
     <div className="border border-gray-200 p-4">
       <div className="text-2xl">สิ่งอำนวยความสะดวก</div>
-      { props.data && props.data.map((v, i) => (
-        <div key={`facility-name-${i}`}>
-          { v?.facilityName }
-        </div>
-      )) }
+      <div className="grid grid-cols-2">
+        { props.data && props.data.map((v, i) => (
+          <div key={`facility-name-${i}`}>
+            { v?.facilityName }
+          </div>
+        )) }
+      </div>
     </div>
   )
 }

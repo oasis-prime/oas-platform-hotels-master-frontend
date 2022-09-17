@@ -1,3 +1,4 @@
+import { HotelCategory } from './hotel.category'
 import { HotelSearch_getHotel } from '@graphql/services/__generated__/HotelSearch'
 import { useState } from 'react'
 
@@ -13,16 +14,10 @@ const HotelDescriptionCard: (props: IHotelsDetailSearchProps) => JSX.Element = (
     <div className="border border-gray-200 p-4">
       <div className="text-primary text-2xl">{ data?.hotelName }</div>
       <div className="text-xl">{ data?.hotelName }</div>
-      <div className="text-xl text-orange-400 gap-1 flex">
-        <i className="bi bi-star-fill"></i>
-        <i className="bi bi-star-fill"></i>
-        <i className="bi bi-star-fill"></i>
-        <i className="bi bi-star-fill"></i>
-        <i className="bi bi-star-fill"></i>
-      </div>
+      <HotelCategory categoryGroup={data?.categoryGroupCode} />
       <div className="flex gap-1 items-center">
         <i className="text-2xl bi bi-geo-alt"></i>
-        <div>Chiang Mai</div>
+        <div>{ data?.city?.content }</div>
       </div>
       <div className="">
         <p className={readMore ? '' : 'line-clamp-3'}>{ data?.description?.content }</p>

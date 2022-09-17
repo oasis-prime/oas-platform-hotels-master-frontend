@@ -6,7 +6,11 @@ import { TextFieldNumber } from '@components/misc/textField/number.main'
 import classNames from 'classnames'
 import { usePopper } from 'react-popper'
 
-const OccupanciesSearch = () => {
+type OccupanciesSearch = {
+  screen: 'main' | 'topbar'
+}
+
+const OccupanciesSearch = (prop: OccupanciesSearch) => {
   const { watch, control } = useFormContext<IHotelsSearch>()
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false)
@@ -42,8 +46,16 @@ const OccupanciesSearch = () => {
   }, [popperElement])
 
   return (
-    <div className="flex flex-wrap w-full">
-      <div className="relative inline-flex align-middle w-full">
+    <div className={classNames(
+      'flex flex-wrap w-full bg-white',
+      prop.screen === 'topbar' && 'h-full rounded-md',
+    )}
+    >
+      <div className={classNames(
+        'relative inline-flex align-middle w-full',
+        prop.screen === 'topbar' && 'h-full',
+      )}
+      >
         <button
           className={classNames(
             'w-full px-6 py-3',
@@ -51,6 +63,7 @@ const OccupanciesSearch = () => {
             'uppercase rounded shadow outline-none border border-gray-200',
             'hover:shadow-lg hover:border-primary hover:hover:border-2',
             'focus:outline-none',
+            prop.screen === 'topbar' && 'h-full rounded-md',
           )}
           style={{ transition: 'all .15s ease' }}
           type="button"
@@ -59,18 +72,31 @@ const OccupanciesSearch = () => {
             setDropdownPopoverShow(!dropdownPopoverShow)
           }}
         >
-          <p>
+          { prop.screen == 'main' ? (
+            <>
+              <p>
                 ผู้ใหญ่ { watch('adults') } คน
-            { watch('children') > 0 && `, เด็ก ${watch('children')}` }
-          </p>
-          <p>{ watch('rooms') } ห้องพัก</p>
+                { watch('children') > 0 && `, เด็ก ${watch('children')}` }
+              </p>
+              <p>{ watch('rooms') } ห้องพัก</p>
+            </>
+          ) : (
+            <>
+              <p>
+                ผู้ใหญ่ { watch('adults') } คน
+                { watch('children') > 0 && `, เด็ก ${watch('children')}` } ,
+                { watch('rooms') } ห้องพัก
+              </p>
+            </>
+          ) }
+
         </button>
         <div
           ref={popperElement}
         >
           <div
             className={classNames(
-              'z-50 float-left px-4 py-2 rounded shadow-lg mt-1 bg-white w-full',
+              'z-50 float-left px-4 py-2 rounded shadow-lg mt-1 bg-white',
               'divide-y divide-gray-200',
               'flex flex-col gap-2',
             )}

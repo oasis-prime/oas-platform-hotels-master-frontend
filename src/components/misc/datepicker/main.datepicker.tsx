@@ -3,16 +3,17 @@ import classNames from 'classnames'
 import { useState } from 'react'
 
 type MainDatepicker = {
+  className?: string | undefined
   onChange: (val: Date) => void
   value: Date
 }
 
-const MainDatepicker: React.FC<MainDatepicker> = ({ onChange, value }: MainDatepicker) => {
+const MainDatepicker: React.FC<MainDatepicker> = ({ onChange, value, className }: MainDatepicker) => {
   return (
     <>
       <DatePicker
         dateFormat={'dd/MM/yyyy'}
-        className={classNames(
+        className={className ? className : classNames(
           'w-full bg-transparent border p-3 rounded-lg',
           'font-semibold focus:border-free700 outline-none placeholder-gray-400',
           'border-gray-200',

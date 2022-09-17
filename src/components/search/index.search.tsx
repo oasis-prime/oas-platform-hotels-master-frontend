@@ -1,17 +1,18 @@
-import { Button, ButtonOutline } from '@components/misc/button'
 import { Controller, FormProvider, useForm } from 'react-hook-form'
 import { getCheckIn, getCheckOut, toISOLocal } from '@utils/func'
 
 import { AppUrl } from '@utils/app.config'
+import { Button } from '@components/misc/button'
 import { HotelSearchInput } from './hotel.search.input'
 import { IHotelsSearch } from '@model/hotel-search'
 import { MainDatepicker } from '@components/misc/datepicker/main.datepicker'
 import { OccupanciesSearch } from './occupancies.search'
-import { TextField } from '@components/misc/textField'
 import classNames from 'classnames'
 import { useRouter } from 'next/router'
 
 const HotelSearch: React.FC = () => {
+  const router = useRouter()
+
   const methods = useForm<IHotelsSearch>({
     defaultValues: {
       name: '',
@@ -22,7 +23,7 @@ const HotelSearch: React.FC = () => {
       checkOut: getCheckOut(new Date(), new Date()),
     },
   })
-  const router = useRouter()
+
   const onSubmit = (data: IHotelsSearch) => {
     router.push({
       pathname: AppUrl.hotels,
@@ -40,7 +41,10 @@ const HotelSearch: React.FC = () => {
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <div className="grid grid-cols-4 gap-4 border-solid border-2 rounded-md shadow-md px-6 py-8">
+        <div className={classNames(
+          'grid grid-cols-4 gap-4 border-solid border-2 rounded-md shadow-md px-6 py-8',
+        )}
+        >
           <div className="col-span-4">
             <p>ค้นหาโรงแรมในประเทศ/ต่างประเทศ</p>
           </div>
@@ -82,7 +86,7 @@ const HotelSearch: React.FC = () => {
             <p>จำนวนผู้เข้าพักและห้องพัก</p>
           </div>
           <div className="col-start-1 lg:col-span-3 col-span-4">
-            <OccupanciesSearch />
+            <OccupanciesSearch screen="main" />
           </div>
           <div className="lg:col-start-4 lg:col-span-1 col-span-4">
             <Button
