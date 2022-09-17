@@ -53,11 +53,12 @@ export interface FacilitiesInput {
   groupCode: number;
   offset: number;
   limit: number;
+  language: LanguageEnum;
 }
 
 export interface HotelInput {
   language: LanguageEnum;
-  id: number;
+  code: number;
 }
 
 export interface HotelInterestPointsInput {
@@ -76,8 +77,10 @@ export interface HotelPhonesInput {
 }
 
 export interface HotelRoomsInput {
-  offset: number;
-  limit: number;
+  roomCode?: string[] | null;
+  offset?: number | null;
+  limit?: number | null;
+  language: LanguageEnum;
 }
 
 export interface HotelsGeolocationInput {

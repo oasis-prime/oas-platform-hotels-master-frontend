@@ -180,6 +180,7 @@ input FacilitiesInput {
   groupCode: Int!
   offset: Int!
   limit: Int!
+  language: LanguageEnum!
 }
 
 input GetPlacesInput {
@@ -223,7 +224,7 @@ type Hotel {
 
 input HotelInput {
   language: LanguageEnum!
-  id: Int!
+  code: Int!
 }
 
 input HotelInterestPointsInput {
@@ -242,8 +243,10 @@ input HotelPhonesInput {
 }
 
 input HotelRoomsInput {
-  offset: Int!
-  limit: Int!
+  roomCode: [String!]
+  offset: Int
+  limit: Int
+  language: LanguageEnum!
 }
 
 type HotelsData {

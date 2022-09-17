@@ -1,34 +1,32 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-import { User } from 'firebase/auth'
-
-type IAuthInitialState = {
-  user: User | null;
+type IBookingInitialState = {
+  user: string | null;
   loading: boolean;
 };
 
-const authInitialState = {
+const bookingInitialState: IBookingInitialState = {
   user: null,
   loading: false,
 }
 
-type ISetUser = PayloadAction<{ user: User | null }>;
+type ISetBooking = PayloadAction<{ user: string | null }>;
 type ISetLoading = PayloadAction<{ loading: boolean }>;
 
-const authSlice = createSlice({
-  name: 'auth',
-  initialState: authInitialState,
+const bookingSlice = createSlice({
+  name: 'booking',
+  initialState: bookingInitialState,
   reducers: {
-    setUser(state, action: ISetUser) {
+    setUser(state, action: ISetBooking) {
       return Object.assign({}, state, { user: action.payload.user })
     },
     setLoading(state, action: ISetLoading) {
       return Object.assign({}, state, { loading: action.payload.loading })
     },
     reset() {
-      return Object.assign({}, authInitialState)
+      return Object.assign({}, bookingInitialState)
     },
   },
 })
 
-export { authSlice }
+export { bookingSlice }

@@ -16,11 +16,16 @@ const getCheckOut = (checkout: Date, checkin: Date) => {
 }
 
 const getCheckIn = (checkin: Date) => {
-  const nowDate = new Date()
-  if (checkin <= nowDate) {
-    nowDate.setDate(nowDate.getDate())
-    return nowDate
-  }
+  // const nowDate = new Date()
+
+  // if (checkin < nowDate) {
+  //   nowDate.setHours(0)
+  //   nowDate.setMilliseconds(0)
+  //   nowDate.setMinutes(0)
+  //   nowDate.setSeconds(0)
+  //   return nowDate
+  // }
+
 
   return checkin
 }
@@ -30,7 +35,7 @@ const getCalculatorDays = (checkout: Date, checkin: Date) => {
 
   // To calculate the no. of days between two dates
   const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24)
-
+  console.log('count: %s', checkin)
   return Difference_In_Days.toFixed()
 }
 

@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react'
 import { AppHotelbeds } from '@utils/app.config'
 import { AvailabilitySearch_getAvailability_availability } from '@graphql/services/__generated__/AvailabilitySearch'
 import { Button } from '@components/misc/button'
-import { HotelSearch_getHotels_hotels } from '@graphql/services/__generated__/HotelSearch'
+import { HotelCategory } from './hotel.category'
+import { HotelsSearch_getHotels_hotels } from '@graphql/services/__generated__/HotelsSearch'
 import { IHotelsSearch } from '@model/hotel-search'
 import Image from 'next/image'
 import classNames from 'classnames'
@@ -28,13 +29,13 @@ import { useRouter } from 'next/router'
 // ]
 
 type IHotelCardMain = {
-  readonly h: HotelSearch_getHotels_hotels
+  readonly h: HotelsSearch_getHotels_hotels
   readonly a?: AvailabilitySearch_getAvailability_availability
   readonly aLoading: boolean
 }
 
 const HotelCardMain = (prop: IHotelCardMain) => {
-  const { getValues } = useFormContext<IHotelsSearch>()
+  const { getValues, watch } = useFormContext<IHotelsSearch>()
 
   const [numberOfDays, setNumberOfDays] = useState('0')
   // const [hotelFacilities, setHotelFacilities] = useState(DEFAULT_HOTEL_FACILITIES)
@@ -42,17 +43,18 @@ const HotelCardMain = (prop: IHotelCardMain) => {
   const router = useRouter()
 
   const handleOnClick = () => {
-    router.push(`${makeSlug(prop.h.hotelName || '')}/hotel`, {
+    const data = watch()
+    router.push({
       pathname: `${makeSlug(prop.h.hotelName || '')}/hotel`,
       query: {
         code: prop.h.code,
         type: prop.h.type,
-        name: getValues('name'),
-        adults: getValues('adults'),
-        children: getValues('children'),
-        rooms: getValues('rooms'),
-        checkIn: toISOLocal(getValues('checkIn')).slice(0, 10),
-        checkOut: toISOLocal(getValues('checkOut')).slice(0, 10),
+        name: data.name,
+        adults: data.adults,
+        children: data.children,
+        rooms: data.rooms,
+        checkIn: toISOLocal(data.checkIn).slice(0, 10),
+        checkOut: toISOLocal(data.checkOut).slice(0, 10),
       },
     })
   }
@@ -124,16 +126,10 @@ const HotelCardMain = (prop: IHotelCardMain) => {
         <div className="col-span-12 md:col-span-5 grid justify-between p-2">
           <div>
             <div className="text-primary text-xl">{ prop.h.hotelName }</div>
-            <div className="text-2xl text-orange-400 gap-1 flex">
-              <i className="bi bi-star-fill"></i>
-              <i className="bi bi-star-fill"></i>
-              <i className="bi bi-star-fill"></i>
-              <i className="bi bi-star-fill"></i>
-              <i className="bi bi-star-fill"></i>
-            </div>
+            <HotelCategory categoryGroup={prop.h.categoryGroupCode} />
             <div className="flex gap-1 items-center">
               <i className="text-2xl bi bi-geo-alt"></i>
-              <div>Chiang Mai</div>
+              <div>{ prop.h.city?.content }</div>
             </div>
             <div className="flex flex-wrap gap-2">
               { [1, 2, 3, 4]?.map((v, i, r) => {
@@ -153,7 +149,7 @@ const HotelCardMain = (prop: IHotelCardMain) => {
             </div>
           </div>
           <div className=" flex flex-wrap gap-2">
-            <div>จำนวนเตียง</div>
+            <div>{ prop.h.address?.content }, { prop.h.postalCode }</div>
           </div>
         </div>
         <div className="col-span-12 md:col-span-3">

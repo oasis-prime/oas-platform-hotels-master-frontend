@@ -1,40 +1,142 @@
+import { Controller, useFormContext } from 'react-hook-form'
+import { IHotelsDetailSearch, IHotelsSearch } from '@model/hotel-search'
+
+import { AppUrl } from '@utils/app.config'
 import { Button } from '@components/misc/button'
+import { MainDatepicker } from '@components/misc/datepicker/main.datepicker'
+import { OccupanciesSearch } from './occupancies.search'
 import { TextField } from '@components/misc/textField'
 import classNames from 'classnames'
+import { toISOLocal } from '@utils/func'
+import { useRouter } from 'next/router'
 
-const TopBarSearch: React.FC = () => {
+type TopBarSearch = {
+  screen: 'detail' | 'search'
+}
+
+const TopBarSearch = (props: TopBarSearch) => {
+  const router = useRouter()
+
+  const { control, handleSubmit } = useFormContext<IHotelsDetailSearch>()
+
+  const onSubmit = (data: IHotelsDetailSearch) => {
+    let query = {}
+    if (props.screen === 'search') {
+      query = {
+        name: data.name,
+        adults: data.adults,
+        children: data.children,
+        rooms: data.rooms,
+        checkIn: toISOLocal(data.checkIn).slice(0, 10),
+        checkOut: toISOLocal(data.checkOut).slice(0, 10),
+      }
+    } else {
+      query = {
+        code: data.code,
+        adults: data.adults,
+        children: data.children,
+        rooms: data.rooms,
+        checkIn: toISOLocal(data.checkIn).slice(0, 10),
+        checkOut: toISOLocal(data.checkOut).slice(0, 10),
+      }
+    }
+
+
+    router.push({
+      pathname: props.screen === 'search' ? AppUrl.hotels : `/${router.query.slug}/hotel`,
+      query: query,
+    })
+  }
+
   return (
-    <div className="h-16 grid grid-rows-9 gap-2 grid-flow-col content-center">
-      <div className="">
-        <TextField placeholder="สถานที่, โรงแรม, เมือง, ประเทศ" />
-      </div>
-
-      <div className="flex flex-row">
-        <TextField className={classNames(
-          'w-full bg-white border p-3 rounded-l-lg font-semibold border-gray-200 focus:border-gray-400 outline-none placeholder-gray-400',
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className={classNames(
+        'grid grid-cols-12 gap-2 content-center items-center',
+        'xl:grid-flow-col',
+      )}
+      >
+        <div className={classNames(
+          'col-span-12',
+          // 'xs:col-span-6',
+          'md:col-span-6',
         )}
-        />
-        <TextField className={classNames(
-          'w-full bg-white border p-3 rounded-r-lg font-semibold border-gray-200 focus:border-gray-400 outline-none placeholder-gray-400',
-        )}
-        />
-      </div>
-      <div className="">
-        <TextField />
-      </div>
-      <div>
-        <Button
-          type="submit"
-          className={classNames(
-            'w-full h-full bg-secondary border rounded font-semibold outline-none',
-            'placeholder-gray-400',
-            'transition ease-in-out delay-150 hover:scale-105 duration-300',
-          )}
         >
+          <Controller
+            render={({ field: { onChange, value }}) => (
+              <TextField
+                placeholder="สถานที่, โรงแรม, เมือง, ประเทศ"
+                value={value}
+                onChange={onChange}
+              />
+            )}
+            name="name"
+            control={control}
+          />
+
+        </div>
+
+        <div className={classNames(
+          'col-span-12',
+          // 'xs:col-span-6',
+          'md:col-span-6',
+        )}
+        >
+          <div className="flex flex-row">
+            <Controller
+              render={({ field: { onChange, value }}) => (
+                <MainDatepicker
+                  className={classNames(
+                    'w-full bg-white border p-3 rounded-l-lg font-semibold border-gray-200 focus:border-gray-400 outline-none placeholder-gray-400',
+                  )}
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+              name="checkIn"
+              control={control}
+            />
+            <Controller
+              render={({ field: { onChange, value }}) => (
+                <MainDatepicker
+                  className={classNames(
+                    'w-full bg-white border p-3 rounded-r-lg font-semibold border-gray-200 focus:border-gray-400 outline-none placeholder-gray-400',
+                  )}
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+              name="checkOut"
+              control={control}
+            />
+          </div>
+        </div>
+        <div className={classNames(
+          'col-span-12',
+          // 'xs:col-span-6',
+          'md:col-span-6',
+        )}
+        >
+          <OccupanciesSearch screen="topbar" />
+        </div>
+        <div className={classNames(
+          'col-span-12 h-full',
+          'md:col-span-6',
+        )}
+        >
+          <Button
+            type="submit"
+            className={classNames(
+              'w-full h-full bg-secondary border rounded font-semibold outline-none min-h-[3rem]',
+              'placeholder-gray-400',
+              'transition ease-in-out delay-150',
+              'px-4',
+            )}
+          >
               ค้นหาโรงแรม
-        </Button>
+          </Button>
+        </div>
       </div>
-    </div>
+    </form>
   )
 }
 

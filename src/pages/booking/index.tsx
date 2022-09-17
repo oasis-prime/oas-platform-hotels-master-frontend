@@ -22,7 +22,7 @@ const BookingPage: NextPage = () => {
 
   return (
     <div className="max-w-screen-xl mx-auto">
-      <div className="grid grid-cols-5 gap-8">
+      <div className="grid grid-cols-5 gap-8 p-4">
         <div className="col-span-3">
           <div className="grid gap-2">
             <div>ข้อมูลผู้จอง</div>

@@ -1,19 +1,18 @@
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import { FormProvider, useForm } from 'react-hook-form'
 import { HotelDescriptionCard, HotelFacilitiesCard, HotelRoomCard } from '@components/hotels/card'
 import { getCheckIn, getCheckOut, parseDate, toISOLocal } from '@utils/func'
-import { useHotel, useHotels } from '@graphql/services/hotels'
+import { useEffect, useState } from 'react'
 
-import { AppConfig } from '@utils/app.config'
+import { AppHotelbeds } from '@utils/app.config'
 import { IHotelsDetailSearch } from '@model/hotel-search'
 import Image from 'next/image'
 import { LanguageEnum } from '__generated__/globalTypes'
 import { MainLoading } from '@components/misc/loading/main.loading'
+import { NextPage } from 'next'
 import { TopBarSearch } from '@components/search/topbar.search'
 import classNames from 'classnames'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useAvailability } from '@graphql/services/availability'
-import { useEffect } from 'react'
-import { useForm } from 'react-hook-form'
+import { useHotel } from '@graphql/services/hotels'
 import { useRouter } from 'next/router'
 
 const HotelDescription: NextPage = () => {
@@ -25,45 +24,56 @@ const HotelDescription: NextPage = () => {
   const [hotelQuery, { data: hotelData, loading: hotelLoading }] = useHotel()
   const [availabilityQuery, { data: availabilityData, loading: availabilityLoading }] = useAvailability()
 
+  const [roomCount, setRoomCount] = useState(0)
+  const [rateCount, setRateCount] = useState(0)
+
 
   const handlerQuery = () => {
     const query = getValues()
-
-    hotelQuery({
+    availabilityQuery({
       variables: {
-        hotelInput: {
-          id: query.code,
+        input: {
+          hotels: {
+            hotel: [query.code],
+          },
           language: LanguageEnum.TAI,
+          occupancies: [{ adults: query.adults, children: 0, rooms: query.rooms }],
+          stay: {
+            checkIn: toISOLocal(query.checkIn).slice(0, 10),
+            checkOut: toISOLocal(query.checkOut).slice(0, 10),
+          },
         },
       },
       onCompleted: (data) => {
-        const hotelIds = data?.getHotel.code
-
-        if (hotelIds == null) {
-          return
-        }
-
-        availabilityQuery({
+        const availability = data.getAvailability.availability?.[0]
+        const roomCode = availability?.rooms?.map(i => i?.code as string) || []
+        hotelQuery({
           variables: {
-            input: {
-              hotels: {
-                hotel: [hotelIds],
-              },
+            hotelInput: {
+              code: query.code,
               language: LanguageEnum.TAI,
-              occupancies: [{ adults: query.adults, children: query.children, rooms: query.rooms }],
-              stay: {
-                checkIn: toISOLocal(query.checkIn).slice(0, 10),
-                checkOut: toISOLocal(query.checkOut).slice(0, 10),
-              },
+            },
+            hotelRoomsInput: {
+              roomCode: roomCode,
+              language: LanguageEnum.TAI,
+            },
+            hotelFacilitiesInput: {
+              language: LanguageEnum.TAI,
+              limit: 20,
+              offset: 0,
+              groupCode: 70,
             },
           },
         })
       },
     })
+
+
   }
 
   useEffect(() => {
     if (router.isReady) {
+      console.log(router.query)
       const code = router.query.code as string
       const adults = router.query.adults as string
       const checkOut = router.query.checkOut && parseDate(router.query.checkOut as string)
@@ -74,7 +84,7 @@ const HotelDescription: NextPage = () => {
       reset({
         code: code && parseInt(code) || 1,
         adults: adults && parseInt(adults) || 1,
-        checkIn: checkIn && getCheckIn(checkIn) || getCheckIn(new Date()),
+        checkIn: checkIn && getCheckIn(checkIn),
         checkOut: checkOut && getCheckOut(checkOut, checkIn) || getCheckOut(new Date(), new Date()),
         children: children && parseInt(children) || 0,
         rooms: rooms && parseInt(rooms) || 1,
@@ -84,18 +94,49 @@ const HotelDescription: NextPage = () => {
     }
   }, [router])
 
-  if (hotelData == null && hotelLoading == true)
-    return (<MainLoading />)
+  useEffect(() => {
+    if (hotelData != null) {
+      const c = availabilityData?.getAvailability?.availability?.[0]
+
+      let r = 0
+      let a = 0
+      c?.rooms?.map((v) => {
+        const data = hotelData?.getHotel?.rooms?.find((f) => {
+          if (f?.roomCode === v?.code) {
+            return true
+          }
+        })
+
+        if (data) {
+          r++
+          a += v?.rates?.length || 0
+        }
+      })
+
+      setRoomCount(r)
+      setRateCount(a)
+    }
+  }, [hotelData])
+
+  if (availabilityData == null && availabilityLoading == true) {
+    return (
+      <MainLoading />
+    )
+  }
+
+
 
   return (
-    <>
+    <FormProvider {...methods}>
       <div className="grid gap-2">
         <div className={classNames(
-          'bg-primary h-16 w-full',
+          'bg-primary w-full',
+          'px-4',
+          'p-4',
         )}
         >
           <div className="max-w-screen-xl mx-auto">
-            <TopBarSearch />
+            <TopBarSearch screen="detail" />
           </div>
         </div>
         { /* Bar */ }
@@ -108,53 +149,56 @@ const HotelDescription: NextPage = () => {
                   className="text-blue-600 hover:text-blue-700"
                 >Home</a></li>
               <li><span className="text-gray-500 mx-2">&gt;</span></li>
-              <li className="text-gray-500">Library</li>
+              <li className="text-gray-500">{ router.query.slug }</li>
             </ol>
           </nav>
         </div>
         { /* รูปภาพ */ }
         <div>
-          <div className="h-96 max-w-screen-xl mx-auto grid grid-cols-10 grid-rows-2 gap-2">
-            { [1, 2, 3, 4, 5, 6, 7].map((v, i, row) => (
-              <div
-                key={v}
-                className={classNames(
-                  'h-full overflow-hidden relative',
-                  i == 0 ? 'col-span-4' : 'col-span-2',
-                  i == 0 ? 'row-span-2' : 'row-span-1',
-                )}
-              >
-                <Image
-                  unoptimized
-                  placeholder="blur"
-                  blurDataURL="http://photos.hotelbeds.com/giata/13/137704/137704a_hb_a_003.jpg"
-                  src="http://photos.hotelbeds.com/giata/13/137704/137704a_hb_a_003.jpg"
-                  alt=""
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-md"
-                />
-              </div>
-            )) }
+          <div className="md:h-96 max-w-screen-xl mx-auto grid grid-cols-10 md:grid-rows-2 gap-2">
+            { [1, 2, 3, 4, 5, 6, 7].map((v, i, row) => {
+              if (hotelData?.getHotel.images?.[i]?.path != null)
+                return (
+                  <div
+                    key={v}
+                    className={classNames(
+                      'h-64 md:h-auto overflow-hidden relative',
+                      i == 0 ? 'col-span-5 md:col-span-4' : 'col-span-5 md:col-span-2',
+                      i == 0 ? 'row-span-1 md:row-span-2' : 'md:row-span-1',
+                    )}
+                  >
+                    <Image
+                      unoptimized
+                      placeholder="blur"
+                      blurDataURL={AppHotelbeds.standard + hotelData?.getHotel.images?.[i]?.path || ''}
+                      src={AppHotelbeds.standard + hotelData?.getHotel.images?.[i]?.path || ''}
+                      alt=""
+                      layout="fill"
+                      objectFit="cover"
+                      className="rounded-md"
+                    />
+                  </div>
+                )
+            }) }
           </div>
         </div>
         { /* ลิงค์ */ }
-        <div className="h-14">
+        <div className="md:h-14">
           <div className={classNames(
-            'h-14 max-w-screen-xl mx-auto',
+            'max-w-screen-xl mx-auto',
             'rounded-md border border-gray-200',
-            'grid grid-cols-3 px-4',
+            'grid md:grid-cols-3 px-4',
           )}
           >
-            <div className="col-span-2 flex gap-4 items-center">
+            <div className="md:col-span-2 flex gap-4 items-center">
               <div>รายละเอียดที่พัก</div>
               <div>ห้องพัก</div>
               <div>สิ่งอำนวยความสะดวก</div>
               <div>ตำแหน่งที่ตั้ง</div>
               <div>นโยบายที่พัก</div>
             </div>
-            <div className="col-span-1 flex items-center justify-end">
-              <div>เริ่มต้นที่ <span className="text-red-500 text-xl">฿ 524</span></div>
+            <div className="md:col-span-1 flex items-center justify-end">
+              <div>เริ่มต้นที่ <span className="text-red-500 text-xl">฿ { availabilityData?.getAvailability?.availability?.[0]?.minRate }</span></div>
             </div>
           </div>
         </div>
@@ -167,11 +211,11 @@ const HotelDescription: NextPage = () => {
             'items-start',
           )}
           >
-            <div className="col-span-9 grid gap-2">
-              <HotelDescriptionCard />
-              <HotelFacilitiesCard />
+            <div className="col-span-12 md:col-span-9 grid gap-2">
+              <HotelDescriptionCard data={hotelData?.getHotel} />
+              <HotelFacilitiesCard data={hotelData?.getHotel.facilities || []} />
             </div>
-            <div className="col-span-3 grid gap-2">
+            <div className="col-span-12 md:col-span-3 grid gap-2">
               <div className="border border-gray-20 p-4 flex gap-4">
                 <div className="w-8 p-8 bg-primary rounded-full rounded-br-none relative">
                   <div className="absolute text-xl text-white top-[50%] left-[50%] translate-y-[-50%] translate-x-[-40%]">6.8</div>
@@ -199,13 +243,35 @@ const HotelDescription: NextPage = () => {
                   </div>
                 </div>
 
-                <div className="pt-3 flex gap-4">
+                <div className="pt-3 flex gap-4 items-center">
                   <i className="bi bi-car-front"></i>
                   <div>ที่จอดรถ</div>
+                  { hotelData?.getHotel.facilities?.find((v, i) => {
+                    if (v?.facilityCode === 500 || v?.facilityCode === 560 || v?.facilityCode === 320) {
+                      return true
+                    } else {
+                      return false
+                    }
+                  }) ? (
+                      <span className="flex h-3 w-3">
+                        <span className="relative inline-flex rounded-full h-3 w-3 bg-green-600"></span>
+                      </span>
+                    ) : (
+                      <span className="flex h-3 w-3">
+                        <span className="relative inline-flex rounded-full h-3 w-3 bg-red-600"></span>
+                      </span>
+                    ) }
                 </div>
 
                 <div className="pt-3">
                   <div>ที่เที่ยวยอดนิยม</div>
+                  { hotelData?.getHotel.interestPoints?.map((v, i) => (
+                    <div
+                      key={`interestPoints-${i}`}
+                    >
+                      { v?.poiName }
+                    </div>
+                  )) }
                 </div>
 
                 <div className="pt-3">
@@ -220,36 +286,44 @@ const HotelDescription: NextPage = () => {
               <div className="text-2xl">ประเภทห้อง</div>
               <div className="bg-gray-200 w-full h-[0.5px]"></div>
               <div>
-                <div>ห้องพัก 6 ประเภท | ข้อเสนอห้องพัก 17 ข้อเสนอ</div>
+                <div>ห้องพัก { roomCount } ประเภท | ข้อเสนอห้องพัก { rateCount } ข้อเสนอ</div>
                 <div className="text-xs text-gray-300">ราคาไม่รวมภาษีและค่าธรรมเนียม</div>
               </div>
               { /* <HotelCardEmpty /> */ }
-              <HotelRoomCard />
+              { availabilityData?.getAvailability?.availability?.[0] &&
+                availabilityData?.getAvailability.availability?.[0].rooms?.map((v, i) => {
+                  const data = hotelData?.getHotel?.rooms?.find((f) => {
+                    if (f?.roomCode === v?.code) {
+                      console.log(v?.code, f?.roomCode)
+                      return true
+                    }
+                  })
+
+                  if (data) {
+                    return (
+                      <HotelRoomCard
+                        key={`hotel-rooms-${v?.code}`}
+                        data={data}
+                        availability={v}
+                      />
+                    )
+                  }
+                }) }
             </div>
           </div>
         </div>
       </div>
-    </>
+    </FormProvider>
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale as string, [
-        ...AppConfig.default_translations,
-        'hotels',
-      ])),
-    },
-  }
-}
 
-export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
-  }
-}
+// export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
+//   return {
+//     paths: [],
+//     fallback: 'blocking',
+//   }
+// }
 
 
 export default HotelDescription

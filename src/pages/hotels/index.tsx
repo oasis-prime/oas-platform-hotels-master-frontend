@@ -6,6 +6,7 @@ import { HotelCardMain } from '@components/hotels/card'
 import { HotelsFilter } from '@components/hotels/filter'
 import { IHotelsSearch } from '@model/hotel-search'
 import { LanguageEnum } from '__generated__/globalTypes'
+import { MainLoading } from '@components/misc/loading/main.loading'
 import { Modal } from '@components/misc/modal'
 import type { NextPage } from 'next'
 import { TopBarSearch } from '@components/search/topbar.search'
@@ -62,7 +63,7 @@ const HotelsPage: NextPage = () => {
                 hotel: hotelIds,
               },
               language: LanguageEnum.TAI,
-              occupancies: [{ adults: query.adults, children: query.children, rooms: query.rooms }],
+              occupancies: [{ adults: query.adults, children: 0, rooms: query.rooms }],
               stay: {
                 checkIn: toISOLocal(query.checkIn).slice(0, 10),
                 checkOut: toISOLocal(query.checkOut).slice(0, 10),
@@ -75,40 +76,53 @@ const HotelsPage: NextPage = () => {
   }
 
   useEffect(() => {
-    // if (router.isReady) {
-
-    // }
-  }, [router.query])
-
-  useEffect(() => {
     if (router.isReady) {
+      // reset({
+      //   adults: router.query.adults && parseInt(router.query.adults as string) || 1,
+      //   checkIn: router.query.checkIn &&
+      //   getCheckIn(parseDate(router.query.checkIn as string)) ||
+      //   getCheckIn(new Date()),
+      //   checkOut: router.query.checkOut &&
+      //   getCheckOut(parseDate(router.query.checkOut as string), parseDate(router.query.checkIn as string)) ||
+      //   getCheckOut(new Date(), new Date()),
+      //   children: router.query.children && parseInt(router.query.children as string) || 0,
+      //   name: router.query.name && router.query.name as string || '',
+      //   rooms: router.query.rooms && parseInt(router.query.rooms as string) || 1,
+      // })
+      const name = router.query.name && router.query.name as string || ''
+      const adults = router.query.adults as string
+      const checkOut = router.query.checkOut && parseDate(router.query.checkOut as string)
+      const checkIn = router.query.checkIn && getCheckIn(parseDate(router.query.checkIn as string)) || getCheckIn(new Date())
+      const children = router.query.children as string
+      const rooms = router.query.rooms as string
+
       reset({
-        adults: router.query.adults && parseInt(router.query.adults as string) || 1,
-        checkIn: router.query.checkIn &&
-        getCheckIn(parseDate(router.query.checkIn as string)) ||
-        getCheckIn(new Date()),
-        checkOut: router.query.checkOut &&
-        getCheckOut(parseDate(router.query.checkOut as string), parseDate(router.query.checkIn as string)) ||
-        getCheckOut(new Date(), new Date()),
-        children: router.query.children && parseInt(router.query.children as string) || 0,
-        name: router.query.name && router.query.name as string || '',
-        rooms: router.query.rooms && parseInt(router.query.rooms as string) || 1,
+        name: name,
+        adults: adults && parseInt(adults) || 1,
+        checkIn: checkIn && getCheckIn(checkIn) || getCheckIn(new Date()),
+        checkOut: checkOut && getCheckOut(checkOut, checkIn) || getCheckOut(new Date(), new Date()),
+        children: children && parseInt(children) || 0,
+        rooms: rooms && parseInt(rooms) || 1,
       })
 
       handlerQuery()
     }
   }, [router])
 
+  if (hotelsData == null && hotelsLoading == true)
+    return (<MainLoading />)
+
   return (
     <FormProvider {...methods} >
       <div>
         <div className={classNames(
-          'bg-primary h-16 w-full',
+          'bg-primary w-full',
           'px-4',
+          'p-4',
         )}
         >
           <div className="max-w-screen-xl mx-auto">
-            <TopBarSearch />
+            <TopBarSearch screen="search" />
           </div>
         </div>
         <div className="max-w-screen-xl mx-auto mt-2 px-4">

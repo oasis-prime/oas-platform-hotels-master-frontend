@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "i18nexus pull && next dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "download-schema": "apollo client:download-schema --endpoint=http://localhost:8080/graphql schema.graphql",
-    "codegen": "apollo codegen:generate --localSchemaFile=schema.graphql --target=typescript --tagName=gql"
+    "codegen": "yarn download-schema && apollo codegen:generate --localSchemaFile=schema.graphql --target=typescript --tagName=gql"
   },
   "dependencies": {
     "@apollo/client": "^3.6.8",
@@ -33,15 +33,14 @@
     "@tailwindcss/line-clamp": "^0.4.2",
     "@types/lodash": "^4.14.184",
     "@types/node": "18.0.0",
+    "@types/react": "18.0.13",
     "@types/react-datepicker": "^4.4.2",
     "@types/react-dom": "18.0.5",
-    "@types/react-scroll": "^1.8.3",
-    "@types/react": "18.0.13",
     "@typescript-eslint/eslint-plugin": "^5.36.0",
     "@typescript-eslint/parser": "^5.36.0",
     "autoprefixer": "^10.4.7",
-    "eslint-config-next": "12.1.6",
     "eslint": "8.17.0",
+    "eslint-config-next": "12.1.6",
     "graphql": "^16.6.0",
     "i18nexus-cli": "^2.1.0",
     "postcss": "^8.4.14",

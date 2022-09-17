@@ -7,14 +7,9 @@ type IHotelsSearch = {
   checkOut: Date
 }
 
-type IHotelsDetailSearch = {
+type IHotelsDetailSearch = IHotelsSearch & {
   code: number
   type: string
-  rooms: number
-  adults: number
-  children: number
-  checkIn: Date
-  checkOut: Date
 }
 
 export type { IHotelsSearch, IHotelsDetailSearch }
