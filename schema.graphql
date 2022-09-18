@@ -145,12 +145,154 @@ input AvailabilityStayInput {
   checkOut: String!
 }
 
+type B_CancellationPolicies {
+  amount: String
+  from: String
+}
+
+type B_Holder {
+  name: String
+  surname: String
+}
+
+type B_Hotel {
+  checkOut: String
+  checkIn: String
+  code: Int
+  name: String
+  categoryCode: String
+  categoryName: String
+  destinationCode: String
+  destinationName: String
+  zoneCode: Int
+  zoneName: String
+  latitude: String
+  longitude: String
+  totalSellingRate: String
+  totalNet: String
+  currency: String
+  cancellationAmount: Int
+  supplier: B_Supplier
+  rooms: [B_Rooms]
+}
+
+type B_InvoiceCompany {
+  code: String
+  company: String
+  registrationNumber: String
+}
+
+type B_ModificationPolicies {
+  cancellation: Boolean
+  modification: Boolean
+}
+
+type B_Paxes {
+  roomId: Int
+  type: String
+  name: String
+  surname: String
+}
+
+type B_Rates {
+  rateClass: String
+  net: String
+  discount: String
+  discountPCT: String
+  sellingRate: String
+  rateComments: String
+  paymentType: String
+  packaging: Boolean
+  boardCode: String
+  boardName: String
+  rooms: Int
+  adults: Int
+  children: Int
+  cancellationPolicies: [B_CancellationPolicies]
+}
+
+type B_Rooms {
+  status: String
+  id: Int
+  code: String
+  name: String
+  rates: [B_Rates]
+  paxes: [B_Paxes]
+}
+
+type B_Supplier {
+  name: String
+  vatNumber: String
+}
+
+input BoHolderInput {
+  name: String
+  surname: String
+}
+
 type BookingData {
-  id: String
+  reference: String
+  cancellationReference: String
+  clientReference: String
+  creationDate: String
+  status: String
+  creationUser: String
+  remark: String
+  totalSellingRate: Int
+  totalNet: Int
+  pendingAmount: Int
+  currency: String
+  invoiceCompany: B_InvoiceCompany
+  hotel: B_Hotel
+  holder: B_Holder
+  modificationPolicies: B_ModificationPolicies
 }
 
 input BookingInput {
-  id: String
+  clientReference: String
+  remark: String
+  tolerance: Int
+  rooms: [BoRoomsInput]
+  holder: BoHolderInput
+  language: LanguageEnum!
+}
+
+input BoPaxesInput {
+  roomId: Int
+  type: String
+  name: String
+  surname: String
+}
+
+input BoRoomsInput {
+  rateKey: String
+  paxes: [BoPaxesInput]
+}
+
+type CheckRateData {
+  checkOut: String
+  checkIn: String
+  code: Int
+  name: String
+  categoryCode: String
+  categoryName: String
+  destinationCode: String
+  destinationName: String
+  zoneCode: Int
+  zoneName: String
+  latitude: String
+  longitude: String
+  totalSellingRate: String
+  totalNet: String
+  currency: String
+  paymentDataRequired: Boolean
+  modificationPolicies: RaModificationPolicies
+  rooms: [RaRooms]
+}
+
+input CheckRateInput {
+  rateKey: String!
+  language: LanguageEnum!
 }
 
 type City {
@@ -180,6 +322,11 @@ input FacilitiesInput {
   groupCode: Int!
   offset: Int!
   limit: Int!
+  language: LanguageEnum!
+}
+
+input GetBookingInput {
+  BookingReference: String
   language: LanguageEnum!
 }
 
@@ -333,7 +480,9 @@ input MemberVerifyEmailInput {
 }
 
 type Mutation {
+  booking(input: BookingInput!): BookingData!
   memberVerify(input: MemberVerifyEmailInput!): MemberVerifyEmailData!
+  payment(input: PaymentInput!): PaymentData!
 }
 
 type Name {
@@ -352,6 +501,20 @@ type PaginationType {
   total: Int!
 }
 
+type PaymentData {
+  orderNumber: String!
+  paymentUrl: String!
+  qrImage: String!
+}
+
+input PaymentInput {
+  email: String!
+  name: String!
+  surname: String!
+  phoneNumber: String!
+  rateKey: String!
+}
+
 type Phones {
   phoneNumber: String
   phoneType: String
@@ -367,11 +530,67 @@ type PlacesData {
 }
 
 type Query {
+  getBooking(input: GetBookingInput!): BookingData!
   getPlaces(input: GetPlacesInput!): PlacesData!
   getAvailability(input: AvailabilityInput!): AvailabilityData!
+  checkRate(input: CheckRateInput!): CheckRateData!
   getHotels(input: HotelsInput!): HotelsData!
   getHotel(input: HotelInput!): Hotel!
   _service: _Service!
+}
+
+type RaCancellationPolicies {
+  amount: String
+  from: String
+}
+
+type RaModificationPolicies {
+  cancellation: Boolean
+  modification: Boolean
+}
+
+type RaOffers {
+  code: String
+  name: String
+  amount: String
+}
+
+type RaRateBreakDown {
+  rateDiscounts: [RaRateDiscounts]
+}
+
+type RaRateDiscounts {
+  code: String
+  name: String
+  amount: String
+}
+
+type RaRates {
+  rateKey: String
+  rateClass: String
+  rateType: String
+  net: String
+  discount: String
+  discountPCT: String
+  sellingRate: String
+  allotment: Int
+  rateComments: String
+  paymentType: String
+  packaging: Boolean
+  boardCode: String
+  boardName: String
+  rooms: Int
+  adults: Int
+  children: Int
+  offers: [RaOffers]
+  rateBreakDown: RaRateBreakDown
+  cancellationPolicies: [RaCancellationPolicies]
+}
+
+type RaRooms {
+  code: String
+  name: String
+  rates: [RaRates]
 }
 
 type RoomFacilities {
