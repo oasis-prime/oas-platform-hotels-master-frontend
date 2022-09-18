@@ -49,6 +49,11 @@ export interface AvailabilityStayInput {
   checkOut: string;
 }
 
+export interface CheckRateInput {
+  rateKey: string;
+  language: LanguageEnum;
+}
+
 export interface FacilitiesInput {
   groupCode: number;
   offset: number;
@@ -117,6 +122,14 @@ export interface PaginationInput {
   page: number;
   pageSize: number;
   orderBy?: string | null;
+}
+
+export interface PaymentInput {
+  email: string;
+  name: string;
+  surname: string;
+  phoneNumber: string;
+  rateKey: string;
 }
 
 export interface StaysInput {

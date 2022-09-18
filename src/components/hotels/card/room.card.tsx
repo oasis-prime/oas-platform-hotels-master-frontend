@@ -7,6 +7,7 @@ import { HotelSearch_getHotel_rooms } from '@graphql/services/__generated__/Hote
 import { IHotelsDetailSearch } from '@model/hotel-search'
 import Image from 'next/image'
 import classNames from 'classnames'
+import { formatter } from '@utils/func'
 import { useFormContext } from 'react-hook-form'
 import { useRouter } from 'next/router'
 
@@ -21,7 +22,12 @@ const HotelRoomCard = (props: HotelRoomCardProps) => {
   const router = useRouter()
 
   const onHandle = (rateKey: string) => {
-    router.push('/booking')
+    router.push('/booking', {
+      pathname: '/booking',
+      query: {
+        rateKey: rateKey,
+      },
+    })
   }
 
   const query = watch()
@@ -129,7 +135,7 @@ const HotelRoomCard = (props: HotelRoomCardProps) => {
                             onHandle(v?.rateKey)
                         }}
                       >
-                        <div className="text-red-500">฿ { v?.net }</div>
+                        <div className="text-red-500">{ formatter.format(parseInt(v?.net as string)) }</div>
                         <div className="text-sm text-gray-400">ราคาเริ่มต้น (ต่อคืน)</div>
                         <div className="text-green-500 underline">จองราคานี้</div>
                       </div>

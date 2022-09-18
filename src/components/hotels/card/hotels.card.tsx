@@ -1,4 +1,4 @@
-import { getCalculatorDays, makeSlug, toISOLocal } from '@utils/func'
+import { formatter, getCalculatorDays, makeSlug, toISOLocal } from '@utils/func'
 import { useEffect, useState } from 'react'
 
 import { AppHotelbeds } from '@utils/app.config'
@@ -11,22 +11,6 @@ import Image from 'next/image'
 import classNames from 'classnames'
 import { useFormContext } from 'react-hook-form'
 import { useRouter } from 'next/router'
-
-// type IHotelFacilities = {
-//   code: number
-//   name: string
-// }
-
-// const DEFAULT_HOTEL_FACILITIES: IHotelFacilities[] = [
-//   { code: 1, name: 'นำสัตว์เลี้ยงเข้าพักได้' },
-//   { code: 1, name: 'ที่จอดรถ' },
-//   { code: 1, name: 'Wi-Fi ทุกห้อง (ฟรี)' },
-//   { code: 1, name: 'บริการเช็คอิน/เช็คเอาต์แบบไร้การสัมผัส' },
-//   { code: 1, name: 'บาร์' },
-//   { code: 1, name: 'ห้องอาหาร' },
-//   { code: 1, name: 'รูมเซอร์วิส' },
-//   { code: 1, name: 'Wi-Fi ในพื้นที่สาธารณะ' },
-// ]
 
 type IHotelCardMain = {
   readonly h: HotelsSearch_getHotels_hotels
@@ -184,7 +168,7 @@ const HotelCardMain = (prop: IHotelCardMain) => {
                     ราคารวม <span className="text-red-500">1</span> ที่พัก <span className="text-red-500">{ numberOfDays }</span> คืน
                 </div>
                 <div className="text-red-500 text-4xl">
-                ฿ { prop.a?.minRate }
+                  { formatter.format(parseInt(prop.a?.minRate as string)) }
                 </div>
               </div>
             ) }

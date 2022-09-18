@@ -1,94 +1,202 @@
+import * as yup from 'yup'
+
+import { FormProvider, useForm } from 'react-hook-form'
 import type { GetStaticProps, NextPage } from 'next'
+import { getCalculatorDays, parseDate } from '@utils/func'
+import { useEffect, useState } from 'react'
 
 import { AppConfig } from '@utils/app.config'
+import { BookingInformation } from '@components/hotels/booking/booking.information'
+import { BookingPayment } from '@components/hotels/booking/booking.payment'
 import { Button } from '@components/misc/button'
-import { Checkbox } from '@components/misc/checkbox/main.checkbox'
-import { TextField } from '@components/misc/textField'
+import { HotelRateKeyCard } from '@components/hotels/card/hotel.ratekey.card'
+import { IHotelsBooking } from '@model/hotel-search'
+import { LanguageEnum } from '__generated__/globalTypes'
+import { MainLoading } from '@components/misc/loading/main.loading'
 import classNames from 'classnames'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useCheckRate } from '@graphql/services/checkrate'
+import { usePayment } from '@graphql/services/payment'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 const BookingPage: NextPage = () => {
-  const [open, setOpen] = useState(false)
+  // holder: {
+  //   name: string
+  //   surname: string
+  // }
+  // rateKey: string
+  // paxes: IHotelsPaxes[]
+  // clientReference: string
+  // remark: string
+  // tolerance: number
+  // email: string
+  // phoneNumber: string
+  // acceptPolicy: boolean
+  const validationSchema = yup.object().shape({
+    'holder': yup.object().shape({
+      'name': yup.string().required('Title(th) is a required field'),
+      'surname': yup.string().required('Title(en) is a required field'),
+    }),
+    'rateKey': yup.string().required('Slug is a required field'),
+    // 'remark': yup.string().required('Slug is a required field'),
+    'email': yup.string().required('Slug is a required field'),
+    'phoneNumber': yup.string().required('Slug is a required field'),
+  })
+
+  const [numberOfDays, setNumberOfDays] = useState('0')
+  const [step, setStep] = useState<'information'| 'payment'>('information')
+  const [checkOut, setCheckOut] = useState<Date>()
+  const [checkIn, setCheckIn] = useState<Date>()
+
+  const methods = useForm<IHotelsBooking>({
+    mode: 'onSubmit',
+    reValidateMode: 'onChange',
+    resolver: yupResolver(validationSchema),
+    context: undefined,
+    criteriaMode: 'firstError',
+    shouldFocusError: true,
+    shouldUnregister: false,
+    shouldUseNativeValidation: false,
+    delayError: undefined,
+  })
+
+  const { handleSubmit, reset } = methods
+
   const { t } = useTranslation()
+
+  const [rateQuery, { data: rateData, loading: rateLoading }] = useCheckRate()
+  const [paymentQuery, { data: paymentData, loading: paymentLoading }] = usePayment()
 
   const router = useRouter()
 
   const onHandler = () => {
-    router.push('/booking/payment')
+    if (step === 'information') {
+      setStep('payment')
+    }
+
+    if (step === 'payment') {
+      const d = methods.watch()
+      paymentQuery({
+        variables: {
+          input: {
+            email: d.email,
+            name: d.holder.name,
+            surname: d.holder.surname,
+            phoneNumber: d.phoneNumber,
+            rateKey: router.query.rateKey as string,
+          },
+        },
+        onCompleted: (data) => {
+          window.open(data.payment.paymentUrl)
+        },
+      },
+      )
+    }
   }
 
+  useEffect(() => {
+    if (router.isReady && router.query.rateKey != null) {
+      rateQuery({
+        variables: {
+          input: {
+            rateKey: router.query.rateKey as string,
+            language: LanguageEnum.TAI,
+          },
+        },
+      })
+
+      reset({
+        rateKey: router.query.rateKey as string,
+      })
+    }
+  }, [router])
+
+  useEffect(() => {
+    if (rateData?.checkRate != null &&
+      rateData.checkRate.checkOut != null &&
+      rateData.checkRate.checkIn != null) {
+      const checkOut = parseDate(rateData.checkRate.checkOut as string)
+      const checkIn = parseDate(rateData.checkRate.checkIn as string)
+      setCheckOut(checkOut)
+      setCheckIn(checkIn)
+      if (checkOut != null && checkIn != null) {
+        const days = getCalculatorDays(checkOut, checkIn)
+
+        setNumberOfDays(days)
+      }
+    }
+  }, [rateData])
+
+  if (rateData == null && rateLoading == true)
+    return (<MainLoading />)
+
+
   return (
-    <div className="max-w-screen-xl mx-auto">
-      <div className="grid grid-cols-5 gap-8 p-4">
-        <div className="col-span-3">
-          <div className="grid gap-2">
-            <div>ข้อมูลผู้จอง</div>
-            <div className="bg-gray-200 w-full h-[0.5px]" />
-            <div>ชื่อ - นามสกุล</div>
-            <div><TextField /></div>
-            <div>Name - Surname</div>
-            <div><TextField /></div>
-            <div>เบอร์โทร</div>
-            <div><TextField /></div>
-            <div>อีเมล</div>
-            <div><TextField /></div>
-            <div className="flex gap-2"><Checkbox /><p>จองให้ผู้อื่น</p></div>
-            <div>รหัสคูปองส่วนลด</div>
-            <div><TextField /></div>
-            <div>*หากใช้ส่วนลดแล้วไม่สามารถยกเลิกการจองได้</div>
-            <div className="flex gap-2"><Checkbox /><p>ท่านยอมรับ ข้อกำหนดการใช้งานและนโยบายความเป็นส่วนตัว เพื่อดำเนินการ</p></div>
-            <div>
-              <Button
-                onClick={() => {
-                  onHandler()
-                }}
-                type="submit"
-                className={classNames(
-                  'p-3 px-7 float-right bg-primary text-white border rounded font-semibold outline-none',
-                  'transition ease-in-out delay-150 hover:scale-105 duration-300',
-                )}
-              >
+    <FormProvider {...methods}>
+      { paymentLoading && <MainLoading /> }
+      <form  onSubmit={handleSubmit(onHandler)}>
+        <div className="max-w-screen-xl mx-auto">
+          <div className="grid md:grid-cols-5 gap-4 p-4">
+            <div className="order-last md:col-span-3 md:order-first">
+              { step === 'information' && <BookingInformation /> }
+              { step === 'payment' &&  <BookingPayment /> }
+
+              <div className="flex justify-end">
+                { step !== 'information' && (
+                  <Button
+                    onClick={() => {
+                      setStep('information')
+                    }}
+                    type="submit"
+                    className={classNames(
+                      'p-3 px-7 float-right bg-primary text-white border rounded font-semibold outline-none',
+                      'transition ease-in-out delay-150 hover:scale-105 duration-300',
+                    )}
+                  >ย้อนกลับ</Button>
+                ) }
+
+                { step === 'information' && (
+                  <Button
+                    type="submit"
+                    className={classNames(
+                      'p-3 px-7 float-right bg-primary text-white border rounded font-semibold outline-none',
+                      'transition ease-in-out delay-150 hover:scale-105 duration-300',
+                    )}
+                  >
               ถัดไป
-              </Button>
+                  </Button>
+                ) }
+
+                { step === 'payment' && (
+                  <Button
+                    type="submit"
+                    className={classNames(
+                      'p-3 px-7 float-right bg-primary text-white border rounded font-semibold outline-none',
+                      'transition ease-in-out delay-150 hover:scale-105 duration-300',
+                    )}
+                  >
+              ชำระเงิน
+                  </Button>
+                ) }
+
+              </div>
+            </div>
+            <div className="md:col-span-2">
+              <HotelRateKeyCard
+                checkIn={checkIn}
+                checkOut={checkOut}
+                data={rateData?.checkRate}
+                numberOfDays={numberOfDays}
+              />
             </div>
           </div>
         </div>
-        <div className="col-span-2">
-          <div className="grid border border-gray-200 rounded-sm p-4">
-            <div className="text-2xl text-primary">รายละเอียด</div>
-            <div>The Rim Chiang Mai</div>
-
-            <div>CHIANG MAI</div>
-
-            <div>10 กันยายน 2022 - 11 กันยายน 2022 (1 คืน )</div>
-            <div>1 ห้อง</div>
-
-            <div>1 ผู้ใหญ่</div>
-
-            <div>0 เด็ก</div>
-
-            <div>ราคาที่พัก	3,683.0	บาท</div>
-            <div>ส่วนลดที่ได้รับ	0.00	บาท</div>
-            <div>ค่าธรรมเนียมการจอง	ฟรี</div>
-            <div>ราคาที่ต้องจ่าย	3,683.0	บาท</div>
-            <div>รวม: เซอร์วิสชาร์จ, ภาษี เรียบร้อยแล้ว</div>
-          </div>
-        </div>
-      </div>
-    </div>
+      </form>
+    </FormProvider>
   )
 }
-
-// export const getStaticProps: GetStaticProps = async ({ locale }) => {
-//   return {
-//     props: {
-//       ...(await serverSideTranslations(locale as string, ['booking'])),
-//     },
-//   }
-// }
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
