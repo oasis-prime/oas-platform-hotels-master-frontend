@@ -22,18 +22,6 @@ import { useTranslation } from 'next-i18next'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 const BookingPage: NextPage = () => {
-  // holder: {
-  //   name: string
-  //   surname: string
-  // }
-  // rateKey: string
-  // paxes: IHotelsPaxes[]
-  // clientReference: string
-  // remark: string
-  // tolerance: number
-  // email: string
-  // phoneNumber: string
-  // acceptPolicy: boolean
   const validationSchema = yup.object().shape({
     'holder': yup.object().shape({
       'name': yup.string().required('Title(th) is a required field'),
