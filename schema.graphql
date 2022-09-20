@@ -330,6 +330,10 @@ input GetBookingInput {
   language: LanguageEnum!
 }
 
+input GetPaymentInput {
+  orderNumber: String!
+}
+
 input GetPlacesInput {
   query: String
 }
@@ -536,6 +540,7 @@ type Query {
   checkRate(input: CheckRateInput!): CheckRateData!
   getHotels(input: HotelsInput!): HotelsData!
   getHotel(input: HotelInput!): Hotel!
+  getPayment(input: GetPaymentInput!): PaymentData!
   _service: _Service!
 }
 

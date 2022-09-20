@@ -1,5 +1,6 @@
 import { Controller, useFormContext } from 'react-hook-form'
 import { IHotelsDetailSearch, IHotelsSearch } from '@model/hotel-search'
+import { getCheckOut, toISOLocal } from '@utils/func'
 
 import { AppUrl } from '@utils/app.config'
 import { Button } from '@components/misc/button'
@@ -7,7 +8,7 @@ import { MainDatepicker } from '@components/misc/datepicker/main.datepicker'
 import { OccupanciesSearch } from './occupancies.search'
 import { TextField } from '@components/misc/textField'
 import classNames from 'classnames'
-import { toISOLocal } from '@utils/func'
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 type TopBarSearch = {
@@ -17,7 +18,9 @@ type TopBarSearch = {
 const TopBarSearch = (props: TopBarSearch) => {
   const router = useRouter()
 
-  const { control, handleSubmit } = useFormContext<IHotelsDetailSearch>()
+  const { control, handleSubmit, watch, setValue } = useFormContext<IHotelsDetailSearch>()
+
+  const data = watch()
 
   const onSubmit = (data: IHotelsDetailSearch) => {
     let query = {}
@@ -27,8 +30,8 @@ const TopBarSearch = (props: TopBarSearch) => {
         adults: data.adults,
         children: data.children,
         rooms: data.rooms,
-        checkIn: toISOLocal(data.checkIn).slice(0, 10),
-        checkOut: toISOLocal(data.checkOut).slice(0, 10),
+        checkIn: toISOLocal(data.checkIn)?.slice(0, 10),
+        checkOut: toISOLocal(data.checkOut)?.slice(0, 10),
       }
     } else {
       query = {
@@ -36,8 +39,8 @@ const TopBarSearch = (props: TopBarSearch) => {
         adults: data.adults,
         children: data.children,
         rooms: data.rooms,
-        checkIn: toISOLocal(data.checkIn).slice(0, 10),
-        checkOut: toISOLocal(data.checkOut).slice(0, 10),
+        checkIn: toISOLocal(data.checkIn)?.slice(0, 10),
+        checkOut: toISOLocal(data.checkOut)?.slice(0, 10),
       }
     }
 
@@ -47,6 +50,14 @@ const TopBarSearch = (props: TopBarSearch) => {
       query: query,
     })
   }
+
+
+
+  useEffect(() => {
+    if (data?.checkIn?.getTime() >= data?.checkOut?.getTime()) {
+      setValue('checkOut', getCheckOut(data.checkOut, data.checkIn))
+    }
+  }, [data.checkIn])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

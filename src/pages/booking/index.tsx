@@ -97,7 +97,10 @@ const BookingPage: NextPage = () => {
   }
 
   useEffect(() => {
-    if (router.isReady && router.query.rateKey != null) {
+    if (!router.isReady) return
+
+    console.log(router.query.rateKey)
+    if (router.isReady) {
       rateQuery({
         variables: {
           input: {
@@ -111,7 +114,7 @@ const BookingPage: NextPage = () => {
         rateKey: router.query.rateKey as string,
       })
     }
-  }, [router])
+  }, [router.query, router.isReady])
 
   useEffect(() => {
     if (rateData?.checkRate != null &&

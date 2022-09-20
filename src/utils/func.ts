@@ -6,8 +6,8 @@ const getCheckOut = (checkout: Date, checkin: Date) => {
   const co = new Date(checkoutStr)
 
   if (ci.getTime() >= co.getTime()) {
-    const date = new Date()
-    date.setDate(date.getDate() + 1)
+    const date = ci
+    date.setDate(ci.getDate() + 1)
 
     return date
   }
@@ -61,6 +61,8 @@ function toISOLocal(d: Date) {
          z(d.getSeconds()) + '.' +
          zz(d.getMilliseconds()) +
          sign + z(off / 60 | 0) + ':' + z(off % 60)
+
+
 }
 
 function makeSlug(str: string) {
