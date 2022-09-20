@@ -1,6 +1,6 @@
 import { Controller, useFormContext } from 'react-hook-form'
 import { IHotelsDetailSearch, IHotelsSearch } from '@model/hotel-search'
-import { getCheckOut, toISOLocal } from '@utils/func'
+import { getCheckIn, getCheckOut, toISOLocal } from '@utils/func'
 
 import { AppUrl } from '@utils/app.config'
 import { Button } from '@components/misc/button'
@@ -51,13 +51,19 @@ const TopBarSearch = (props: TopBarSearch) => {
     })
   }
 
-
-
   useEffect(() => {
     if (data?.checkIn?.getTime() >= data?.checkOut?.getTime()) {
+      console.log('Effect checkIn')
       setValue('checkOut', getCheckOut(data.checkOut, data.checkIn))
     }
   }, [data.checkIn])
+
+  useEffect(() => {
+    if (data?.checkOut?.getTime() <= data?.checkIn?.getTime()) {
+      console.log('Effect checkOut')
+      setValue('checkIn', getCheckIn(data.checkIn, data.checkOut))
+    }
+  }, [data.checkOut])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

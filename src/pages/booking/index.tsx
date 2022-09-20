@@ -89,7 +89,7 @@ const BookingPage: NextPage = () => {
           },
         },
         onCompleted: (data) => {
-          window.open(data.payment.paymentUrl)
+          window.location.href = `${data.payment.paymentUrl}`
         },
       },
       )
