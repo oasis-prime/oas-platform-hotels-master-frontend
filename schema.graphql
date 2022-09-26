@@ -225,11 +225,6 @@ type B_Supplier {
   vatNumber: String
 }
 
-input BoHolderInput {
-  name: String
-  surname: String
-}
-
 type BookingData {
   reference: String
   cancellationReference: String
@@ -250,23 +245,7 @@ type BookingData {
 
 input BookingInput {
   clientReference: String
-  remark: String
-  tolerance: Int
-  rooms: [BoRoomsInput]
-  holder: BoHolderInput
   language: LanguageEnum!
-}
-
-input BoPaxesInput {
-  roomId: Int
-  type: String
-  name: String
-  surname: String
-}
-
-input BoRoomsInput {
-  rateKey: String
-  paxes: [BoPaxesInput]
 }
 
 type CheckRateData {
@@ -326,7 +305,7 @@ input FacilitiesInput {
 }
 
 input GetBookingInput {
-  BookingReference: String
+  bookingReference: String
   language: LanguageEnum!
 }
 
@@ -475,6 +454,16 @@ enum LanguageEnum {
   ENG
 }
 
+type MemberRegisterData {
+  message: String!
+}
+
+input MemberRegisterInput {
+  display: String!
+  email: String!
+  password: String!
+}
+
 type MemberVerifyEmailData {
   message: String!
 }
@@ -485,6 +474,7 @@ input MemberVerifyEmailInput {
 
 type Mutation {
   booking(input: BookingInput!): BookingData!
+  memberRegister(input: MemberRegisterInput!): MemberRegisterData!
   memberVerify(input: MemberVerifyEmailInput!): MemberVerifyEmailData!
   payment(input: PaymentInput!): PaymentData!
 }
