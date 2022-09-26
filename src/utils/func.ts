@@ -6,8 +6,8 @@ const getCheckOut = (checkout: Date, checkin: Date) => {
   const co = new Date(checkoutStr)
 
   if (ci.getTime() >= co.getTime()) {
-    const date = new Date()
-    date.setDate(date.getDate() + 1)
+    const date = ci
+    date.setDate(ci.getDate() + 1)
 
     return date
   }
@@ -15,7 +15,21 @@ const getCheckOut = (checkout: Date, checkin: Date) => {
   return checkout
 }
 
-const getCheckIn = (checkin: Date) => {
+const getCheckIn = (checkin: Date, checkout?: Date) => {
+  if (checkout != null) {
+    const checkoutStr = toISOLocal(checkout).slice(0, 10)
+    const checkinStr = toISOLocal(checkin).slice(0, 10)
+
+    const ci = new Date(checkinStr)
+    const co = new Date(checkoutStr)
+
+    if (ci.getTime() <= co.getTime()) {
+      const date = co
+      date.setDate(co.getDate() - 1)
+
+      return date
+    }
+  }
   return checkin
 }
 
@@ -61,6 +75,8 @@ function toISOLocal(d: Date) {
          z(d.getSeconds()) + '.' +
          zz(d.getMilliseconds()) +
          sign + z(off / 60 | 0) + ':' + z(off % 60)
+
+
 }
 
 function makeSlug(str: string) {

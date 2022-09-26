@@ -22,7 +22,7 @@ const HotelRoomCard = (props: HotelRoomCardProps) => {
   const router = useRouter()
 
   const onHandle = (rateKey: string) => {
-    router.push('/booking', {
+    router.push({
       pathname: '/booking',
       query: {
         rateKey: rateKey,
@@ -61,6 +61,12 @@ const HotelRoomCard = (props: HotelRoomCardProps) => {
               rateFilter?.length === 4 && 'row-span-4',
               rateFilter?.length === 5 && 'row-span-5',
               rateFilter?.length === 6 && 'row-span-6',
+              rateFilter?.length === 7 && 'row-span-7',
+              rateFilter?.length === 8 && 'row-span-8',
+              rateFilter?.length === 9 && 'row-span-9',
+              rateFilter?.length === 10 && 'row-span-10',
+              rateFilter?.length === 11 && 'row-span-11',
+              rateFilter?.length === 12 && 'row-span-12',
             )}
             >
               <div className="h-32 mx-auto flex">
@@ -90,6 +96,10 @@ const HotelRoomCard = (props: HotelRoomCardProps) => {
             </div>
             {
               rateFilter?.map((v, i) => {
+                if (i > 12) {
+                  return <></>
+                }
+
                 return (
                   <div
                     key={v?.rooms}
@@ -139,11 +149,7 @@ const HotelRoomCard = (props: HotelRoomCardProps) => {
                         <div className="text-sm text-gray-400">ราคาเริ่มต้น (ต่อคืน)</div>
                         <div className="text-green-500 underline">จองราคานี้</div>
                       </div>
-                      { /* <ButtonText>จองเลย</ButtonText> */ }
                     </div>
-                    { /* <div className="md:hidden col-span-12">
-                      <ButtonText>จองเลย</ButtonText>
-                    </div> */ }
                   </div>
                 )
               })

@@ -9,14 +9,15 @@ import classNames from 'classnames'
 import { debounce } from 'lodash'
 import { useHotelsAutocomplete } from '@graphql/services/hotels'
 import { usePopper } from 'react-popper'
+import { getCheckIn, getCheckOut } from '@utils/func'
 
 const HotelSearchInput = () => {
   const { watch, control, setValue } = useFormContext<IHotelsSearch>()
-
+  const data = watch()
   // const [value, setValue] = useState('')
   const [selected, setSelected] = useState<HotelsAutocomplete_getHotels_hotels>()
 
-  const [autocompleteQuery, { data, loading }] = useHotelsAutocomplete()
+  const [autocompleteQuery, { data: queryData, loading }] = useHotelsAutocomplete()
 
   const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false)
   const referenceElement = useRef<HTMLInputElement>(null)
@@ -63,6 +64,20 @@ const HotelSearchInput = () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [popperElement])
+
+  useEffect(() => {
+    if (data?.checkIn?.getTime() >= data?.checkOut?.getTime()) {
+      console.log('Effect checkIn')
+      setValue('checkOut', getCheckOut(data.checkOut, data.checkIn))
+    }
+  }, [data.checkIn])
+
+  useEffect(() => {
+    if (data?.checkOut?.getTime() <= data?.checkIn?.getTime()) {
+      console.log('Effect checkOut')
+      setValue('checkIn', getCheckIn(data.checkIn, data.checkOut))
+    }
+  }, [data.checkOut])
 
   return (
     <div className="flex flex-wrap w-full">
@@ -112,7 +127,7 @@ const HotelSearchInput = () => {
               {
                 !loading &&
                 <div className="gird divide-y-[1px]">
-                  { data?.getHotels?.hotels.map((v) => (
+                  { queryData?.getHotels?.hotels.map((v) => (
                     <div
                       key={v.code}
                       data-code={v.code}

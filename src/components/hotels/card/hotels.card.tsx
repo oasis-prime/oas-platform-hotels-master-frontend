@@ -167,7 +167,7 @@ const HotelCardMain = (prop: IHotelCardMain) => {
                 <div>
                     ราคารวม <span className="text-red-500">1</span> ที่พัก <span className="text-red-500">{ numberOfDays }</span> คืน
                 </div>
-                <div className="text-red-500 text-4xl">
+                <div className="text-red-500 text-2xl">
                   { formatter.format(parseInt(prop.a?.minRate as string)) }
                 </div>
               </div>

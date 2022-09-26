@@ -22,18 +22,6 @@ import { useTranslation } from 'next-i18next'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 const BookingPage: NextPage = () => {
-  // holder: {
-  //   name: string
-  //   surname: string
-  // }
-  // rateKey: string
-  // paxes: IHotelsPaxes[]
-  // clientReference: string
-  // remark: string
-  // tolerance: number
-  // email: string
-  // phoneNumber: string
-  // acceptPolicy: boolean
   const validationSchema = yup.object().shape({
     'holder': yup.object().shape({
       'name': yup.string().required('Title(th) is a required field'),
@@ -89,7 +77,7 @@ const BookingPage: NextPage = () => {
           },
         },
         onCompleted: (data) => {
-          window.open(data.payment.paymentUrl)
+          window.location.href = `${data.payment.paymentUrl}`
         },
       },
       )
@@ -97,7 +85,10 @@ const BookingPage: NextPage = () => {
   }
 
   useEffect(() => {
-    if (router.isReady && router.query.rateKey != null) {
+    if (!router.isReady) return
+
+    console.log(router.query.rateKey)
+    if (router.isReady) {
       rateQuery({
         variables: {
           input: {
@@ -111,7 +102,7 @@ const BookingPage: NextPage = () => {
         rateKey: router.query.rateKey as string,
       })
     }
-  }, [router])
+  }, [router.query, router.isReady])
 
   useEffect(() => {
     if (rateData?.checkRate != null &&
