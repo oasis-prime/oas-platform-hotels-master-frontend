@@ -49,6 +49,11 @@ export interface AvailabilityStayInput {
   checkOut: string;
 }
 
+export interface BookingInput {
+  clientReference?: string | null;
+  language: LanguageEnum;
+}
+
 export interface CheckRateInput {
   rateKey: string;
   language: LanguageEnum;

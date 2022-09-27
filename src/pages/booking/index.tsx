@@ -37,6 +37,7 @@ const BookingPage: NextPage = () => {
   const [step, setStep] = useState<'information'| 'payment'>('information')
   const [checkOut, setCheckOut] = useState<Date>()
   const [checkIn, setCheckIn] = useState<Date>()
+  const [paymentLoading, setPaymentLoading] = useState<boolean>(false)
 
   const methods = useForm<IHotelsBooking>({
     mode: 'onSubmit',
@@ -55,7 +56,7 @@ const BookingPage: NextPage = () => {
   const { t } = useTranslation()
 
   const [rateQuery, { data: rateData, loading: rateLoading }] = useCheckRate()
-  const [paymentQuery, { data: paymentData, loading: paymentLoading }] = usePayment()
+  const [paymentQuery, { data: paymentData }] = usePayment()
 
   const router = useRouter()
 
@@ -65,6 +66,7 @@ const BookingPage: NextPage = () => {
     }
 
     if (step === 'payment') {
+      setPaymentLoading(true)
       const d = methods.watch()
       paymentQuery({
         variables: {
@@ -78,6 +80,9 @@ const BookingPage: NextPage = () => {
         },
         onCompleted: (data) => {
           window.location.href = `${data.payment.paymentUrl}`
+        },
+        onError: () => {
+          setPaymentLoading(false)
         },
       },
       )
