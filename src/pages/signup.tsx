@@ -25,17 +25,18 @@ const Signup: NextPage = () => {
   ) => {
     event.preventDefault()
 
-    auth
-      ?.signUp(email, password)
-      .then(() => {
-        // do something after signing in. For example, router.push("/");
-        router.push('/')
-      })
-      .catch((error) => {
-        const { title, description } = setErrorMessage(error)
-        // do something with error title and description here
-        alert(title + ': ' + description)
-      })
+
+    // auth
+    //   ?.signUp(email, password)
+    //   .then(() => {
+    //     // do something after signing in. For example, router.push("/");
+    //     router.push('/')
+    //   })
+    //   .catch((error) => {
+    //     const { title, description } = setErrorMessage(error)
+    //     // do something with error title and description here
+    //     alert(title + ': ' + description)
+    //   })
   }
 
   // loading state

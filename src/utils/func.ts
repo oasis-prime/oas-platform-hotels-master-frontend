@@ -90,4 +90,15 @@ function fullDateString(date: Date) {
   return date.toLocaleDateString('en-us', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' })
 }
 
-export { fullDateString, formatter, parseDate, toISOLocal, getCheckIn, getCheckOut, getCalculatorDays, makeSlug }
+function getUrlVars(url: string) {
+  let hash
+  const myJson: any = {}
+  const hashes = url.slice(url.indexOf('?') + 1).split('&')
+  for (let i = 0; i < hashes.length; i++) {
+    hash = hashes[i].split('=')
+    myJson[hash[0]] = hash[1]
+  }
+  return myJson
+}
+
+export { getUrlVars, fullDateString, formatter, parseDate, toISOLocal, getCheckIn, getCheckOut, getCalculatorDays, makeSlug }
