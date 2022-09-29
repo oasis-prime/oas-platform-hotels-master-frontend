@@ -7,6 +7,7 @@ import { IncomingMessage } from 'http'
 import { LanguageEnum } from '__generated__/globalTypes'
 import { NextApiRequestCookies } from 'next/dist/server/api-utils'
 import { apolloClientMain } from '@graphql/client'
+import { getUrlVars } from '@utils/func'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
@@ -56,13 +57,13 @@ const streamToString = async (stream: IncomingMessage & {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res, locale }) => {
-  console.log(req.method)
   let booking: Booking | null | undefined = null
   if (req.method === 'POST') {
     const body = await streamToString(req)
 
     if (body) {
-      const jsonBody = JSON.parse(body)
+      const jsonBody = getUrlVars(body)
+      console.log(jsonBody)
       booking = await apolloClientMain.mutate<Booking, BookingVariables>({
         mutation: BOOKING_INSERT,
         variables: {
@@ -74,7 +75,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res, locale 
         errorPolicy: 'all',
       }).then(data => {
         return data.data
-      }).catch(() => {
+      }).catch((err) => {
+        console.log(err)
         return null
       })
     }
