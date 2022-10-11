@@ -1,1 +1,19 @@
-{}
+{
+  "search": {
+    "title": "Search for domestic/international hotels",
+    "input_placeholder": "Place, Hotel, City, Country",
+    "checkin": "Check in",
+    "checkout": "Check out",
+    "numberOfGuestsAndRooms": "Number of guests and rooms",
+    "submit": "Find a hotel"
+  },
+  "occupanciesSearch": {
+    "roomsUnit": "rooms",
+    "childrenUnit": "children",
+    "adultsUnit": "adults",
+    "children": "Children",
+    "adults": "Adults",
+    "rooms": "Rooms"
+  },
+  "hello_th": "AABB"
+}

@@ -1,5 +1,6 @@
 import { Controller, useFormContext } from 'react-hook-form'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { getCheckIn, getCheckOut } from '@utils/func'
 
 import { HotelsAutocomplete_getHotels_hotels } from '@graphql/services/__generated__/HotelsAutocomplete'
 import { IHotelsSearch } from '@model/hotel-search'
@@ -9,9 +10,11 @@ import classNames from 'classnames'
 import { debounce } from 'lodash'
 import { useHotelsAutocomplete } from '@graphql/services/hotels'
 import { usePopper } from 'react-popper'
-import { getCheckIn, getCheckOut } from '@utils/func'
+import { useTranslation } from 'next-i18next'
 
 const HotelSearchInput = () => {
+  const { t } = useTranslation()
+
   const { watch, control, setValue } = useFormContext<IHotelsSearch>()
   const data = watch()
   // const [value, setValue] = useState('')
@@ -86,7 +89,7 @@ const HotelSearchInput = () => {
           render={({ field: { onChange, value }}) => (
             <TextField
               value={value}
-              placeholder="สถานที่, โรงแรม, เมือง, ประเทศ"
+              placeholder={t('common:search.input_placeholder')}
               ref={referenceElement}
               onChange={(e) => {
                 onChange(e)

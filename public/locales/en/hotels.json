@@ -1,1 +1,9 @@
-{}
+{
+  "hotelType": "Hotel type",
+  "bedType": "Bed type",
+  "facilities/services": "Facilities/Services",
+  "filterSearchResults": "Filter search results",
+  "sortBy": "Sort By",
+  "starRating": "Star rating",
+  "findHotels": "Find hotels"
+}

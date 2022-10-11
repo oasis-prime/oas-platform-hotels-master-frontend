@@ -1,1 +1,19 @@
-{}
+{
+  "search": {
+    "title": "ค้นหาโรงแรมในประเทศ/ต่างประเทศ",
+    "input_placeholder": "สถานที่, โรงแรม, เมือง, ประเทศ",
+    "checkin": "เช็คอิน",
+    "checkout": "เช็คเอ้าท์",
+    "numberOfGuestsAndRooms": "จำนวนผู้เข้าพักและห้องพัก",
+    "submit": "ค้นหาโรงแรม"
+  },
+  "occupanciesSearch": {
+    "roomsUnit": "ห้อง",
+    "childrenUnit": "คน",
+    "adultsUnit": "คน",
+    "children": "เด็ก",
+    "adults": "ผู้ใหญ่",
+    "rooms": "ห้อง"
+  },
+  "hello_th": "AABB"
+}

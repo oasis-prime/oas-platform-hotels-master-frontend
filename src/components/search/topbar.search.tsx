@@ -10,12 +10,15 @@ import { TextField } from '@components/misc/textField'
 import classNames from 'classnames'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 
 type TopBarSearch = {
   screen: 'detail' | 'search'
 }
 
 const TopBarSearch = (props: TopBarSearch) => {
+  const { t } = useTranslation()
+
   const router = useRouter()
 
   const { control, handleSubmit, watch, setValue } = useFormContext<IHotelsDetailSearch>()
@@ -81,7 +84,7 @@ const TopBarSearch = (props: TopBarSearch) => {
           <Controller
             render={({ field: { onChange, value }}) => (
               <TextField
-                placeholder="สถานที่, โรงแรม, เมือง, ประเทศ"
+                placeholder={t('common:search.input_placeholder')}
                 value={value}
                 onChange={onChange}
               />
@@ -149,7 +152,7 @@ const TopBarSearch = (props: TopBarSearch) => {
               'px-4',
             )}
           >
-              ค้นหาโรงแรม
+            { t('common:search.submit') }
           </Button>
         </div>
       </div>

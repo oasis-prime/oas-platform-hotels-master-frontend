@@ -1,1 +1,9 @@
-{}
+{
+  "hotelType": "ประเภทที่พัก",
+  "bedType": "ประเภทเตียง",
+  "facilities/services": "สิ่งอำนวยความสะดวก/บริการ",
+  "filterSearchResults": "กรองผลการค้นหา",
+  "sortBy": "เรียงตาม",
+  "starRating": "ระดับดาว",
+  "findHotels": "ค้นหาที่พัก"
+}

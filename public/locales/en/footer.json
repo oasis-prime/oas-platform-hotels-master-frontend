@@ -1,1 +1,15 @@
-{}
+{
+  "copyright": "©2020LaslesVPN",
+  "contact": "Contact",
+  "helpeCenter": "Helpe Center",
+  "followUs": "Follow Us",
+  "contactItems": {
+    "contactUs": "Contact Us",
+    "privacyPolicy": "Privacy Policy",
+    "about": "About Smartgo.life"
+  },
+  "helpItems": {
+    "paymentMethod": "Payment method",
+    "howToBookAHotel": "How to book a hotel"
+  }
+}
