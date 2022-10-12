@@ -11,6 +11,7 @@ import Image from 'next/image'
 import classNames from 'classnames'
 import { useFormContext } from 'react-hook-form'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 
 type IHotelCardMain = {
   readonly h: HotelsSearch_getHotels_hotels
@@ -19,6 +20,8 @@ type IHotelCardMain = {
 }
 
 const HotelCardMain = (prop: IHotelCardMain) => {
+  const { t } = useTranslation()
+
   const { getValues, watch } = useFormContext<IHotelsSearch>()
 
   const [numberOfDays, setNumberOfDays] = useState('0')
@@ -151,9 +154,9 @@ const HotelCardMain = (prop: IHotelCardMain) => {
             </div>
             <div className="absolute w-full h-full">
               <div className="p-2 text-white">
-                <div className="text-xs text-center">ราคาเมื่อจองผ่าน</div>
-                <div className="text-xs text-center">Click & Go</div>
-                <div className="text-2xl text-center">จองเลย</div>
+                <div className="text-xs text-center">{ t('hotels:priceWhenBookingThrough') }</div>
+                <div className="text-xs text-center">{ t('hotels:through') }</div>
+                <div className="text-2xl text-center">{ t('hotels:bookNow') }</div>
               </div>
             </div>
           </div>
@@ -165,7 +168,7 @@ const HotelCardMain = (prop: IHotelCardMain) => {
             ) : (
               <div className="text-xl text-right">
                 <div>
-                    ราคารวม <span className="text-red-500">1</span> ที่พัก <span className="text-red-500">{ numberOfDays }</span> คืน
+                  { t('hotels:totalCost') } <span className="text-red-500">1</span> { t('hotels:room') } <span className="text-red-500">{ numberOfDays }</span> { t('hotels:days') }
                 </div>
                 <div className="text-red-500 text-2xl">
                   { formatter.format(parseInt(prop.a?.minRate as string)) }
@@ -185,7 +188,7 @@ const HotelCardMain = (prop: IHotelCardMain) => {
                   'text-md text-white',
                 )}
               >
-              เลือกห้องพัก
+                { t('hotels:chooseRoom') }
               </Button>
             </div>
           </div>

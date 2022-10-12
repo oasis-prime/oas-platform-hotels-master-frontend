@@ -5,5 +5,12 @@
   "filterSearchResults": "กรองผลการค้นหา",
   "sortBy": "เรียงตาม",
   "starRating": "ระดับดาว",
-  "findHotels": "ค้นหาที่พัก"
+  "findHotels": "ค้นหาที่พัก",
+  "chooseRoom": "เลือกห้องพัก",
+  "totalCost": "ราคารวม",
+  "room": "ที่พัก",
+  "days": "คืน",
+  "priceWhenBookingThrough": "ราคาเมื่อจองผ่าน",
+  "through": "Smartgo",
+  "bookNow": "จองเลย"
 }

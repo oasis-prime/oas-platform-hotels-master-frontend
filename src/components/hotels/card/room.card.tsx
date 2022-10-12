@@ -10,6 +10,7 @@ import classNames from 'classnames'
 import { formatter } from '@utils/func'
 import { useFormContext } from 'react-hook-form'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 
 type HotelRoomCardProps = {
   data: HotelSearch_getHotel_rooms | null
@@ -17,6 +18,7 @@ type HotelRoomCardProps = {
 }
 
 const HotelRoomCard = (props: HotelRoomCardProps) => {
+  const { t } = useTranslation()
   const { getValues, watch } = useFormContext<IHotelsDetailSearch>()
 
   const router = useRouter()
@@ -45,10 +47,10 @@ const HotelRoomCard = (props: HotelRoomCardProps) => {
         <div className="col-span-12 md:col-span-10">
           <div className="text-lg">{ props.availability?.name } ({ props.data?.roomCode })</div>
           <div className="hidden md:grid grid-cols-12 md:grid-cols-10 gap-2">
-            <div className="col-span-2">ห้องพัก</div>
-            <div className="col-span-4">สิทธิประโยชน์</div>
-            <div className="col-span-1">ผู้เข้าพัก</div>
-            <div className="col-span-3">ราคา ต่อห้อง ต่อคืน</div>
+            <div className="col-span-2">{ t('hotel:room') }</div>
+            <div className="col-span-4">{ t('hotel:benefits') }</div>
+            <div className="col-span-1">{ t('hotel:guest') }</div>
+            <div className="col-span-3">{ t('hotel:pricePerRoomPerNight') }</div>
           </div>
           <div className={classNames(
             'grid grid-cols-12 md:grid-cols-10 gap-2 grid-flow-row divide-y-[0.5px] auto-rows-auto',
@@ -109,7 +111,7 @@ const HotelRoomCard = (props: HotelRoomCardProps) => {
                     )}
                   >
                     <div className="col-span-6 md:col-span-4 text-sm">
-                      <div>ราคานี้รวม</div>
+                      <div>{ t('hotel:thisPriceIncludes') }</div>
                       <div><i className="bi bi-check text-green-600"></i> { v?.boardName }</div>
 
                       { v?.rateClass === 'NRF' && <div><i className="bi bi-shield-exclamation text-red-600"></i> Non-Refundable Rate</div> }
@@ -146,8 +148,8 @@ const HotelRoomCard = (props: HotelRoomCardProps) => {
                         }}
                       >
                         <div className="text-red-500">{ formatter.format(parseInt(v?.net as string)) }</div>
-                        <div className="text-sm text-gray-400">ราคาเริ่มต้น (ต่อคืน)</div>
-                        <div className="text-green-500 underline">จองราคานี้</div>
+                        <div className="text-sm text-gray-400">{ t('hotel:startingPrice') }</div>
+                        <div className="text-green-500 underline">{ t('hotel:reserve') }</div>
                       </div>
                     </div>
                   </div>
@@ -179,9 +181,9 @@ const HotelRoomCard = (props: HotelRoomCardProps) => {
               </div>
               <div className="absolute w-full h-full">
                 <div className="p-2 text-white">
-                  <div className="sm:text-xs text-center">ราคาเมื่อจองผ่าน</div>
-                  <div className="sm:text-xs text-center">Click & Go</div>
-                  <div className="sm:text-xl text-center">จองเลย</div>
+                  <div className="sm:text-xs text-center">{ t('hotel:priceWhenBookingThrough') }</div>
+                  <div className="sm:text-xs text-center">{ t('hotel:through') }</div>
+                  <div className="sm:text-xl text-center">{ t('hotel:bookNow') }</div>
                 </div>
               </div>
             </div>
@@ -192,8 +194,8 @@ const HotelRoomCard = (props: HotelRoomCardProps) => {
 
               { props.data?.maxPax &&
                 query.adults + query.children > props.data?.maxPax ?
-                <div className="text-red-500 text-xs">จำนวนผู้เข้าพักเกินกำหนด { props.data?.maxPax } คน</div> :
-                <div className="text-xs">จำนวนผู้เข้าพักสูงสุด</div>
+                <div className="text-red-500 text-xs">{ t('hotel:guestsOverdue', { number: props.data?.maxPax }) }</div> :
+                <div className="text-xs">{ t('hotel:maximumNumberOfGuests') }</div>
               }
 
             </div>

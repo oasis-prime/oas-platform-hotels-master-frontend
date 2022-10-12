@@ -15,5 +15,25 @@
     "adults": "ผู้ใหญ่",
     "rooms": "ห้อง"
   },
-  "hello_th": "AABB"
+  "signinForm": {
+    "title": "เข้าสู่ระบบด้วย",
+    "facebook": "ดำเนินการต่อด้วย Facebook",
+    "email": "อีเมล",
+    "password": "รหัสผ่าน",
+    "signin": "ลงชื่อเข้าใช้",
+    "register": "สมัครสมาชิกใหม่"
+  },
+  "signupForm": {
+    "title": "สร้างบัญชีผู้ใช้",
+    "facebook": "ดำเนินการต่อด้วย Facebook",
+    "name-surname": "ชื่อ นามสกุล",
+    "email": "อีเมล",
+    "password": "รหัสผ่าน",
+    "passwordConfirm": "ยืนยันรหัสผ่าน",
+    "confirmPolicy": "ท่านยอมรับ",
+    "confirmPolicyInSpan": "ข้อกำหนดการใช้งานและนโยบายความเป็นส่วนตัว",
+    "confirmPolicyOutSpan": "เพื่อดำเนินการ",
+    "submit": "ยืนยันการสมัคร",
+    "register": "สมัครสมาชิก"
+  }
 }

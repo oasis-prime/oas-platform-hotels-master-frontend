@@ -15,5 +15,26 @@
     "adults": "Adults",
     "rooms": "Rooms"
   },
-  "hello_th": "AABB"
+  "signinForm": {
+    "title": "Login with",
+    "facebook": "Continue with Facebook",
+    "email": "Email",
+    "password": "Password",
+    "signin": "Sign In",
+    "register": "Register"
+  },
+  "signupForm": {
+    "title": "Login with",
+    "facebook": "Continue with Facebook",
+    "name-surname": "Name Surname",
+    "email": "Email",
+    "password": "Password",
+    "passwordConfirm": "Confirm password",
+    "confirmPolicy": "You accept",
+    "confirmPolicyInSpan": "Terms of Use and Privacy Policy",
+    "confirmPolicyOutSpan": "to perform",
+    "submit": "Confirmation",
+    "signin": "Sign In",
+    "register": "Register"
+  }
 }

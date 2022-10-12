@@ -12,11 +12,14 @@ import { setErrorMessage } from '@auth/error.message'
 import { useAuth } from '@auth/auth'
 import useModal from '@store/useModal'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 const MemberTextField = 'w-full bg-white border p-3 rounded-lg font-semibold border-gray-200 focus:border-gray-400 outline-none placeholder-gray-400'
 
 const SignupModal: React.FC = () => {
+  const { t } = useTranslation()
+
   const router = useRouter()
   const auth = useAuth()
 
@@ -115,13 +118,13 @@ const SignupModal: React.FC = () => {
                     </div>
                     <div className="col-span-1 grid grid-flow-row gap-2">
                       <div>
-                        <p className="text-lg">สร้างบัญชีผู้ใช้ Click & Go</p>
+                        <p className="text-lg">{ t('common:signupForm.title') }</p>
                       </div>
                       <div>
-                        <ButtonOutline>ดำเนินการต่อด้วย Facebook</ButtonOutline>
+                        <ButtonOutline>{ t('common:signupForm.facebook') }</ButtonOutline>
                       </div>
                       <div>
-                        <p className="text-lg">ชื่อ-นามสกุล</p>
+                        <p className="text-lg">{ t('common:signupForm.name-surname') }</p>
                         <Controller
                           render={({ field: { onChange, value }, fieldState: { error }}) => (
                             <TextField
@@ -140,7 +143,7 @@ const SignupModal: React.FC = () => {
                         />
                       </div>
                       <div>
-                        <p className="text-lg">อีเมล</p>
+                        <p className="text-lg">{ t('common:signupForm.email') }</p>
                         <Controller
                           render={({ field: { onChange, value }, fieldState: { error }}) => (
                             <TextField
@@ -159,7 +162,7 @@ const SignupModal: React.FC = () => {
                         />
                       </div>
                       <div>
-                        <p className="text-lg">รหัสผ่าน</p>
+                        <p className="text-lg">{ t('common:signupForm.password') }</p>
                         <Controller
                           render={({ field: { onChange, value }, fieldState: { error }}) => (
                             <TextField
@@ -179,7 +182,7 @@ const SignupModal: React.FC = () => {
                         />
                       </div>
                       <div>
-                        <p className="text-lg">ยืนยันรหัสผ่าน</p>
+                        <p className="text-lg">{ t('common:signupForm.passwordConfirm') }</p>
                         <Controller
                           render={({ field: { onChange, value }, fieldState: { error }}) => (
                             <TextField
@@ -201,13 +204,13 @@ const SignupModal: React.FC = () => {
                       <div className="mt-2">
                         <Checkbox className="float-left mr-2" />
                         <p className="">
-                        ท่านยอมรับ{ ' ' }
-                          <span>ข้อกำหนดการใช้งานและนโยบายความเป็นส่วนตัว</span>
-                        เพื่อดำเนินการ
+                          { t('common:signupForm.confirmPolicy') }{ ' ' }
+                          <span>{ t('common:signupForm.confirmPolicyInSpan') }</span>
+                          { t('common:signupForm.confirmPolicyOutSpan') }
                         </p>
                       </div>
                       <div className="">
-                        <Button>ยืนยันการสมัคร</Button>
+                        <Button>{ t('common:signupForm.submit') }</Button>
                       </div>
                     </div>
                   </div>

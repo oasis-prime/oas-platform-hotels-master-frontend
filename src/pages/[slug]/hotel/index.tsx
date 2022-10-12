@@ -1,26 +1,31 @@
+import { AppConfig, AppHotelbeds } from '@utils/app.config'
 import { FormProvider, useForm } from 'react-hook-form'
+import { GetServerSideProps, GetStaticPaths, NextPage } from 'next'
 import { HotelDescriptionCard, HotelFacilitiesCard, HotelRoomCard } from '@components/hotels/card'
+import { Trans, useTranslation } from 'next-i18next'
 import { getCheckIn, getCheckOut, parseDate, toISOLocal } from '@utils/func'
 import { useEffect, useState } from 'react'
 
-import { AppHotelbeds } from '@utils/app.config'
 import { IHotelsDetailSearch } from '@model/hotel-search'
 import Image from 'next/image'
 import { LanguageEnum } from '__generated__/globalTypes'
 import { MainLoading } from '@components/misc/loading/main.loading'
-import { NextPage } from 'next'
 import { TopBarSearch } from '@components/search/topbar.search'
 import classNames from 'classnames'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useAvailability } from '@graphql/services/availability'
 import { useHotel } from '@graphql/services/hotels'
 import { useRouter } from 'next/router'
 
 const HotelDescription: NextPage = () => {
+  const { t } = useTranslation()
   const methods = useForm<IHotelsDetailSearch>()
 
   const { getValues, reset } = methods
 
   const router = useRouter()
+  const { locale } = router
+
   const [hotelQuery, { data: hotelData, loading: hotelLoading }] = useHotel()
   const [availabilityQuery, { data: availabilityData, loading: availabilityLoading }] = useAvailability()
 
@@ -36,7 +41,7 @@ const HotelDescription: NextPage = () => {
           hotels: {
             hotel: [query.code],
           },
-          language: LanguageEnum.TAI,
+          language: locale === 'th' ? LanguageEnum.TAI : LanguageEnum.ENG,
           occupancies: [{ adults: query.adults, children: 0, rooms: query.rooms }],
           stay: {
             checkIn: toISOLocal(query.checkIn).slice(0, 10),
@@ -51,14 +56,14 @@ const HotelDescription: NextPage = () => {
           variables: {
             hotelInput: {
               code: query.code,
-              language: LanguageEnum.TAI,
+              language: locale === 'th' ? LanguageEnum.TAI : LanguageEnum.ENG,
             },
             hotelRoomsInput: {
               roomCode: roomCode,
-              language: LanguageEnum.TAI,
+              language: locale === 'th' ? LanguageEnum.TAI : LanguageEnum.ENG,
             },
             hotelFacilitiesInput: {
-              language: LanguageEnum.TAI,
+              language: locale === 'th' ? LanguageEnum.TAI : LanguageEnum.ENG,
               limit: 20,
               offset: 0,
               groupCode: 70,
@@ -191,14 +196,14 @@ const HotelDescription: NextPage = () => {
           )}
           >
             <div className="md:col-span-2 flex gap-4 items-center">
-              <div>รายละเอียดที่พัก</div>
-              <div>ห้องพัก</div>
-              <div>สิ่งอำนวยความสะดวก</div>
-              <div>ตำแหน่งที่ตั้ง</div>
-              <div>นโยบายที่พัก</div>
+              <div>{ t('hotel:details') }</div>
+              <div>{ t('hotel:room') }</div>
+              <div>{ t('hotel:facilities') }</div>
+              <div>{ t('hotel:location') }</div>
+              <div>{ t('hotel:policy') }</div>
             </div>
             <div className="md:col-span-1 flex items-center justify-end">
-              <div>เริ่มต้นที่ <span className="text-red-500 text-xl">฿ { availabilityData?.getAvailability?.availability?.[0]?.minRate }</span></div>
+              <div>{ t('hotel:costStartAt') } <span className="text-red-500 text-xl">฿ { availabilityData?.getAvailability?.availability?.[0]?.minRate }</span></div>
             </div>
           </div>
         </div>
@@ -238,14 +243,14 @@ const HotelDescription: NextPage = () => {
                       height={100}
                     />
                     <div className="w-full h-full absolute flex flex-wrap justify-center content-end">
-                      <div className="text-gray-800 text-xl py-2">ดูที่พัก</div>
+                      <div className="text-gray-800 text-xl py-2">{ t('hotel:location') }</div>
                     </div>
                   </div>
                 </div>
 
                 <div className="pt-3 flex gap-4 items-center">
                   <i className="bi bi-car-front"></i>
-                  <div>ที่จอดรถ</div>
+                  <div>{ t('hotel:parking') }</div>
                   { hotelData?.getHotel.facilities?.find((v, i) => {
                     if (v?.facilityCode === 500 || v?.facilityCode === 560 || v?.facilityCode === 320) {
                       return true
@@ -264,7 +269,7 @@ const HotelDescription: NextPage = () => {
                 </div>
 
                 <div className="pt-3">
-                  <div>ที่เที่ยวยอดนิยม</div>
+                  <div>{ t('hotel:popular') }</div>
                   { hotelData?.getHotel.interestPoints?.map((v, i) => (
                     <div
                       key={`interestPoints-${i}`}
@@ -275,7 +280,7 @@ const HotelDescription: NextPage = () => {
                 </div>
 
                 <div className="pt-3">
-                  <div>ที่เที่ยวใกล้ที่พัก</div>
+                  <div>{ t('hotel:near') }</div>
                 </div>
               </div>
             </div>
@@ -283,11 +288,20 @@ const HotelDescription: NextPage = () => {
           </div>
           <div>
             <div className="max-w-screen-xl mx-auto grid gap-2">
-              <div className="text-2xl">ประเภทห้อง</div>
+              <div className="text-2xl">{ t('hotel:roomType') }</div>
               <div className="bg-gray-200 w-full h-[0.5px]"></div>
               <div>
-                <div>ห้องพัก { roomCount } ประเภท | ข้อเสนอห้องพัก { rateCount } ข้อเสนอ</div>
-                <div className="text-xs text-gray-300">ราคาไม่รวมภาษีและค่าธรรมเนียม</div>
+                <div>
+                  <Trans
+                    i18nKey="hotel:typeOffer"
+                    t={t}
+                    values={{ type: roomCount, offer: rateCount }}
+                  />
+                </div>
+                { /* {t('hotel:typeOffer', {
+                  type: roomCount, offer: rateCount
+                })} */ }
+                <div className="text-xs text-gray-300">{ t('hotel:taxes') }</div>
               </div>
               { /* <HotelCardEmpty /> */ }
               { availabilityData?.getAvailability?.availability?.[0] &&
@@ -318,12 +332,13 @@ const HotelDescription: NextPage = () => {
 }
 
 
-// export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
-//   return {
-//     paths: [],
-//     fallback: 'blocking',
-//   }
-// }
+export const getServerSideProps: GetServerSideProps = async ({ req, res, locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale as string, [...AppConfig.default_translations, 'hotel'])),
+    },
+  }
+}
 
 
 export default HotelDescription

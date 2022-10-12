@@ -20,6 +20,7 @@ import { useTranslation } from 'next-i18next'
 
 const HotelsPage: NextPage = () => {
   const router = useRouter()
+  const { locale } = router
   const [hotelsQuery, { data: hotelsData, loading: hotelsLoading }] = useHotels()
   const [availabilityQuery, { data: availabilityData, loading: availabilityLoading }] = useAvailability()
 
@@ -48,7 +49,7 @@ const HotelsPage: NextPage = () => {
           keywords: {
             keyword: [query.name],
           },
-          language: LanguageEnum.TAI,
+          language: locale === 'th' ? LanguageEnum.TAI : LanguageEnum.ENG,
           pagination: {
             page: 1,
             pageSize: 20,
@@ -64,7 +65,7 @@ const HotelsPage: NextPage = () => {
               hotels: {
                 hotel: hotelIds,
               },
-              language: LanguageEnum.TAI,
+              language: locale === 'th' ? LanguageEnum.TAI : LanguageEnum.ENG,
               occupancies: [{ adults: query.adults, children: 0, rooms: query.rooms }],
               stay: {
                 checkIn: toISOLocal(query.checkIn).slice(0, 10),
