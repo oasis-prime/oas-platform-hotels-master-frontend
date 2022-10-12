@@ -1,1 +1,40 @@
-{}
+{
+  "search": {
+    "title": "Search for domestic/international hotels",
+    "input_placeholder": "Place, Hotel, City, Country",
+    "checkin": "Check in",
+    "checkout": "Check out",
+    "numberOfGuestsAndRooms": "Number of guests and rooms",
+    "submit": "Find a hotel"
+  },
+  "occupanciesSearch": {
+    "roomsUnit": "rooms",
+    "childrenUnit": "children",
+    "adultsUnit": "adults",
+    "children": "Children",
+    "adults": "Adults",
+    "rooms": "Rooms"
+  },
+  "signinForm": {
+    "title": "Login with",
+    "facebook": "Continue with Facebook",
+    "email": "Email",
+    "password": "Password",
+    "signin": "Sign In",
+    "register": "Register"
+  },
+  "signupForm": {
+    "title": "Login with",
+    "facebook": "Continue with Facebook",
+    "name-surname": "Name Surname",
+    "email": "Email",
+    "password": "Password",
+    "passwordConfirm": "Confirm password",
+    "confirmPolicy": "You accept",
+    "confirmPolicyInSpan": "Terms of Use and Privacy Policy",
+    "confirmPolicyOutSpan": "to perform",
+    "submit": "Confirmation",
+    "signin": "Sign In",
+    "register": "Register"
+  }
+}

@@ -1,1 +1,39 @@
-{}
+{
+  "search": {
+    "title": "ค้นหาโรงแรมในประเทศ/ต่างประเทศ",
+    "input_placeholder": "สถานที่, โรงแรม, เมือง, ประเทศ",
+    "checkin": "เช็คอิน",
+    "checkout": "เช็คเอ้าท์",
+    "numberOfGuestsAndRooms": "จำนวนผู้เข้าพักและห้องพัก",
+    "submit": "ค้นหาโรงแรม"
+  },
+  "occupanciesSearch": {
+    "roomsUnit": "ห้อง",
+    "childrenUnit": "คน",
+    "adultsUnit": "คน",
+    "children": "เด็ก",
+    "adults": "ผู้ใหญ่",
+    "rooms": "ห้อง"
+  },
+  "signinForm": {
+    "title": "เข้าสู่ระบบด้วย",
+    "facebook": "ดำเนินการต่อด้วย Facebook",
+    "email": "อีเมล",
+    "password": "รหัสผ่าน",
+    "signin": "ลงชื่อเข้าใช้",
+    "register": "สมัครสมาชิกใหม่"
+  },
+  "signupForm": {
+    "title": "สร้างบัญชีผู้ใช้",
+    "facebook": "ดำเนินการต่อด้วย Facebook",
+    "name-surname": "ชื่อ นามสกุล",
+    "email": "อีเมล",
+    "password": "รหัสผ่าน",
+    "passwordConfirm": "ยืนยันรหัสผ่าน",
+    "confirmPolicy": "ท่านยอมรับ",
+    "confirmPolicyInSpan": "ข้อกำหนดการใช้งานและนโยบายความเป็นส่วนตัว",
+    "confirmPolicyOutSpan": "เพื่อดำเนินการ",
+    "submit": "ยืนยันการสมัคร",
+    "register": "สมัครสมาชิก"
+  }
+}

@@ -9,8 +9,11 @@ import { MainDatepicker } from '@components/misc/datepicker/main.datepicker'
 import { OccupanciesSearch } from './occupancies.search'
 import classNames from 'classnames'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 
 const HotelSearch: React.FC = () => {
+  const { t } = useTranslation()
+
   const router = useRouter()
 
   const methods = useForm<IHotelsSearch>({
@@ -46,16 +49,16 @@ const HotelSearch: React.FC = () => {
         )}
         >
           <div className="col-span-4">
-            <p>ค้นหาโรงแรมในประเทศ/ต่างประเทศ</p>
+            <p>{ t('common:search.title') }</p>
           </div>
           <div className="col-span-4">
             <HotelSearchInput />
           </div>
           <div className="col-start-1 col-span-2">
-            <p>เช็คอิน</p>
+            <p>{ t('common:search.checkin') }</p>
           </div>
           <div className="col-start-3 col-span-2">
-            <p>เช็คเอ้าท์</p>
+            <p>{ t('common:search.checkout') }</p>
           </div>
           <div className="col-start-1 col-span-2">
             <Controller
@@ -83,7 +86,7 @@ const HotelSearch: React.FC = () => {
             />
           </div>
           <div className="col-span-4">
-            <p>จำนวนผู้เข้าพักและห้องพัก</p>
+            <p>{ t('common:search.numberOfGuestsAndRooms') }</p>
           </div>
           <div className="col-start-1 lg:col-span-3 col-span-4">
             <OccupanciesSearch screen="main" />
@@ -99,7 +102,7 @@ const HotelSearch: React.FC = () => {
               )}
             >
               <p className="whitespace-pre-wrap">
-                ค้นหาโรงแรม
+                { t('common:search.submit') }
               </p>
             </Button>
           </div>

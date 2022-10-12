@@ -1,6 +1,7 @@
 import { Checkbox } from '@components/misc/checkbox/main.checkbox'
 import Image from 'next/image'
 import { useState } from 'react'
+import { useTranslation } from 'next-i18next'
 
 type IFacilities = {
   code: number
@@ -43,6 +44,8 @@ const DEFAULT_BEDS_TYPE: IBedsType[] = [
 ]
 
 const HotelsFilter = () => {
+  const { t } = useTranslation()
+
   const [facilities, setFacilities] = useState<IFacilities[]>(DEFAULT_FACILITIES)
   const [hotelsType, setHotelsType] = useState<IHotelsType[]>(DEFAULT_HOTELS_TYPE)
   const [bedsType, setBedsType] = useState<IBedsType[]>(DEFAULT_BEDS_TYPE)
@@ -64,25 +67,26 @@ const HotelsFilter = () => {
             height={100}
           />
           <div className="w-full h-full absolute flex flex-wrap justify-center content-end">
-            <div className="text-gray-800 text-xl py-2">ค้นหาที่พัก</div>
+            <div className="text-gray-800 text-xl py-2">{ t('hotels:findHotels') }</div>
           </div>
         </div>
       </div>
       <div className="grid gap-1 col-span-6 xl:col-span-12">
-        <div className="text-xl mt-4">กรองผลการค้นหา</div>
+        <div className="text-xl mt-4">{ t('hotels:filterSearchResults') }</div>
         { facilities.slice(0, 3).map((v, i, row) => {
-          return (<div
-            className="flex items-center"
-            key={`facilities-filter-type-${i}`}
-          >
-            <Checkbox className="float-left mr-2" />
-            <p className="">{ v.name }</p>
-          </div>)
+          return (
+            <div
+              className="flex items-center"
+              key={`facilities-filter-type-${i}`}
+            >
+              <Checkbox className="float-left mr-2" />
+              <p className="">{ v.name }</p>
+            </div>)
         }) }
 
       </div>
       <div className="grid gap-1 col-span-6 xl:col-span-12">
-        <div className="text-xl mt-4">ระดับดาว</div>
+        <div className="text-xl mt-4">{ t('hotels:starRating') }</div>
         <div className="flex items-center">
           <Checkbox className="float-left mr-2" />
           <div className="text-2xl text-orange-400 gap-1 flex">
@@ -112,7 +116,7 @@ const HotelsFilter = () => {
         </div>
       </div>
       <div className="grid gap-1 col-span-6 xl:col-span-12">
-        <div className="text-xl mt-4">ประเภทที่พัก</div>
+        <div className="text-xl mt-4">{ t('hotels:hotelType') }</div>
         { hotelsType.map((v, i) => (
           <div
             className="flex items-center"
@@ -124,7 +128,7 @@ const HotelsFilter = () => {
         )) }
       </div>
       <div className="grid gap-1 col-span-6 xl:col-span-12">
-        <div className="text-xl mt-4">ประเภทเตียง</div>
+        <div className="text-xl mt-4">{ t('hotels:bedType') }</div>
         { bedsType.map((v, i) => (
           <div
             className="flex items-center"
@@ -136,15 +140,16 @@ const HotelsFilter = () => {
         )) }
       </div>
       <div className="grid gap-1 col-span-6 xl:col-span-12">
-        <div className="text-xl mt-4">สิ่งอำนวยความสะดวก/บริการ</div>
+        <div className="text-xl mt-4">{ t('hotels:facilities/services') }</div>
         { facilities.map((v, i, row) => {
-          return (<div
-            className="flex items-center"
-            key={`facilities-filter-type-${i}`}
-          >
-            <Checkbox className="float-left mr-2" />
-            <p className="">{ v.name }</p>
-          </div>)
+          return (
+            <div
+              className="flex items-center"
+              key={`facilities-filter-type-${i}`}
+            >
+              <Checkbox className="float-left mr-2" />
+              <p className="">{ v.name }</p>
+            </div>)
         }) }
       </div>
     </div>

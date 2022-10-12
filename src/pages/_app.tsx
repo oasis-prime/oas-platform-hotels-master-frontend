@@ -1,6 +1,9 @@
 import '@styles/globals.css'
 import '@styles/datepicker.css'
 import '@styles/pentagon.css'
+import 'swiper/css'
+import 'swiper/css/free-mode'
+import 'swiper/css/pagination'
 
 import { SigninModal, SignupModal } from '@components/member'
 

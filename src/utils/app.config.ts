@@ -11,7 +11,7 @@ export const AppConfig = {
   graphqlBaseUrl: process.env.NEXT_PUBLIC_API_GRAPHQL,
   locale: '',
   site_name: '',
-  default_translations: ['footer', 'header', 'layout', 'misc'],
+  default_translations: ['footer', 'header', 'layout', 'misc', 'common'],
 }
 
 export const AppHotelbeds = {

@@ -1,19 +1,26 @@
 import { Controller, useFormContext } from 'react-hook-form'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import { IHotelsSearch } from '@model/hotel-search'
 import { TextFieldNumber } from '@components/misc/textField/number.main'
 import classNames from 'classnames'
 import { usePopper } from 'react-popper'
+import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 
 type OccupanciesSearch = {
   screen: 'main' | 'topbar'
 }
 
 const OccupanciesSearch = (prop: OccupanciesSearch) => {
+  const { t } = useTranslation()
+
+  const router = useRouter()
+  const { locale } = router
+
   const { watch, control } = useFormContext<IHotelsSearch>()
   // dropdown props
-  const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false)
+  const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false)
   const referenceElement = useRef<HTMLButtonElement>(null)
   const popperElement = useRef<HTMLDivElement>(null)
 
@@ -31,9 +38,15 @@ const OccupanciesSearch = (prop: OccupanciesSearch) => {
 
 
   useEffect(() => {
+    if (!dropdownPopoverShow) return
+
     function handleClickOutside(event: MouseEvent) {
       const a = event.target
-      if (popperElement.current && !popperElement.current.contains(a as Node)) {
+      if (popperElement.current &&
+        !popperElement.current.contains(a as Node) &&
+        referenceElement.current &&
+        !referenceElement.current.contains(a as Node) &&
+        dropdownPopoverShow) {
         setDropdownPopoverShow(false)
       }
     }
@@ -43,7 +56,7 @@ const OccupanciesSearch = (prop: OccupanciesSearch) => {
       // Unbind the event listener on clean up
       document.removeEventListener('mousedown', handleClickOutside)
     }
-  }, [popperElement])
+  }, [popperElement, referenceElement, dropdownPopoverShow])
 
   return (
     <div className={classNames(
@@ -61,7 +74,7 @@ const OccupanciesSearch = (prop: OccupanciesSearch) => {
             'w-full px-6 py-3',
             'text-gray-700 font-bold text-sm',
             'uppercase rounded shadow outline-none border border-gray-200',
-            'hover:shadow-lg hover:border-primary hover:hover:border-2',
+            'hover:shadow-lg hover:border-primary',
             'focus:outline-none',
             prop.screen === 'topbar' && 'h-full rounded-md',
           )}
@@ -75,17 +88,17 @@ const OccupanciesSearch = (prop: OccupanciesSearch) => {
           { prop.screen == 'main' ? (
             <>
               <p>
-                ผู้ใหญ่ { watch('adults') } คน
-                { watch('children') > 0 && `, เด็ก ${watch('children')}` }
+                { locale === 'th' && t('common:occupanciesSearch.adults') } { watch('adults') } { t('common:occupanciesSearch.adultsUnit') }
+                { watch('children') > 0 && `, ${ locale === 'th' ? t('common:occupanciesSearch.children') : '' } ${watch('children')} ${ t('common:occupanciesSearch.childrenUnit') }` }
               </p>
-              <p>{ watch('rooms') } ห้องพัก</p>
+              <p>{ watch('rooms') } { t('common:occupanciesSearch.roomsUnit') }</p>
             </>
           ) : (
             <>
               <p>
-                ผู้ใหญ่ { watch('adults') } คน
-                { watch('children') > 0 && `, เด็ก ${watch('children')}` } ,
-                { watch('rooms') } ห้องพัก
+                { locale === 'th' && t('common:occupanciesSearch.adults') } { watch('adults') } { t('common:occupanciesSearch.adultsUnit') }
+                { watch('children') > 0 && `, ${ locale === 'th' ? t('common:occupanciesSearch.children') : '' } ${watch('children')} ${ t('common:occupanciesSearch.childrenUnit') }` } ,
+                { watch('rooms') } { t('common:occupanciesSearch.roomsUnit') }
               </p>
             </>
           ) }
@@ -109,7 +122,7 @@ const OccupanciesSearch = (prop: OccupanciesSearch) => {
                   htmlFor="rooms-input"
                   className="text-gray-700 text-sm font-semibold"
                 >
-                      ห้อง
+                  { t('common:occupanciesSearch.rooms') }
                 </label>
               </div>
               <div>
@@ -132,7 +145,7 @@ const OccupanciesSearch = (prop: OccupanciesSearch) => {
                   htmlFor="custom-input-number"
                   className="text-gray-700 text-sm font-semibold"
                 >
-                      ผู้ใหญ่
+                  { t('common:occupanciesSearch.adults') }
                 </label>
               </div>
               <div>
@@ -155,7 +168,7 @@ const OccupanciesSearch = (prop: OccupanciesSearch) => {
                   htmlFor="custom-input-number"
                   className="text-gray-700 text-sm font-semibold"
                 >
-                      เด็ก
+                  { t('common:occupanciesSearch.children') }
                 </label>
               </div>
               <div>

@@ -1,16 +1,18 @@
 import { FormProvider, useForm } from 'react-hook-form'
+import type { GetStaticProps, NextPage } from 'next'
 import { getCheckIn, getCheckOut, parseDate, toISOLocal } from '@utils/func'
 import { useEffect, useState } from 'react'
 
+import { AppConfig } from '@utils/app.config'
 import { HotelCardMain } from '@components/hotels/card'
 import { HotelsFilter } from '@components/hotels/filter'
 import { IHotelsSearch } from '@model/hotel-search'
 import { LanguageEnum } from '__generated__/globalTypes'
 import { MainLoading } from '@components/misc/loading/main.loading'
 import { Modal } from '@components/misc/modal'
-import type { NextPage } from 'next'
 import { TopBarSearch } from '@components/search/topbar.search'
 import classNames from 'classnames'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useAvailability } from '@graphql/services/availability'
 import { useHotels } from '@graphql/services/hotels'
 import { useRouter } from 'next/router'
@@ -18,6 +20,7 @@ import { useTranslation } from 'next-i18next'
 
 const HotelsPage: NextPage = () => {
   const router = useRouter()
+  const { locale } = router
   const [hotelsQuery, { data: hotelsData, loading: hotelsLoading }] = useHotels()
   const [availabilityQuery, { data: availabilityData, loading: availabilityLoading }] = useAvailability()
 
@@ -46,7 +49,7 @@ const HotelsPage: NextPage = () => {
           keywords: {
             keyword: [query.name],
           },
-          language: LanguageEnum.TAI,
+          language: locale === 'th' ? LanguageEnum.TAI : LanguageEnum.ENG,
           pagination: {
             page: 1,
             pageSize: 20,
@@ -62,7 +65,7 @@ const HotelsPage: NextPage = () => {
               hotels: {
                 hotel: hotelIds,
               },
-              language: LanguageEnum.TAI,
+              language: locale === 'th' ? LanguageEnum.TAI : LanguageEnum.ENG,
               occupancies: [{ adults: query.adults, children: 0, rooms: query.rooms }],
               stay: {
                 checkIn: toISOLocal(query.checkIn).slice(0, 10),
@@ -120,7 +123,7 @@ const HotelsPage: NextPage = () => {
               แค่<span className="text-primary">คลิก</span> แล้ว<span className="text-primary">ไป</span>
               </p>
               <div className="col-span-9 flex gap-4 justify-between">
-                <p>เรียงตาม</p>
+                <p>{ t('hotels:sortBy') }</p>
                 <i
                   className="bi bi-filter-circle text-2xl cursor-pointer xl:hidden"
                   onClick={() => {
@@ -168,5 +171,15 @@ const HotelsPage: NextPage = () => {
   )
 }
 
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale as string, [
+        ...AppConfig.default_translations,
+        'hotels',
+      ])),
+    },
+  }
+}
 
 export default HotelsPage

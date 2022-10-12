@@ -2,5 +2,14 @@
   "copyright": "©2020LaslesVPN",
   "contact": "เกี่ยวกับเรา",
   "helpeCenter": "ช่วยเหลือ",
-  "followUs": "ติดตามเรา"
+  "followUs": "ติดตามเรา",
+  "contactItems": {
+    "contactUs": "ติดต่อเรา",
+    "privacyPolicy": "นโยบายความเป็นส่วนตัว",
+    "about": "เกี่ยวกับ Smartgo.life"
+  },
+  "helpItems": {
+    "paymentMethod": "วิธีชำระเงิน",
+    "howToBookAHotel": "วิธีการจอง"
+  }
 }

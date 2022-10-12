@@ -1,1 +1,16 @@
-{}
+{
+  "hotelType": "Hotel type",
+  "bedType": "Bed type",
+  "facilities/services": "Facilities/Services",
+  "filterSearchResults": "Filter search results",
+  "sortBy": "Sort By",
+  "starRating": "Star rating",
+  "findHotels": "Find hotels",
+  "chooseRoom": "Choose a room",
+  "totalCost": "Only",
+  "room": "Room",
+  "days": "Days",
+  "priceWhenBookingThrough": "Price when booking through",
+  "through": "Smartgo",
+  "bookNow": "Book now"
+}

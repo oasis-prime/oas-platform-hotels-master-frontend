@@ -10,9 +10,11 @@ import Image from 'next/image'
 import { TextField } from '@components/misc/textField'
 import classNames from 'classnames'
 import useModal from '@store/useModal'
+import { useTranslation } from 'next-i18next'
 
 const SigninModal: React.FC = () => {
   const { signIn, setSignIn } = useModal()
+  const { t } = useTranslation()
 
   return signIn ? (
     <>
@@ -92,22 +94,22 @@ const SigninModal: React.FC = () => {
               </div>
               <div className="col-span-1 flex flex-col gap-2">
                 <div>
-                  <p className="text-lg">เข้าสู่ระบบด้วย</p>
+                  <p className="text-lg">{ t('common:signinForm.title') }</p>
                 </div>
                 <div>
-                  <ButtonOutline>ดำเนินการต่อด้วย Facebook</ButtonOutline>
+                  <ButtonOutline>{ t('common:signinForm.facebook') }</ButtonOutline>
                 </div>
                 <div>
-                  <p className="text-lg">อีเมล</p>
+                  <p className="text-lg">{ t('common:signinForm.email') }</p>
                   <TextField />
                 </div>
                 <div>
-                  <p className="text-lg">รหัสผ่าน</p>
+                  <p className="text-lg">{ t('common:signinForm.password') }</p>
                   <TextField />
                 </div>
                 <div className="grid lg:grid-cols-2 grid-cols-1 gap-4 mt-4">
-                  <ButtonPrimary>ลงชื่อเข้าใช้</ButtonPrimary>
-                  <Button>สมัครสมาชิกใหม่</Button>
+                  <ButtonPrimary>{ t('common:signinForm.signin') }</ButtonPrimary>
+                  <Button>{ t('common:signinForm.register') }</Button>
                 </div>
               </div>
             </div>

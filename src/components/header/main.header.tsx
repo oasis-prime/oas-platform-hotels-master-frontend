@@ -2,6 +2,7 @@ import { Button, ButtonOutline, ButtonText } from '@components/misc/button'
 import { useEffect, useState } from 'react'
 
 import Image from 'next/image'
+import { LanguageHeader } from './language.header'
 import Link from 'next/link'
 import classNames from 'classnames'
 import useModal from '@store/useModal'
@@ -93,23 +94,28 @@ const MainHeader: React.FC<MainHeaderProps> = () => {
                 </Link>
               )) }
             </ul>
-            <div className="col-start-10 col-span-1">
-              <ButtonText
-                onClick={() => {
-                  setSignIn(!signIn)
-                }}
-              >
+            <div className="col-span-2 flex gap-4 items-center">
+              <div>
+                <ButtonText
+                  onClick={() => {
+                    setSignIn(!signIn)
+                  }}
+                >
                 Sign In
-              </ButtonText>
-            </div>
-            <div className="col-start-11 col-span-1">
-              <ButtonOutline
-                onClick={() => {
-                  setSignUp(!signUp)
-                }}
-              >
+                </ButtonText>
+              </div>
+              <div>
+                <ButtonOutline
+                  onClick={() => {
+                    setSignUp(!signUp)
+                  }}
+                >
                 Sign Up
-              </ButtonOutline>
+                </ButtonOutline>
+              </div>
+              <div>
+                <LanguageHeader />
+              </div>
             </div>
           </div>
         </nav>

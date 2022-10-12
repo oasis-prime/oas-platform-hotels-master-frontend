@@ -32,7 +32,7 @@ const MainFooter: React.FC = () => {
             { t('footer:contact') }
           </p>
           <ul className="text-white ">
-            { ['ติดต่อเรา', 'นโยบายความเป็นส่วนตัว', 'เกี่ยวกับ Click and Go Thailand'].map((i, v) => (
+            { [t('footer:contactItems.contactUs'), t('footer:contactItems.privacyPolicy'), t('footer:contactItems.about')].map((i, v) => (
               <li
                 key={v}
                 className={classNames(
@@ -62,7 +62,7 @@ const MainFooter: React.FC = () => {
                 'hover:text-orange-500',
               )}
             >
-              วิธีชำระเงิน
+              { t('footer:helpItems.paymentMethod') }
             </li>
           </ul>
         </div>
@@ -82,7 +82,7 @@ const MainFooter: React.FC = () => {
                 'hover:text-orange-500',
               )}
             >
-              วิธีชำระเงิน
+              { t('footer:helpItems.howToBookAHotel') }
             </li>
           </ul>
         </div>

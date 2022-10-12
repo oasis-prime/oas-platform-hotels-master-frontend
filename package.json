@@ -26,6 +26,7 @@
     "react-hook-form": "^7.34.2",
     "react-popper": "^2.3.0",
     "react-redux": "^8.0.2",
+    "swiper": "^8.4.3",
     "yup": "^0.32.11",
     "zustand": "^4.0.0-rc.1"
   },
