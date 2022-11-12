@@ -1,10 +1,12 @@
 type IHotelsSearch = {
-  name: string
+  name?: string
   rooms: number
   adults: number
   children: number
   checkIn: Date
   checkOut: Date
+  latitude?: number
+  longitude?: number
 }
 
 type IHotelsDetailSearch = IHotelsSearch & {

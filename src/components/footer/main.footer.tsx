@@ -25,7 +25,7 @@ const MainFooter: React.FC = () => {
         <div
           className={classNames(
             'row-span-2 flex flex-col',
-            'col-span-12 md:col-span-2',
+            'col-span-12 md:col-span-3',
           )}
         >
           <p className="text-white font-medium text-xl">
@@ -46,7 +46,7 @@ const MainFooter: React.FC = () => {
 
           </ul>
         </div>
-        <div
+        { /* <div
           className={classNames(
             'row-span-2 flex flex-col',
             'col-span-12 md:col-span-2',
@@ -65,11 +65,11 @@ const MainFooter: React.FC = () => {
               { t('footer:helpItems.paymentMethod') }
             </li>
           </ul>
-        </div>
+        </div> */ }
         <div
           className={classNames(
             'row-span-2 flex flex-col',
-            'col-span-12 md:col-span-2',
+            'col-span-12 md:col-span-3',
           )}
         >
           <p className="text-white font-medium text-xl">
@@ -89,7 +89,7 @@ const MainFooter: React.FC = () => {
         <div
           className={classNames(
             'row-span-2 flex flex-col',
-            'col-span-12 md:col-span-2',
+            'col-span-12 md:col-span-3',
             // 'grid justify-end text-right',
           )}
         >

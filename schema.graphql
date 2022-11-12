@@ -317,6 +317,11 @@ input GetPlacesInput {
   query: String
 }
 
+input GetPopularInput {
+  language: LanguageEnum!
+  pagination: PaginationInput!
+}
+
 type Hotel {
   hotelName: String
   language: LanguageEnum!
@@ -523,6 +528,34 @@ type PlacesData {
   places: [Places]
 }
 
+type Popular {
+  name: String
+  image: String
+  link: String
+  count: Int
+  status: String
+  createdAt: String
+  updatedAt: String
+}
+
+type PopularData {
+  data: [Popular!]!
+  pagination: PaginationType!
+}
+
+type PromotionData {
+  image: String
+  link: String
+  state: String
+  status: String
+  createdAt: String
+  updatedAt: String
+}
+
+input PromotionInput {
+  language: LanguageEnum!
+}
+
 type Query {
   getBooking(input: GetBookingInput!): BookingData!
   getPlaces(input: GetPlacesInput!): PlacesData!
@@ -531,6 +564,9 @@ type Query {
   getHotels(input: HotelsInput!): HotelsData!
   getHotel(input: HotelInput!): Hotel!
   getPayment(input: GetPaymentInput!): PaymentData!
+  getPopular(input: GetPopularInput!): Popular!
+  getAllPopular(input: GetPopularInput!): PopularData!
+  getPromotion(input: PromotionInput!): PromotionData!
   _service: _Service!
 }
 
