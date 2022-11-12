@@ -166,31 +166,50 @@ const HotelCardMain = (prop: IHotelCardMain) => {
               <>
               </>
             ) : (
-              <div className="text-xl text-right">
-                <div>
-                  { t('hotels:totalCost') } <span className="text-red-500">1</span> { t('hotels:room') } <span className="text-red-500">{ numberOfDays }</span> { t('hotels:days') }
+              prop.a?.minRate ? (
+                <>
+                  <div className="text-xl text-right">
+                    <div>
+                      { t('hotels:totalCost') } <span className="text-red-500">1</span> { t('hotels:room') } <span className="text-red-500">{ numberOfDays }</span> { t('hotels:days') }
+                    </div>
+                    <div className="text-red-500 text-2xl">
+                      { formatter.format(parseInt(prop.a?.minRate as string)) }
+                    </div>
+                  </div>
+                  <div className="flex content-end justify-end">
+                    <Button
+                      onClick={() => {
+                        handleOnClick()
+                      }}
+                      type="submit"
+                      className={classNames(
+                        'h-full bg-primary p-4 px-6 border rounded font-semibold outline-none',
+                        'placeholder-gray-400',
+                        'text-md text-white',
+                      )}
+                    >
+                      { t('hotels:chooseRoom') }
+                    </Button>
+                  </div>
+                </>
+              ) : (
+                <div className="flex content-end justify-end">
+                  <Button
+                    type="button"
+                    disabled
+                    className={classNames(
+                      'h-full bg-slate-400 p-4 px-6 border rounded font-semibold outline-none',
+                      'placeholder-gray-400',
+                      'text-md text-white',
+                    )}
+                  >
+                    { t('hotels:not-available') }
+                  </Button>
                 </div>
-                <div className="text-red-500 text-2xl">
-                  { formatter.format(parseInt(prop.a?.minRate as string)) }
-                </div>
-              </div>
+              )
             ) }
 
-            <div className="flex content-end justify-end">
-              <Button
-                onClick={() => {
-                  handleOnClick()
-                }}
-                type="submit"
-                className={classNames(
-                  'h-full bg-primary p-4 px-6 border rounded font-semibold outline-none',
-                  'placeholder-gray-400',
-                  'text-md text-white',
-                )}
-              >
-                { t('hotels:chooseRoom') }
-              </Button>
-            </div>
+
           </div>
         </div>
       </div>

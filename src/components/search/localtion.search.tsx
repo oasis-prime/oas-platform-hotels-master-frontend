@@ -50,7 +50,7 @@ const LocationSearch = () => {
     return () => {
       init()
     }
-  }, [])
+  }, [locale, queryPopular])
 
   return (
     <>

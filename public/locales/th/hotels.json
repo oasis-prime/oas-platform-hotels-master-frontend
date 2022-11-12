@@ -12,5 +12,6 @@
   "days": "คืน",
   "priceWhenBookingThrough": "ราคาเมื่อจองผ่าน",
   "through": "Smartgo",
-  "bookNow": "จองเลย"
+  "bookNow": "จองเลย",
+  "not-available": "ห้องพักเต็ม"
 }
