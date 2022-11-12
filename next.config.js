@@ -11,8 +11,7 @@ const nextConfig = {
   },
   compiler: {
     // removeConsole: true,
-    reactRemoveProperties: true,
-    swcMinify: true
+    reactRemoveProperties: true
   }
 }
 

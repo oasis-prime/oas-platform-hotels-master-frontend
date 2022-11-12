@@ -80,7 +80,7 @@ const CarouselPromotion = () => {
                   layout="fill"
                   // width={50}
                   // height={100}
-                  objectFit="contain"
+                  // objectFit="contain"
                 />
 
               </div>

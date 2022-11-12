@@ -175,8 +175,8 @@ const Carousel: React.FC<CarouselProsp> = () => {
                     blurDataURL={resource.imageUrl || ''}
                     src={resource.imageUrl || ''}
                     alt={resource.title}
-                    layout="fill"
-                    objectFit="cover"
+                    // layout="fill"
+                    // objectFit="cover"
                     // width={100}
                     // height={100}
                   />
