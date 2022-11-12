@@ -37,7 +37,12 @@ const HotelsPage: NextPage = () => {
 
   const handlerQuery = () => {
     const query = getValues()
-
+    const keywords = query.name && { keyword: [query.name] } || undefined
+    const geolocation = query.latitude && query.longitude && {
+      latitude: query.latitude,
+      longitude: query.longitude,
+      radius: 30,
+    } || undefined
     hotelsQuery({
       variables: {
         hotelsInput: {
@@ -46,9 +51,8 @@ const HotelsPage: NextPage = () => {
             children: query.children,
             rooms: query.rooms,
           },
-          keywords: {
-            keyword: [query.name],
-          },
+          keywords: keywords,
+          geolocation: geolocation,
           language: locale === 'th' ? LanguageEnum.TAI : LanguageEnum.ENG,
           pagination: {
             page: 1,
