@@ -12,5 +12,6 @@
   "days": "Days",
   "priceWhenBookingThrough": "Price when booking through",
   "through": "Smartgo",
-  "bookNow": "Book now"
+  "bookNow": "Book now",
+  "not-available": "Not available"
 }
