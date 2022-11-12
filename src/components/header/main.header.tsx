@@ -67,7 +67,7 @@ const MainHeader: React.FC<MainHeaderProps> = () => {
                   router.push('/')
                 }}
                 src={'/images/main/mini-logo.png'}
-                layout="responsive"
+                // layout="responsive"
                 width={100}
                 height={100}
                 alt="logo"

@@ -66,7 +66,7 @@ const LanguageHeader = () => {
               className="rounded-full"
               src="/icons/png/th.png"
               alt="Thailand"
-              layout="responsive"
+              // layout="responsive"
               width="100"
               height="100"
             />
@@ -75,7 +75,7 @@ const LanguageHeader = () => {
               className="rounded-full"
               src="/icons/png/en.png"
               alt="English"
-              layout="responsive"
+              // layout="responsive"
               width="100"
               height="100"
             /> }
@@ -108,7 +108,7 @@ const LanguageHeader = () => {
                 className="rounded-full"
                 src="/icons/png/th.png"
                 alt="English"
-                layout="responsive"
+                // layout="responsive"
                 width="100"
                 height="100"
               />
@@ -126,7 +126,7 @@ const LanguageHeader = () => {
                 className="rounded-full"
                 src="/icons/png/en.png"
                 alt="English"
-                layout="responsive"
+                // layout="responsive"
                 width="100"
                 height="100"
               />
