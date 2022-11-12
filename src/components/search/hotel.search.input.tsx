@@ -10,9 +10,13 @@ import classNames from 'classnames'
 import { debounce } from 'lodash'
 import { useHotelsAutocomplete } from '@graphql/services/hotels'
 import { usePopper } from 'react-popper'
+import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
 const HotelSearchInput = () => {
+  const router = useRouter()
+  const { locale } = router
+
   const { t } = useTranslation()
 
   const { watch, control, setValue } = useFormContext<IHotelsSearch>()
@@ -45,7 +49,7 @@ const HotelSearchInput = () => {
             page: 0,
             pageSize: 5,
           },
-          language: LanguageEnum.TAI,
+          language: locale === 'th' ? LanguageEnum.TAI : LanguageEnum.ENG,
           keywords: {
             keyword: [...keyword.split(' ')],
           },

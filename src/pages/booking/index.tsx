@@ -150,7 +150,7 @@ const BookingPage: NextPage = () => {
                       'p-3 px-7 float-right bg-primary text-white border rounded font-semibold outline-none',
                       'transition ease-in-out delay-150 hover:scale-105 duration-300',
                     )}
-                  >ย้อนกลับ</Button>
+                  >{ t('booking:previous') }</Button>
                 ) }
 
                 { step === 'information' && (
@@ -161,7 +161,7 @@ const BookingPage: NextPage = () => {
                       'transition ease-in-out delay-150 hover:scale-105 duration-300',
                     )}
                   >
-              ถัดไป
+                    { t('booking:next') }
                   </Button>
                 ) }
 
@@ -173,7 +173,7 @@ const BookingPage: NextPage = () => {
                       'transition ease-in-out delay-150 hover:scale-105 duration-300',
                     )}
                   >
-              ชำระเงิน
+                    { t('booking:pay') }
                   </Button>
                 ) }
 

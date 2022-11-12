@@ -66,6 +66,11 @@ export interface FacilitiesInput {
   language: LanguageEnum;
 }
 
+export interface GetPopularInput {
+  language: LanguageEnum;
+  pagination: PaginationInput;
+}
+
 export interface HotelInput {
   language: LanguageEnum;
   code: number;

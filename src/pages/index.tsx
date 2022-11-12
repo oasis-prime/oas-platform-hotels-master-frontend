@@ -30,15 +30,8 @@ const Home: NextPage = () => {
         <div className="text-2xl text-center">
           <h3>{ t('home:promotion') }</h3>
         </div>
-        <div>
-          <CarouselPromotion />
-        </div>
-        <div className="text-2xl text-center">
-          <h3>{ t('home:popular') }</h3>
-        </div>
-        <div>
-          <LocationSearch />
-        </div>
+        <CarouselPromotion />
+        <LocationSearch />
       </div>
     </>
   )
