@@ -122,8 +122,9 @@ const LogoVPN: React.FC = () => {
         placeholder="blur"
         blurDataURL="/images/main/long-logo.png"
         src="/images/main/long-logo.png"
-        layout="fill"
-        objectFit="contain"
+        width={100}
+        height={100}
+        className="w-full"
         alt="footer-logo"
       />
     </div>

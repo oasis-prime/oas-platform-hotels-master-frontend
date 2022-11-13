@@ -8,14 +8,14 @@ type MainLayoutProsp = {
 
 const MainLayout = (props: MainLayoutProsp) => {
   return (
-    <>
+    <div>
       <MainHeader />
       <div className="mt-20" />
       <div className={classNames('my-6', 'min-h-[42rem]')}>
         { props.children }
       </div>
       <MainFooter />
-    </>
+    </div>
   )
 }
 

@@ -97,6 +97,7 @@ const MainHeader: React.FC<MainHeaderProps> = () => {
             <div className="col-span-2 flex gap-4 items-center">
               <div>
                 <ButtonText
+                  type="button"
                   onClick={() => {
                     setSignIn(!signIn)
                   }}

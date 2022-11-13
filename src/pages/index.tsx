@@ -17,7 +17,7 @@ const Home: NextPage = () => {
   // const { base64, img } = await getPlaiceholder('/path-to-your-image.jpg')
 
   return (
-    <>
+    <div>
       <div className="bg-primary h-[1px]"></div>
       <div className="max-w-screen-xl mx-auto mt-4 grid-flow-row grid gap-6">
         <div className="text-2xl text-center">
@@ -33,7 +33,7 @@ const Home: NextPage = () => {
         <CarouselPromotion />
         <LocationSearch />
       </div>
-    </>
+    </div>
   )
 }
 

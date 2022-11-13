@@ -16,7 +16,7 @@ const SigninModal: React.FC = () => {
   const { signIn, setSignIn } = useModal()
   const { t } = useTranslation()
 
-  return signIn ? (
+  return (
     <>
       <div
         className={classNames(
@@ -118,9 +118,7 @@ const SigninModal: React.FC = () => {
       </div>
       <div className="opacity-60 fixed inset-0 z-40 bg-black"></div>
     </>
-  ) : (
-    <></>
   )
 }
 
-export { SigninModal }
+export default SigninModal

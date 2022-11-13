@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
 import {
+  FacebookAuthProvider,
   User,
   createUserWithEmailAndPassword,
   confirmPasswordReset as fConfirmPasswordReset,
@@ -8,20 +8,20 @@ import {
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
 } from 'firebase/auth'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import { getApps, initializeApp } from 'firebase/app'
 
 import { AppConfig } from '@utils/app.config'
-import { authSlice } from '@store/auth'
-import { bindActionCreators } from '@reduxjs/toolkit'
-import { reduxStoreMain } from '@store/core'
-import { useSelector } from '@utils/main.hooks'
+import useAuth from '@store/useAuth'
 
 const config = AppConfig.firebase
 
 type AppContextInterface = {
   signIn: (email: string, password: string) => Promise<void>
   signUp: (email: string, password: string) => Promise<void>
+  signUpFacebook: () => Promise<void>
   signOut: () => Promise<void>
   sendPasswordResetEmail: (email: string) => Promise<void>
   confirmPasswordReset: (password: string, oobCode: string) => Promise<void>
@@ -29,7 +29,7 @@ type AppContextInterface = {
 
 const AuthContext = createContext<AppContextInterface | null>(null)
 
-export const useAuth = () => useContext(AuthContext)
+export const useFirebaseAuth = () => useContext(AuthContext)
 
 type Props = {
   children?: JSX.Element
@@ -39,7 +39,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   const auth = useAuthProvider()
   return <AuthContext.Provider value={auth}>{ children }</AuthContext.Provider>
 }
-const action = bindActionCreators(authSlice.actions, reduxStoreMain.dispatch)
+// const action = bindActionCreators(authSlice.actions, reduxStoreMain.dispatch)
 
 const useAuthProvider: () => AppContextInterface = () => {
   let firebaseApp
@@ -47,16 +47,18 @@ const useAuthProvider: () => AppContextInterface = () => {
     firebaseApp = initializeApp(config)
   }
   const auth = getAuth(firebaseApp)
-  const user = useSelector((s) => s.auth)
+  const { setUser } = useAuth()
+  // const user = useSelector((s) => s.auth)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        action.setUser({ user: user })
-        action.setLoading({ loading: true })
+        setUser(user)
+        // action.setLoading({ loading: true })
       } else {
-        action.setUser({ user: null })
-        action.setLoading({ loading: false })
+        setUser(null)
+        // action.setUser({ user: null })
+        // action.setLoading({ loading: false })
       }
     })
 
@@ -75,6 +77,39 @@ const useAuthProvider: () => AppContextInterface = () => {
     await fSignOut(auth)
   }
 
+  const signUpFacebook = async () => {
+    const provider = new FacebookAuthProvider()
+
+    signInWithPopup(auth, provider)
+      .then((result) => {
+      // The signed-in user info.
+        const user = result.user
+
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        const credential = FacebookAuthProvider.credentialFromResult(result)
+        const accessToken = credential?.accessToken
+
+        console.log('user:', user)
+        console.log('accessToken:', accessToken)
+      // ...
+      })
+      .catch((error) => {
+      // Handle Errors here.
+        const errorCode = error.code
+        const errorMessage = error.message
+        // The email of the user's account used.
+        const email = error.customData.email
+        // The AuthCredential type that was used.
+        const credential = FacebookAuthProvider.credentialFromError(error)
+
+        console.log('errorCode:', errorCode)
+        console.log('errorMessage:', errorMessage)
+        console.log('email:', email)
+        console.log('credential:', credential)
+      // ...
+      })
+  }
+
   const sendPasswordResetEmail = async (email: string) => {
     await fSendPasswordResetEmail(auth, email)
   }
@@ -86,6 +121,7 @@ const useAuthProvider: () => AppContextInterface = () => {
   return {
     signIn,
     signUp,
+    signUpFacebook,
     signOut,
     sendPasswordResetEmail,
     confirmPasswordReset,

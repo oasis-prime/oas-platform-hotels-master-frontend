@@ -6,17 +6,19 @@ import Link from 'next/link'
 import type { NextPage } from 'next'
 import { TextField } from '@components/misc/textField'
 import { setErrorMessage } from '@auth/error.message'
-import { useAuth } from '@auth/auth'
+import useAuth from '@store/useAuth'
+import { useFirebaseAuth } from '@auth/auth'
 import { useRouter } from 'next/router'
 import { useSelector } from '@utils/main.hooks'
 
 const Signup: NextPage = () => {
   const router = useRouter()
-  const auth = useAuth()
+  const auth = useFirebaseAuth()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const storeAuth = useSelector((s) => s.auth)
+  const { loading, user } = useAuth()
+  // const storeAuth = useSelector((s) => s.auth)
 
   const signUp = (
     event: FormEvent<HTMLFormElement>,
@@ -40,14 +42,18 @@ const Signup: NextPage = () => {
   }
 
   // loading state
-  if (storeAuth.loading) {
+  if (loading) {
     return <p>Loading...</p>
   }
 
   // // if a user is logged in, redirect to a page of your liking
-  if (storeAuth.user) {
-    router.push('/')
-    return null
+  if (user) {
+    // router.push('/')
+    return (
+      <div>
+        <div>{ user.displayName }</div>
+      </div>
+    )
   }
 
   return (
