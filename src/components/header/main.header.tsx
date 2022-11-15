@@ -7,6 +7,9 @@ import Link from 'next/link'
 import classNames from 'classnames'
 import useModal from '@store/useModal'
 import { useRouter } from 'next/router'
+import useAuth from '@store/useAuth'
+import { SignHeader } from './sign.header'
+import { ProfileHeader } from './profile.header'
 
 type MainHeaderProps = {
   children?: JSX.Element
@@ -38,6 +41,7 @@ const MainHeader: React.FC<MainHeaderProps> = () => {
   const [activeLink, setActiveLink] = useState<string | null>(null)
   const [scrollActive, setScrollActive] = useState(false)
   const { signIn, signUp, setSignIn, setSignUp } = useModal()
+  const { user } = useAuth()
   // const [signIn, setSignIn] = useState(false)
   // Hooks
   const router = useRouter()
@@ -74,7 +78,7 @@ const MainHeader: React.FC<MainHeaderProps> = () => {
               />
             </div>
           </div>
-          <div className="grow grid grid-flow-col">
+          <div className="grow grid grid-flow-col justify-between items-center">
             <ul className="hidden lg:flex col-start-1 col-end-10 text-black-500  items-center">
               { DataNavigation.map((data, index) => (
                 <Link
@@ -94,29 +98,20 @@ const MainHeader: React.FC<MainHeaderProps> = () => {
                 </Link>
               )) }
             </ul>
-            <div className="col-span-2 flex gap-4 items-center">
-              <div>
-                <ButtonText
-                  type="button"
-                  onClick={() => {
-                    setSignIn(!signIn)
-                  }}
-                >
-                Sign In
-                </ButtonText>
-              </div>
-              <div>
-                <ButtonOutline
-                  onClick={() => {
-                    setSignUp(!signUp)
-                  }}
-                >
-                Sign Up
-                </ButtonOutline>
-              </div>
-              <div>
-                <LanguageHeader />
-              </div>
+            <div className="col-span-2 flex flex-row gap-x-2 justify-end divide-x">
+              {
+                !user && (
+                  <div className="flex flex-row gap-x-2">
+                    <SignHeader />
+                  </div>
+                )
+              }
+              {
+                user && (
+                  <ProfileHeader />
+                )
+              }
+              <LanguageHeader />
             </div>
           </div>
         </nav>

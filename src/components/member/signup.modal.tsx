@@ -55,10 +55,10 @@ const SignupModal: React.FC = () => {
     auth
       ?.signUp(data.email, data.password)
       .then(() => {
-        // do something after signing in. For example, router.push("/");
-        router.push('/')
+        setSignUp(false)
       })
       .catch((error) => {
+        setSignUp(false)
         const { title, description } = setErrorMessage(error)
         // do something with error title and description here
         alert(title + ': ' + description)
@@ -69,10 +69,10 @@ const SignupModal: React.FC = () => {
     auth
       ?.signUpFacebook()
       .then(() => {
-        // do something after signing in. For example, router.push("/");
-        router.push('/')
+        setSignUp(false)
       })
       .catch((error) => {
+        setSignUp(false)
         const { title, description } = setErrorMessage(error)
         // do something with error title and description here
         alert(title + ': ' + description)

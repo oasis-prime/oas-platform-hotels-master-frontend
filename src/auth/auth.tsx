@@ -74,6 +74,8 @@ const useAuthProvider: () => AppContextInterface = () => {
   }
 
   const signOut = async () => {
+    console.log('signout')
+    setUser(null)
     await fSignOut(auth)
   }
 

@@ -62,27 +62,26 @@ const LocationSearch = () => {
       <div className="text-2xl text-center">
         <h3>{ t('home:popular') }</h3>
       </div>
-      <div>
-        <div className="flex flex-nowrap gap-8 overflow-auto max-w-screen-xl">
-          { data?.getAllPopular.data.map((v, i) => (
-            <div
-              key={i}
-              className="flex flex-col items-center gap-1 cursor-pointer"
-              onClick={() => {
-                onSubmit({
-                  adults: 1,
-                  checkIn: new Date(),
-                  checkOut: new Date(),
-                  children: 0,
-                  name: v.name && v.name || '',
-                  rooms: 1,
-                })
-              }}
-            >
-              <div className="transition ease-in-out delay-150 hover:scale-110 p-2">
-                <div className="relative w-28 h-28 rounded-full overflow-hidden">
-                  {
-                    v.image &&
+      <div className="flex flex-nowrap gap-8 overflow-auto mx-auto max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg">
+        { data?.getAllPopular.data.map((v, i) => (
+          <div
+            key={i}
+            className="flex flex-col items-center gap-1 cursor-pointer"
+            onClick={() => {
+              onSubmit({
+                adults: 1,
+                checkIn: new Date(),
+                checkOut: new Date(),
+                children: 0,
+                name: v.name && v.name || '',
+                rooms: 1,
+              })
+            }}
+          >
+            <div className="transition ease-in-out delay-150 hover:scale-110 p-2">
+              <div className="relative w-28 h-28 rounded-full overflow-hidden">
+                {
+                  v.image &&
                   <Image
                     unoptimized
                     placeholder="blur"
@@ -93,15 +92,14 @@ const LocationSearch = () => {
                     // height={100}
                     alt="footer-logo"
                   />
-                  }
+                }
 
-                </div>
               </div>
-              <div className="text-center whitespace-nowrap text-xs">{ v.name }</div>
-              <div className="text-center whitespace-nowrap text-xs text-zinc-400">{ v.count } { t('home:popular-accommodation') }</div>
             </div>
-          )) }
-        </div>
+            <div className="text-center whitespace-nowrap text-xs">{ v.name }</div>
+            <div className="text-center whitespace-nowrap text-xs text-zinc-400">{ v.count } { t('home:popular-accommodation') }</div>
+          </div>
+        )) }
       </div>
     </div>
   )

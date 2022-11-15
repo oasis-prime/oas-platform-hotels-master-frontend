@@ -35,19 +35,18 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const Layout = Component.Layout || MainLayout
 
   return (
-    <Layout>
-      { /* <Provider store={reduxStoreMain}> */ }
-      <AuthProvider>
-        <ApolloProviderWithJWT>
+    <AuthProvider>
+      <ApolloProviderWithJWT>
+        <Layout>
+          <>
+            <Component {...pageProps} />
+            { signIn && <SigninModal /> }
+            { signUp && <SignupModal /> }
+          </>
+        </Layout>
+      </ApolloProviderWithJWT>
+    </AuthProvider>
 
-          <Component {...pageProps} />
-          { signIn && <SigninModal /> }
-          { signUp && <SignupModal /> }
-
-        </ApolloProviderWithJWT>
-      </AuthProvider>
-      { /* </Provider> */ }
-    </Layout>
   )
 }
 

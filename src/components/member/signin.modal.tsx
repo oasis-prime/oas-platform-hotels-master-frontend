@@ -11,10 +11,29 @@ import { TextField } from '@components/misc/textField'
 import classNames from 'classnames'
 import useModal from '@store/useModal'
 import { useTranslation } from 'next-i18next'
+import { useFirebaseAuth } from '@auth/auth'
+import { setErrorMessage } from '@auth/error.message'
 
 const SigninModal: React.FC = () => {
   const { signIn, setSignIn } = useModal()
   const { t } = useTranslation()
+
+  const auth = useFirebaseAuth()
+
+
+  const onHandlerSignUpWithFacebook = () => {
+    auth
+      ?.signUpFacebook()
+      .then(() => {
+        setSignIn(false)
+      })
+      .catch((error) => {
+        setSignIn(false)
+        const { title, description } = setErrorMessage(error)
+        // do something with error title and description here
+        alert(title + ': ' + description)
+      })
+  }
 
   return (
     <>
@@ -97,7 +116,14 @@ const SigninModal: React.FC = () => {
                   <p className="text-lg">{ t('common:signinForm.title') }</p>
                 </div>
                 <div>
-                  <ButtonOutline>{ t('common:signinForm.facebook') }</ButtonOutline>
+                  <ButtonOutline
+                    type="button"
+                    onClick={
+                      () => onHandlerSignUpWithFacebook()
+                    }
+                  >
+                    { t('common:signupForm.facebook') }
+                  </ButtonOutline>
                 </div>
                 <div>
                   <p className="text-lg">{ t('common:signinForm.email') }</p>
