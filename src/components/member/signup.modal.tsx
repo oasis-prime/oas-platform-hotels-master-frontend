@@ -5,7 +5,7 @@ import { Controller, useForm } from 'react-hook-form'
 
 import { Checkbox } from '@components/misc/checkbox/main.checkbox'
 import Image from 'next/image'
-import { MemberRegister } from '@model/member'
+import { TSignUp } from '@model/member'
 import { TextField } from '@components/misc/textField'
 import classNames from 'classnames'
 import { setErrorMessage } from '@auth/error.message'
@@ -30,7 +30,7 @@ const SignupModal: React.FC = () => {
     'confirmPassword': yup.string().required('Confirm Password is a required field'),
   })
 
-  const methods = useForm<MemberRegister>({
+  const methods = useForm<TSignUp>({
     mode: 'onSubmit',
     // reValidateMode: 'onSubmit',
     resolver: yupResolver(validationSchema),
@@ -51,7 +51,7 @@ const SignupModal: React.FC = () => {
 
   const { signUp, setSignUp } = useModal()
 
-  const onHandlerSignUp = (data: MemberRegister) => {
+  const onHandlerSignUp = (data: TSignUp) => {
     auth
       ?.signUp(data.email, data.password)
       .then(() => {
@@ -173,7 +173,7 @@ const SignupModal: React.FC = () => {
                     <Controller
                       render={({ field: { onChange, value }, fieldState: { error }}) => (
                         <TextField
-                          name={'email'}
+                          name="email"
                           value={value}
                           onChange={(e) => {
                             onChange(e)
@@ -193,6 +193,7 @@ const SignupModal: React.FC = () => {
                     <Controller
                       render={({ field: { onChange, value }, fieldState: { error }}) => (
                         <TextField
+                          name="password"
                           type="password"
                           value={value}
                           onChange={(e) => {
@@ -213,6 +214,7 @@ const SignupModal: React.FC = () => {
                     <Controller
                       render={({ field: { onChange, value }, fieldState: { error }}) => (
                         <TextField
+                          name="confirm-password"
                           type="password"
                           value={value}
                           onChange={(e) => {

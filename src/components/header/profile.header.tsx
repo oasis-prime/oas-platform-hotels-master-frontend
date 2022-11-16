@@ -1,13 +1,13 @@
 import { ButtonOutline, ButtonText } from '@components/misc/button'
+import { useEffect, useRef, useState } from 'react'
 
-import useModal from '@store/useModal'
-import useAuth from '@store/useAuth'
 import Image from 'next/image'
 import classNames from 'classnames'
-import { useRouter } from 'next/router'
-import { useState, useRef, useEffect } from 'react'
-import { usePopper } from 'react-popper'
+import useAuth from '@store/useAuth'
 import { useFirebaseAuth } from '@auth/auth'
+import useModal from '@store/useModal'
+import { usePopper } from 'react-popper'
+import { useRouter } from 'next/router'
 
 type MainHeaderProps = {
   children?: JSX.Element
@@ -83,7 +83,7 @@ const ProfileHeader: React.FC<MainHeaderProps> = () => {
           />
         ) : (
           <div className="inline-flex overflow-hidden relative justify-center items-center w-10 h-10 bg-gray-100 rounded-full dark:bg-gray-600">
-            <span className="font-medium text-gray-600 dark:text-gray-300">JL</span>
+            <span className="font-medium text-gray-600 dark:text-gray-300">{ user?.displayName?.slice(0, 2) }</span>
           </div>
         ) }
         { /* <a
