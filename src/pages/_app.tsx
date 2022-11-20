@@ -35,8 +35,8 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const Layout = Component.Layout || MainLayout
 
   return (
-    <AuthProvider>
-      <ApolloProviderWithJWT>
+    <ApolloProviderWithJWT>
+      <AuthProvider>
         <Layout>
           <>
             <Component {...pageProps} />
@@ -44,9 +44,8 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             { signUp && <SignupModal /> }
           </>
         </Layout>
-      </ApolloProviderWithJWT>
-    </AuthProvider>
-
+      </AuthProvider>
+    </ApolloProviderWithJWT>
   )
 }
 

@@ -57,12 +57,13 @@ const LocationSearch = () => {
     <div
       className={classNames(
         !data?.getAllPopular && 'hidden',
+        'w-full overflow-auto',
       )}
     >
       <div className="text-2xl text-center">
         <h3>{ t('home:popular') }</h3>
       </div>
-      <div className="flex flex-nowrap gap-8 overflow-auto mx-auto max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg">
+      <div className="flex flex-nowrap gap-4">
         { data?.getAllPopular.data.map((v, i) => (
           <div
             key={i}

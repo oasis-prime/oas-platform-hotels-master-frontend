@@ -14,13 +14,15 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 import { getApps, initializeApp } from 'firebase/app'
 
 import { AppConfig } from '@utils/app.config'
+import { TMessage } from '@model/common'
 import useAuth from '@store/useAuth'
+import { useRegister } from '@graphql/services/member'
 
 const config = AppConfig.firebase
 
 type AppContextInterface = {
   signIn: (email: string, password: string) => Promise<void>
-  signUp: (email: string, password: string) => Promise<void>
+  signUp: (display: string, email: string, password: string) => Promise<TMessage>
   signUpFacebook: () => Promise<void>
   signOut: () => Promise<void>
   sendPasswordResetEmail: (email: string) => Promise<void>
@@ -48,6 +50,7 @@ const useAuthProvider: () => AppContextInterface = () => {
   }
   const auth = getAuth(firebaseApp)
   const { setUser } = useAuth()
+  const [queryRegister] = useRegister()
   // const user = useSelector((s) => s.auth)
 
   useEffect(() => {
@@ -69,8 +72,24 @@ const useAuthProvider: () => AppContextInterface = () => {
     await signInWithEmailAndPassword(auth, email, password)
   }
 
-  const signUp = async (email: string, password: string) => {
-    await createUserWithEmailAndPassword(auth, email, password)
+  const signUp = async (display: string, email: string, password: string) => {
+    return await queryRegister({
+      variables: {
+        input: {
+          display: display,
+          email: email,
+          password: password,
+        },
+      },
+    }).then((data) => {
+      if (data.errors) {
+        return { error: false, message: '' }
+      }
+
+      return { error: true, message: '' }
+    }).catch(() => {
+      return { error: true, message: '' }
+    })
   }
 
   const signOut = async () => {

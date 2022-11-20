@@ -53,16 +53,24 @@ const SignupModal: React.FC = () => {
 
   const onHandlerSignUp = (data: TSignUp) => {
     auth
-      ?.signUp(data.email, data.password)
-      .then(() => {
-        setSignUp(false)
+      ?.signUp(data.display, data.email, data.password)
+      .then((data) => {
+        if (!data.error) {
+          setSignUp(false)
+        }
       })
       .catch((error) => {
-        setSignUp(false)
-        const { title, description } = setErrorMessage(error)
-        // do something with error title and description here
-        alert(title + ': ' + description)
+        console.log(error)
       })
+      // .then(() => {
+      //   setSignUp(false)
+      // })
+      // .catch((error) => {
+      //   setSignUp(false)
+      //   const { title, description } = setErrorMessage(error)
+      //   // do something with error title and description here
+      //   alert(title + ': ' + description)
+      // })
   }
 
   const onHandlerSignUpWithFacebook = () => {
