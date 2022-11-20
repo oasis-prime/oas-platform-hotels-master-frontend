@@ -48,7 +48,7 @@ const LanguageHeader = () => {
   }, [popperElement, referenceElement, dropdownPopoverShow])
 
   return (
-    <>
+    <div className="pl-2">
       <button
         className={classNames(
           'w-full bg-transparent p-1 rounded-full font-semibold outline-none',
@@ -135,7 +135,7 @@ const LanguageHeader = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

@@ -128,6 +128,12 @@ export interface ImagesInput {
   limit: number;
 }
 
+export interface MemberRegisterInput {
+  display: string;
+  email: string;
+  password: string;
+}
+
 export interface PaginationInput {
   page: number;
   pageSize: number;

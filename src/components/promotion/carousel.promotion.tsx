@@ -77,10 +77,9 @@ const CarouselPromotion = () => {
                   blurDataURL={resource.imageUrl || ''}
                   src={resource.imageUrl || ''}
                   alt={resource.title}
-                  layout="fill"
-                  // width={50}
-                  // height={100}
-                  // objectFit="contain"
+                  width={100}
+                  height={100}
+                  className="w-full"
                 />
 
               </div>

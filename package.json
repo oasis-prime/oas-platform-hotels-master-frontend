@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "download-schema": "apollo client:download-schema --endpoint=http://localhost:8080/graphql schema.graphql",
+    "download-schema": "apollo client:download-schema --endpoint=https://api.smartgo.life/graphql schema.graphql",
     "codegen": "yarn download-schema && apollo codegen:generate --localSchemaFile=schema.graphql --target=typescript --tagName=gql"
   },
   "dependencies": {
