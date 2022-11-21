@@ -1,0 +1,5 @@
+{
+    "title": "Meet with your mailbox to login.",
+    "sub-title": "To complete setup and login Click the verification link in the email we sent. {{email}}",
+    "resend": "Resend verification email"
+}

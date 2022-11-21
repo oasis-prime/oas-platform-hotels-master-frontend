@@ -1,8 +1,13 @@
-type MemberRegister = {
+type TSignUp = {
   display: string
   email: string
   password: string
   confirmPassword: string
 }
 
-export type { MemberRegister }
+type TSignIn = {
+  email: string
+  password: string
+}
+
+export type { TSignUp, TSignIn }

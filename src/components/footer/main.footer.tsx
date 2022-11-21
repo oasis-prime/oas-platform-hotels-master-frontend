@@ -6,7 +6,7 @@ const MainFooter: React.FC = () => {
   const { t } = useTranslation()
 
   return (
-    <div className="bg-primary p-6 pb-24">
+    <footer className="bg-primary p-6 pb-24 hidden md:flex">
       <div
         className={classNames(
           'max-w-screen-xl w-full mx-auto',
@@ -110,7 +110,7 @@ const MainFooter: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   )
 }
 
@@ -122,8 +122,9 @@ const LogoVPN: React.FC = () => {
         placeholder="blur"
         blurDataURL="/images/main/long-logo.png"
         src="/images/main/long-logo.png"
-        layout="fill"
-        objectFit="contain"
+        width={100}
+        height={100}
+        className="w-full"
         alt="footer-logo"
       />
     </div>

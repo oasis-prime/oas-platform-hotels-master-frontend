@@ -10,7 +10,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
 
-const Home: NextPage = () => {
+const Verify: NextPage = () => {
   const [open, setOpen] = useState(false)
   const { t } = useTranslation()
 
@@ -20,7 +20,7 @@ const Home: NextPage = () => {
     <div>
       <div className="bg-primary h-[1px]"></div>
       <div className="max-w-screen-xl mx-auto mt-4 grid-flow-row grid gap-6">
-        <div className="text-2xl text-center">
+        { /* <div className="text-2xl text-center">
           <h2>{ t('home:title') }</h2>
           <h3>{ t('home:sub-title') }</h3>
         </div>
@@ -31,7 +31,7 @@ const Home: NextPage = () => {
           <h3>{ t('home:promotion') }</h3>
         </div>
         <CarouselPromotion />
-        <LocationSearch />
+        <LocationSearch /> */ }
       </div>
     </div>
   )
@@ -42,10 +42,10 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     props: {
       ...(await serverSideTranslations(locale as string, [
         ...AppConfig.default_translations,
-        'home',
+        'verify',
       ])),
     },
   }
 }
 
-export default Home
+export default Verify

@@ -175,24 +175,8 @@ const Carousel: React.FC<CarouselProsp> = () => {
                     blurDataURL={resource.imageUrl || ''}
                     src={resource.imageUrl || ''}
                     alt={resource.title}
-                    // layout="fill"
-                    // objectFit="cover"
-                    // width={100}
-                    // height={100}
                   />
                 </a>
-                { /* <a
-                  href={resource.link}
-                  className={classNames(
-                    'h-full w-full aspect-square block absolute top-0 left-0',
-                    'transition-opacity duration-300 opacity-0 z-10',
-                    'bg-primary/75',
-                    'hover:opacity-100'
-                  )}>
-                  <h3 className="text-white py-6 px-3 mx-auto text-xl">
-                    {resource.title}
-                  </h3>
-                </a> */ }
               </div>
             )
           }) }

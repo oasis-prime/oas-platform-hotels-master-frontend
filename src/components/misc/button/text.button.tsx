@@ -12,7 +12,7 @@ const ButtonText = React.forwardRef<HTMLButtonElement, TButton>(
     return (
       <button
         ref={ref}
-        // type="submit"
+        type="button"
         className={classNames(
           'w-full bg-transparent p-3 rounded-lg font-semibold outline-none',
           'placeholder-gray-400',
@@ -23,9 +23,6 @@ const ButtonText = React.forwardRef<HTMLButtonElement, TButton>(
     )
   },
 )
-{
-  /* <a className="text-black-600 mx-2 sm:mx-4 capitalize tracking-wide hover:text-primary transition-all"> */
-}
 
 ButtonText.displayName = 'ButtonText'
 
