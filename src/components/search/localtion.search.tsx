@@ -36,22 +36,22 @@ const LocationSearch = () => {
   }
 
   useEffect(() => {
-    const init = () => {
-      queryPopular({ variables: {
-        input: {
-          language: locale === 'th' ? LanguageEnum.TAI : LanguageEnum.ENG,
-          pagination: {
-            page: 1,
-            pageSize: 10,
-          },
+    // const init = () => {
+    queryPopular({ variables: {
+      input: {
+        language: locale === 'th' ? LanguageEnum.TAI : LanguageEnum.ENG,
+        pagination: {
+          page: 1,
+          pageSize: 10,
         },
-      }})
-    }
+      },
+    }})
+    // }
 
-    return () => {
-      init()
-    }
-  }, [])
+    // return () => {
+    //   init()
+    // }
+  }, [locale, queryPopular])
 
   return (
     <div
