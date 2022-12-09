@@ -236,9 +236,9 @@ const HotelDescription: NextPage = () => {
                       blurDataURL="/images/main/search-on-map.jpeg"
                       src="/images/main/search-on-map.jpeg"
                       alt="search-map"
-                      layout="fill"
-                      objectFit="cover"
-                      className="rounded-md"
+                      // layout="fill"
+                      // objectFit="cover"
+                      className="rounded-md h-full w-full"
                       width={100}
                       height={100}
                     />

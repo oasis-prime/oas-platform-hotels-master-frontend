@@ -1,10 +1,8 @@
 import type { GetStaticProps, NextPage } from 'next'
 
 import { AppConfig } from '@utils/app.config'
-import { Carousel } from '@components/misc/carousel'
 import { CarouselPromotion } from '@components/promotion/carousel.promotion'
 import { HotelSearch } from '@components/search/index.search'
-import Image from 'next/image'
 import { LocationSearch } from '@components/search/localtion.search'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'

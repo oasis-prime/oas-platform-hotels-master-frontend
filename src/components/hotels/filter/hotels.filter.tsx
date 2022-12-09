@@ -60,11 +60,9 @@ const HotelsFilter = () => {
             blurDataURL="/images/main/search-on-map.jpeg"
             src="/images/main/search-on-map.jpeg"
             alt="search-map"
-            layout="fill"
-            objectFit="cover"
-            className="rounded-md"
-            // width={100}
-            // height={100}
+            className="rounded-md w-full h-full"
+            width={100}
+            height={100}
           />
           <div className="w-full h-full absolute flex flex-wrap justify-center content-end">
             <div className="text-gray-800 text-xl py-2">{ t('hotels:findHotels') }</div>
