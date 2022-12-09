@@ -99,7 +99,7 @@ export interface Booking_booking_modificationPolicies {
 }
 
 export interface Booking_booking {
-  __typename: "BookingData";
+  __typename: "Booking";
   reference: string | null;
   cancellationReference: string | null;
   clientReference: string | null;

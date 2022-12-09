@@ -225,7 +225,7 @@ type B_Supplier {
   vatNumber: String
 }
 
-type BookingData {
+type Booking {
   reference: String
   cancellationReference: String
   clientReference: String
@@ -243,9 +243,19 @@ type BookingData {
   modificationPolicies: B_ModificationPolicies
 }
 
+type BookingData {
+  data: [Booking!]!
+  pagination: PaginationType!
+}
+
 input BookingInput {
   clientReference: String
   language: LanguageEnum!
+}
+
+input BookingsHistoryInput {
+  language: LanguageEnum!
+  pagination: PaginationInput!
 }
 
 type CheckRateData {
@@ -318,6 +328,15 @@ input GetPlacesInput {
 }
 
 input GetPopularInput {
+  language: LanguageEnum!
+  pagination: PaginationInput!
+}
+
+input GetTickerInput {
+  language: LanguageEnum!
+}
+
+input GetTickersInput {
   language: LanguageEnum!
   pagination: PaginationInput!
 }
@@ -478,10 +497,11 @@ input MemberVerifyEmailInput {
 }
 
 type Mutation {
-  booking(input: BookingInput!): BookingData!
+  booking(input: BookingInput!): Booking!
   memberRegister(input: MemberRegisterInput!): MemberRegisterData!
   memberVerify(input: MemberVerifyEmailInput!): MemberVerifyEmailData!
   payment(input: PaymentInput!): PaymentData!
+  Ticker(input: TickerInput!): Ticker!
 }
 
 type Name {
@@ -557,7 +577,8 @@ input PromotionInput {
 }
 
 type Query {
-  getBooking(input: GetBookingInput!): BookingData!
+  getBooking(input: GetBookingInput!): Booking!
+  getBookingsHistory(input: BookingsHistoryInput!): BookingData!
   getPlaces(input: GetPlacesInput!): PlacesData!
   getAvailability(input: AvailabilityInput!): AvailabilityData!
   checkRate(input: CheckRateInput!): CheckRateData!
@@ -567,6 +588,9 @@ type Query {
   getPopular(input: GetPopularInput!): Popular!
   getAllPopular(input: GetPopularInput!): PopularData!
   getPromotion(input: PromotionInput!): PromotionData!
+  getSubscription(input: SubscriptionInput!): SubscriptionData!
+  getTickers(input: GetTickersInput!): TickerData!
+  getTicker(input: GetTickerInput!): Ticker!
   _service: _Service!
 }
 
@@ -669,4 +693,42 @@ type RoomStays {
 input StaysInput {
   offset: Int!
   limit: Int!
+}
+
+type SubscriptionData {
+  primaryEmail: String
+  email: String
+  status: String
+  expired: String
+}
+
+input SubscriptionInput {
+  language: LanguageEnum!
+}
+
+type Ticker {
+  id: Int!
+  name: String
+  description: String
+  image: String
+  link: String
+  count: Int!
+}
+
+type TickerData {
+  data: [Ticker!]!
+  pagination: PaginationType!
+}
+
+input TickerInput {
+  reference: String
+  clientReference: String
+  creationDate: String
+  creationUser: String
+  remark: String
+  billImage: String
+  totalSellingRate: String
+  totalNet: String
+  pendingAmount: String
+  currency: String
 }
