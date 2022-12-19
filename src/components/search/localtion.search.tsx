@@ -3,7 +3,7 @@ import { useEffect, useMemo } from 'react'
 
 import { AppUrl } from '@utils/app.config'
 import Image from 'next/image'
-import { LanguageEnum } from '__generated__/globalTypes'
+import { LanguageEnum } from '@/types'
 import classNames from 'classnames'
 import { toISOLocal } from '@utils/func'
 import { usePopular } from '@graphql/services/popular'
@@ -39,7 +39,7 @@ const LocationSearch = () => {
     // const init = () => {
     queryPopular({ variables: {
       input: {
-        language: locale === 'th' ? LanguageEnum.TAI : LanguageEnum.ENG,
+        language: locale === 'th' ? LanguageEnum.Tai : LanguageEnum.Eng,
         pagination: {
           page: 1,
           pageSize: 10,

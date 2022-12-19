@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
 
 import { IHotelsDetailSearch } from '@model/hotel-search'
 import Image from 'next/image'
-import { LanguageEnum } from '__generated__/globalTypes'
+import { LanguageEnum } from '@/types'
 import { MainLoading } from '@components/misc/loading/main.loading'
 import { TopBarSearch } from '@components/search/topbar.search'
 import classNames from 'classnames'
@@ -41,7 +41,7 @@ const HotelDescription: NextPage = () => {
           hotels: {
             hotel: [query.code],
           },
-          language: locale === 'th' ? LanguageEnum.TAI : LanguageEnum.ENG,
+          language: locale === 'th' ? LanguageEnum.Tai : LanguageEnum.Eng,
           occupancies: [{ adults: query.adults, children: 0, rooms: query.rooms }],
           stay: {
             checkIn: toISOLocal(query.checkIn).slice(0, 10),
@@ -56,14 +56,14 @@ const HotelDescription: NextPage = () => {
           variables: {
             hotelInput: {
               code: query.code,
-              language: locale === 'th' ? LanguageEnum.TAI : LanguageEnum.ENG,
+              language: locale === 'th' ? LanguageEnum.Tai : LanguageEnum.Eng,
             },
             hotelRoomsInput: {
               roomCode: roomCode,
-              language: locale === 'th' ? LanguageEnum.TAI : LanguageEnum.ENG,
+              language: locale === 'th' ? LanguageEnum.Tai : LanguageEnum.Eng,
             },
             hotelFacilitiesInput: {
-              language: locale === 'th' ? LanguageEnum.TAI : LanguageEnum.ENG,
+              language: locale === 'th' ? LanguageEnum.Tai : LanguageEnum.Eng,
               limit: 20,
               offset: 0,
               groupCode: 70,
@@ -236,8 +236,6 @@ const HotelDescription: NextPage = () => {
                       blurDataURL="/images/main/search-on-map.jpeg"
                       src="/images/main/search-on-map.jpeg"
                       alt="search-map"
-                      // layout="fill"
-                      // objectFit="cover"
                       className="rounded-md h-full w-full"
                       width={100}
                       height={100}

@@ -11,7 +11,7 @@ import { BookingPayment } from '@components/hotels/booking/booking.payment'
 import { Button } from '@components/misc/button'
 import { HotelRateKeyCard } from '@components/hotels/card/hotel.ratekey.card'
 import { IHotelsBooking } from '@model/hotel-search'
-import { LanguageEnum } from '__generated__/globalTypes'
+import { LanguageEnum } from '@/types'
 import { MainLoading } from '@components/misc/loading/main.loading'
 import classNames from 'classnames'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -98,7 +98,7 @@ const BookingPage: NextPage = () => {
         variables: {
           input: {
             rateKey: router.query.rateKey as string,
-            language: LanguageEnum.TAI,
+            language: LanguageEnum.Tai,
           },
         },
       })

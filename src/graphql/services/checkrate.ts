@@ -1,4 +1,4 @@
-import { CheckRate, CheckRateVariables } from './__generated__/CheckRate'
+import { CheckRateQuery, CheckRateQueryVariables } from './generated/checkrate.generated'
 import { gql, useLazyQuery } from '@apollo/client'
 
 const CHECK_RATE = gql`
@@ -66,6 +66,6 @@ const CHECK_RATE = gql`
   }
 `
 
-const useCheckRate = () => useLazyQuery<CheckRate, CheckRateVariables>(CHECK_RATE)
+const useCheckRate = () => useLazyQuery<CheckRateQuery, CheckRateQueryVariables>(CHECK_RATE)
 
 export { useCheckRate }

@@ -1,4 +1,4 @@
-import { Payment, PaymentVariables } from './__generated__/Payment'
+import { PaymentMutation, PaymentMutationVariables } from './generated/payment.generated'
 import { gql, useMutation } from '@apollo/client'
 
 const PAYMENT = gql`
@@ -11,6 +11,6 @@ const PAYMENT = gql`
   }
 `
 
-const usePayment = () => useMutation<Payment, PaymentVariables>(PAYMENT)
+const usePayment = () => useMutation<PaymentMutation, PaymentMutationVariables>(PAYMENT)
 
 export { usePayment }

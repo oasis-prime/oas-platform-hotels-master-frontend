@@ -7,7 +7,7 @@ import { AppConfig } from '@utils/app.config'
 import { HotelCardMain } from '@components/hotels/card'
 import { HotelsFilter } from '@components/hotels/filter'
 import { IHotelsSearch } from '@model/hotel-search'
-import { LanguageEnum } from '__generated__/globalTypes'
+import { LanguageEnum } from '@/types'
 import { MainLoading } from '@components/misc/loading/main.loading'
 import { Modal } from '@components/misc/modal'
 import { TopBarSearch } from '@components/search/topbar.search'
@@ -53,7 +53,7 @@ const HotelsPage: NextPage = () => {
           },
           keywords: keywords,
           geolocation: geolocation,
-          language: locale === 'th' ? LanguageEnum.TAI : LanguageEnum.ENG,
+          language: locale === 'th' ? LanguageEnum.Tai : LanguageEnum.Eng,
           pagination: {
             page: 1,
             pageSize: 20,
@@ -69,7 +69,7 @@ const HotelsPage: NextPage = () => {
               hotels: {
                 hotel: hotelIds,
               },
-              language: locale === 'th' ? LanguageEnum.TAI : LanguageEnum.ENG,
+              language: locale === 'th' ? LanguageEnum.Tai : LanguageEnum.Eng,
               occupancies: [{ adults: query.adults, children: 0, rooms: query.rooms }],
               stay: {
                 checkIn: toISOLocal(query.checkIn).slice(0, 10),

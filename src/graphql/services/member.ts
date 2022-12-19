@@ -1,4 +1,4 @@
-import { MemberRegister, MemberRegisterVariables } from './__generated__/MemberRegister'
+import { MemberRegisterMutation, MemberRegisterMutationVariables } from './generated/member.generated'
 import { gql, useMutation } from '@apollo/client'
 
 const MEMBER_REGISTER = gql`
@@ -10,6 +10,6 @@ const MEMBER_REGISTER = gql`
 `
 
 const useRegister = () =>
-  useMutation<MemberRegister, MemberRegisterVariables>(MEMBER_REGISTER)
+  useMutation<MemberRegisterMutation, MemberRegisterMutationVariables>(MEMBER_REGISTER)
 
 export { useRegister }

@@ -1,11 +1,10 @@
+import { AvailabilityHotels, Hotel } from '@/types'
 import { formatter, getCalculatorDays, makeSlug, toISOLocal } from '@utils/func'
 import { useEffect, useState } from 'react'
 
 import { AppHotelbeds } from '@utils/app.config'
-import { AvailabilitySearch_getAvailability_availability } from '@graphql/services/__generated__/AvailabilitySearch'
 import { Button } from '@components/misc/button'
 import { HotelCategory } from './hotel.category'
-import { HotelsSearch_getHotels_hotels } from '@graphql/services/__generated__/HotelsSearch'
 import { IHotelsSearch } from '@model/hotel-search'
 import Image from 'next/image'
 import classNames from 'classnames'
@@ -14,8 +13,8 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
 type IHotelCardMain = {
-  readonly h: HotelsSearch_getHotels_hotels
-  readonly a?: AvailabilitySearch_getAvailability_availability
+  readonly h: Hotel
+  readonly a?: AvailabilityHotels
   readonly aLoading: boolean
 }
 
@@ -31,8 +30,9 @@ const HotelCardMain = (prop: IHotelCardMain) => {
 
   const handleOnClick = () => {
     const data = watch()
+    if (prop.h.hotelName)
     router.push({
-      pathname: `${makeSlug(prop.h.hotelName || '')}/hotel`,
+      pathname: `/${makeSlug(prop.h?.hotelName)}/hotel`,
       query: {
         code: prop.h.code,
         type: prop.h.type,

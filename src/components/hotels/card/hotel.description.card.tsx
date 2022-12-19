@@ -1,9 +1,9 @@
+import { Hotel } from '@/types'
 import { HotelCategory } from './hotel.category'
-import { HotelSearch_getHotel } from '@graphql/services/__generated__/HotelSearch'
 import { useState } from 'react'
 
 type IHotelsDetailSearchProps = {
-  data?: HotelSearch_getHotel
+  data?: Hotel
 }
 
 
