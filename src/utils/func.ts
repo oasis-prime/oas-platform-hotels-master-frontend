@@ -80,10 +80,13 @@ function toISOLocal(d: Date) {
 }
 
 function makeSlug(str: string) {
-  str = str.toLowerCase()
-  str = str.replace(/[^a-z0-9]+/g, '-')
-  str = str.replace(/^-+|-+$/g, '')
-  return str
+  return str.replace(/\s+/g, '-')           // Replace spaces with -
+      .replace('%', 'เปอร์เซนต์')         // Translate some charactor
+      .replace(/[^\u0E00-\u0E7F\w\-]+/g, '') // Remove all non-word chars
+      .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+      .replace(/^-+/, '')             // Trim - from start of text
+      .replace(/-+$/, '');
+  // return str
 }
 
 function fullDateString(date: Date) {

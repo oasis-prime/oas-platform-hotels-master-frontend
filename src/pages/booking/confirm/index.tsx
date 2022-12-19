@@ -1,10 +1,10 @@
-import { Booking, BookingVariables } from '@graphql/services/__generated__/Booking'
+import { Booking, LanguageEnum } from '@/types'
+import { BookingMutation, BookingMutationVariables } from '@graphql/services/generated/booking.generated'
 import type { GetServerSideProps, NextPage } from 'next'
 
 import { AppConfig } from '@utils/app.config'
 import { BOOKING_INSERT } from '@graphql/services/booking'
 import { IncomingMessage } from 'http'
-import { LanguageEnum } from '__generated__/globalTypes'
 import { NextApiRequestCookies } from 'next/dist/server/api-utils'
 import { apolloClientMain } from '@graphql/client'
 import { getUrlVars } from '@utils/func'
@@ -13,7 +13,7 @@ import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
 
 type ConfirmPageProps = {
-  booking: Booking | null | undefined
+  booking: BookingMutation | null | undefined
 }
 
 const ConfirmPage = (props: ConfirmPageProps) => {
@@ -64,11 +64,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res, locale 
     if (body) {
       const jsonBody = getUrlVars(body)
       console.log(jsonBody)
-      booking = await apolloClientMain.mutate<Booking, BookingVariables>({
+      booking = await apolloClientMain.mutate<Booking, BookingMutationVariables>({
         mutation: BOOKING_INSERT,
         variables: {
           input: {
-            language: LanguageEnum.TAI,
+            language: LanguageEnum.Tai,
             clientReference: jsonBody?.transNo,
           }},
         fetchPolicy: 'no-cache',

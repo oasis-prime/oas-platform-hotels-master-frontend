@@ -1,9 +1,7 @@
 import { AdultsIcon, ChildrenIcon } from '@components/svg'
+import { AvailabilityRooms, Rooms } from '@/types'
 
 import { AppHotelbeds } from '@utils/app.config'
-import { AvailabilitySearch_getAvailability_availability_rooms } from '@graphql/services/__generated__/AvailabilitySearch'
-import { ButtonText } from '@components/misc/button'
-import { HotelSearch_getHotel_rooms } from '@graphql/services/__generated__/HotelSearch'
 import { IHotelsDetailSearch } from '@model/hotel-search'
 import Image from 'next/image'
 import classNames from 'classnames'
@@ -13,8 +11,8 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
 type HotelRoomCardProps = {
-  data: HotelSearch_getHotel_rooms | null
-  availability: AvailabilitySearch_getAvailability_availability_rooms | null
+  data: Rooms | null
+  availability:AvailabilityRooms | null
 }
 
 const HotelRoomCard = (props: HotelRoomCardProps) => {

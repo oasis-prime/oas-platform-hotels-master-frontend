@@ -334,6 +334,7 @@ input GetPopularInput {
 
 input GetTickerInput {
   language: LanguageEnum!
+  id: Int!
 }
 
 input GetTickersInput {

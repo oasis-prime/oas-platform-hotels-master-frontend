@@ -1,9 +1,4 @@
-import { HotelSearch, HotelSearchVariables } from './__generated__/HotelSearch'
-import {
-  HotelsAutocomplete,
-  HotelsAutocompleteVariables,
-} from './__generated__/HotelsAutocomplete'
-import { HotelsSearch, HotelsSearchVariables } from './__generated__/HotelsSearch'
+import { HotelSearchQuery, HotelSearchQueryVariables, HotelsAutocompleteQuery, HotelsAutocompleteQueryVariables, HotelsSearchQuery, HotelsSearchQueryVariables } from './generated/hotels.generated'
 import { gql, useLazyQuery } from '@apollo/client'
 
 const HOTEL_SEARCH = gql`
@@ -234,13 +229,13 @@ const HOTELS_AUTOCOMPLETE = gql`
   }
 `
 const useHotel = () =>
-  useLazyQuery<HotelSearch, HotelSearchVariables>(HOTEL_SEARCH)
+  useLazyQuery<HotelSearchQuery, HotelSearchQueryVariables>(HOTEL_SEARCH)
 
 const useHotels = () =>
-  useLazyQuery<HotelsSearch, HotelsSearchVariables>(HOTELS_SEARCH)
+  useLazyQuery<HotelsSearchQuery, HotelsSearchQueryVariables>(HOTELS_SEARCH)
 
 const useHotelsAutocomplete = () =>
-  useLazyQuery<HotelsAutocomplete, HotelsAutocompleteVariables>(
+  useLazyQuery<HotelsAutocompleteQuery, HotelsAutocompleteQueryVariables>(
     HOTELS_AUTOCOMPLETE,
   )
 

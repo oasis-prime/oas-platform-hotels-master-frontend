@@ -1,4 +1,4 @@
-import { PopularSearch, PopularSearchVariables } from './__generated__/PopularSearch'
+import { PopularSearchQuery, PopularSearchQueryVariables } from './generated/popular.generated'
 import { gql, useLazyQuery, useMutation, useQuery } from '@apollo/client'
 
 const POPULAR = gql`
@@ -22,6 +22,6 @@ const POPULAR = gql`
   }
 `
 
-const usePopular = () => useLazyQuery<PopularSearch, PopularSearchVariables>(POPULAR)
+const usePopular = () => useLazyQuery<PopularSearchQuery, PopularSearchQueryVariables>(POPULAR)
 
 export { usePopular }

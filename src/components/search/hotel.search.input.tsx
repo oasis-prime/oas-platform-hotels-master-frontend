@@ -2,9 +2,8 @@ import { Controller, useFormContext } from 'react-hook-form'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { getCheckIn, getCheckOut } from '@utils/func'
 
-import { HotelsAutocomplete_getHotels_hotels } from '@graphql/services/__generated__/HotelsAutocomplete'
 import { IHotelsSearch } from '@model/hotel-search'
-import { LanguageEnum } from '__generated__/globalTypes'
+import { LanguageEnum } from '@/types'
 import { TextField } from '@components/misc/textField'
 import classNames from 'classnames'
 import { debounce } from 'lodash'
@@ -22,7 +21,7 @@ const HotelSearchInput = () => {
   const { watch, control, setValue } = useFormContext<IHotelsSearch>()
   const data = watch()
   // const [value, setValue] = useState('')
-  const [selected, setSelected] = useState<HotelsAutocomplete_getHotels_hotels>()
+  // const [selected, setSelected] = useState<Hotel>()
 
   const [autocompleteQuery, { data: queryData, loading }] = useHotelsAutocomplete()
 
@@ -49,7 +48,7 @@ const HotelSearchInput = () => {
             page: 0,
             pageSize: 5,
           },
-          language: locale === 'th' ? LanguageEnum.TAI : LanguageEnum.ENG,
+          language: locale === 'th' ? LanguageEnum.Tai : LanguageEnum.Eng,
           keywords: {
             keyword: [...keyword.split(' ')],
           },
@@ -140,7 +139,7 @@ const HotelSearchInput = () => {
                       data-code={v.code}
                       className="p-2 cursor-pointer hover:bg-gray-100"
                       onClick={() => {
-                        setSelected(v)
+                        // setSelected(v)
                         setDropdownPopoverShow(false)
 
                         v.hotelName != null && setValue('name', v.hotelName)

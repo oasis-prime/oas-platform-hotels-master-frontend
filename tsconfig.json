@@ -18,28 +18,31 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
+      "@/*": [
+        "*"
+      ],
       "@components/*": [
-        "./src/components/*"
+        "components/*"
       ],
       "@graphql/*": [
-        "./src/graphql/*"
+        "graphql/*"
       ],
       "@model/*": [
-        "./src/model/*"
+        "model/*"
       ],
       "@store/*": [
-        "./src/store/*"
+        "store/*"
       ],
       "@styles/*": [
-        "./src/styles/*"
+        "styles/*"
       ],
       "@utils/*": [
-        "./src/utils/*"
+        "utils/*"
       ],
       "@auth/*": [
-        "src/auth/*"
+        "auth/*"
       ],
     },
     "typeRoots": [

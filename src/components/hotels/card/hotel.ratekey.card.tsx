@@ -1,10 +1,10 @@
 import { formatter, fullDateString } from '@utils/func'
 
-import { CheckRate_checkRate } from '@graphql/services/__generated__/CheckRate'
+import { CheckRateData } from '@/types'
 import { useTranslation } from 'next-i18next'
 
 type HotelRateKeyCard = {
-  data?: CheckRate_checkRate
+  data?: CheckRateData
   checkIn?: Date
   checkOut?: Date
   numberOfDays: string

@@ -1,4 +1,4 @@
-import { AvailabilitySearch, AvailabilitySearchVariables } from './__generated__/AvailabilitySearch'
+import { AvailabilitySearchQuery, AvailabilitySearchQueryVariables } from './generated/availability.generated'
 import { gql, useLazyQuery } from '@apollo/client'
 
 const AVAILABILITY_SEARCH = gql`
@@ -48,6 +48,6 @@ const AVAILABILITY_SEARCH = gql`
   }
 `
 
-const useAvailability = () => useLazyQuery<AvailabilitySearch, AvailabilitySearchVariables>(AVAILABILITY_SEARCH)
+const useAvailability = () => useLazyQuery<AvailabilitySearchQuery, AvailabilitySearchQueryVariables>(AVAILABILITY_SEARCH)
 
 export { useAvailability }

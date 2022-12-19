@@ -1,8 +1,8 @@
-import { HotelSearch_getHotel_facilities } from '@graphql/services/__generated__/HotelSearch'
+import { Facilities } from '@/types'
 import { useTranslation } from 'next-i18next'
 
 type HotelFacilities = {
-  data?: (HotelSearch_getHotel_facilities | null)[] | null
+  data?: (Facilities | null)[] | null
 }
 
 const HotelFacilitiesCard: (props: HotelFacilities) => JSX.Element = (props: HotelFacilities) => {
