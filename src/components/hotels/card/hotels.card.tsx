@@ -31,19 +31,19 @@ const HotelCardMain = (prop: IHotelCardMain) => {
   const handleOnClick = () => {
     const data = watch()
     if (prop.h.hotelName)
-    router.push({
-      pathname: `/${makeSlug(prop.h?.hotelName)}/hotel`,
-      query: {
-        code: prop.h.code,
-        type: prop.h.type,
-        name: data.name,
-        adults: data.adults,
-        children: data.children,
-        rooms: data.rooms,
-        checkIn: toISOLocal(data.checkIn).slice(0, 10),
-        checkOut: toISOLocal(data.checkOut).slice(0, 10),
-      },
-    })
+      router.push({
+        pathname: `/${makeSlug(prop.h?.hotelName)}/hotel`,
+        query: {
+          code: prop.h.code,
+          type: prop.h.type,
+          name: data.name,
+          adults: data.adults,
+          children: data.children,
+          rooms: data.rooms,
+          checkIn: toISOLocal(data.checkIn).slice(0, 10),
+          checkOut: toISOLocal(data.checkOut).slice(0, 10),
+        },
+      })
   }
 
   useEffect(() => {

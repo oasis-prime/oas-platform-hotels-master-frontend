@@ -37,6 +37,8 @@ const HotelSearch: React.FC = () => {
         rooms: data.rooms,
         checkIn: toISOLocal(data.checkIn).slice(0, 10),
         checkOut: toISOLocal(data.checkOut).slice(0, 10),
+        latitude: data.latitude ? data.latitude : undefined,
+        longitude: data.longitude ? data.longitude : undefined,
       },
     })
   }

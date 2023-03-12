@@ -1,4 +1,13 @@
-import { HotelSearchQuery, HotelSearchQueryVariables, HotelsAutocompleteQuery, HotelsAutocompleteQueryVariables, HotelsSearchQuery, HotelsSearchQueryVariables } from './generated/hotels.generated'
+import {
+  GetKeywordQuery,
+  GetKeywordQueryVariables,
+  HotelSearchQuery,
+  HotelSearchQueryVariables,
+  HotelsAutocompleteQuery,
+  HotelsAutocompleteQueryVariables,
+  HotelsSearchQuery,
+  HotelsSearchQueryVariables,
+} from './generated/hotels.generated'
 import { gql, useLazyQuery } from '@apollo/client'
 
 const HOTEL_SEARCH = gql`
@@ -202,6 +211,8 @@ const HOTELS_AUTOCOMPLETE = gql`
   query HotelsAutocomplete($input: HotelsInput!) {
     getHotels(input: $input) {
       hotels {
+        queryBy
+        hotelCity
         hotelName
         language
         code
@@ -228,6 +239,22 @@ const HOTELS_AUTOCOMPLETE = gql`
     }
   }
 `
+
+const GET_KEYWORD = gql`
+  query GetKeyword($input: KeywordInput!) {
+    getKeyword(input: $input) {
+      __typename
+      keyword {
+        name
+        queryBy
+        latitude
+        longitude
+        radius
+      }
+    }
+  }
+`
+
 const useHotel = () =>
   useLazyQuery<HotelSearchQuery, HotelSearchQueryVariables>(HOTEL_SEARCH)
 
@@ -239,4 +266,9 @@ const useHotelsAutocomplete = () =>
     HOTELS_AUTOCOMPLETE,
   )
 
-export { useHotel, useHotels, useHotelsAutocomplete }
+const useKeywordAutocomplete = () =>
+  useLazyQuery<GetKeywordQuery, GetKeywordQueryVariables>(
+    GET_KEYWORD,
+  )
+
+export { useHotel, useHotels, useHotelsAutocomplete, useKeywordAutocomplete }

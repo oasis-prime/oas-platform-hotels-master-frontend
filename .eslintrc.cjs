@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  ignorePatterns: [ '**/__generated__/*.{ts,tsx}', 'codegen.ts'],
+  ignorePatterns: ['**/__generated__/*.{ts,tsx}', 'codegen.ts'],
   overrides: [
     {
       files: '*.{cjs,tsx,ts,js,jsx}',
@@ -10,7 +10,6 @@ module.exports = {
         'plugin:react-hooks/recommended',
         'plugin:@typescript-eslint/eslint-recommended',
         'plugin:@typescript-eslint/recommended',
-        'plugin:cypress/recommended',
       ],
       env: {
         es2021: true,
@@ -34,7 +33,6 @@ module.exports = {
         'react',
         'react-hooks',
         '@typescript-eslint',
-        'cypress',
       ],
       'rules': {
         'no-unused-vars': 'off',
@@ -111,20 +109,20 @@ module.exports = {
         'react-hooks/exhaustive-deps': 'warn',
         '@typescript-eslint/no-unused-vars': 'warn',
         '@typescript-eslint/type-annotation-spacing': 'error',
-        '@typescript-eslint/explicit-module-boundary-types': 'error',
+        '@typescript-eslint/explicit-module-boundary-types': 'warn',
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/no-var-requires': 'off',
         '@typescript-eslint/comma-dangle': [
           'warn',
           'always-multiline',
         ],
-        '@typescript-eslint/explicit-function-return-type': [
-          'error',
-          {
-            'allowExpressions': true,
-            'allowHigherOrderFunctions': true,
-          },
-        ],
+        // '@typescript-eslint/explicit-function-return-type': [
+        //   'warn',
+        //   {
+        //     'allowExpressions': true,
+        //     'allowHigherOrderFunctions': true,
+        //   },
+        // ],
         '@typescript-eslint/keyword-spacing': [
           'error',
         ],
@@ -159,7 +157,6 @@ module.exports = {
             'allowSingleLine': true,
           },
         ],
-        'cypress/no-unnecessary-waiting': 'warn',
       },
       settings: {
         'react': {

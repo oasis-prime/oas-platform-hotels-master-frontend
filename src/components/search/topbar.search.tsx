@@ -4,6 +4,7 @@ import { getCheckIn, getCheckOut, toISOLocal } from '@utils/func'
 
 import { AppUrl } from '@utils/app.config'
 import { Button } from '@components/misc/button'
+import { HotelSearchInput } from './hotel.search.input'
 import { MainDatepicker } from '@components/misc/datepicker/main.datepicker'
 import { OccupanciesSearch } from './occupancies.search'
 import { TextField } from '@components/misc/textField'
@@ -35,6 +36,8 @@ const TopBarSearch = (props: TopBarSearch) => {
         rooms: data.rooms,
         checkIn: toISOLocal(data.checkIn)?.slice(0, 10),
         checkOut: toISOLocal(data.checkOut)?.slice(0, 10),
+        latitude: data.latitude ? data.latitude : undefined,
+        longitude: data.longitude ? data.longitude : undefined,
       }
     } else {
       query = {
@@ -44,6 +47,8 @@ const TopBarSearch = (props: TopBarSearch) => {
         rooms: data.rooms,
         checkIn: toISOLocal(data.checkIn)?.slice(0, 10),
         checkOut: toISOLocal(data.checkOut)?.slice(0, 10),
+        latitude: data.latitude ? data.latitude : undefined,
+        longitude: data.longitude ? data.longitude : undefined,
       }
     }
 
@@ -81,17 +86,18 @@ const TopBarSearch = (props: TopBarSearch) => {
           'md:col-span-6',
         )}
         >
-          <Controller
+          { /* <Controller
             render={({ field: { onChange, value }}) => (
               <TextField
-                placeholder={t('common:search.input_placeholder')}
+                placeholder={t('common:search.input_placeholder') || ''}
                 value={value}
                 onChange={onChange}
               />
             )}
             name="name"
             control={control}
-          />
+          /> */ }
+          <HotelSearchInput />
 
         </div>
 

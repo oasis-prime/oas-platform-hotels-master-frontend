@@ -8,16 +8,12 @@ import 'swiper/css/pagination'
 import { ApolloProviderWithJWT } from '@graphql/apollo'
 import type { AppProps } from 'next/app'
 import { AuthProvider } from '@auth/auth'
-import Head from 'next/head'
 import { MainLayout } from '@components/layout'
 import { NextPage } from 'next'
-import { Provider } from 'react-redux'
 import { appWithTranslation } from 'next-i18next'
 import dynamic from 'next/dynamic'
-import { reduxStoreMain } from '@store/core'
 import useModal from '@store/useModal'
 
-// import { SigninModal, SignupModal } from '@components/member'
 const SigninModal = dynamic(() => import('@components/member/signin.modal'), { ssr: false })
 const SignupModal = dynamic(() => import('@components/member/signup.modal'), { ssr: false })
 
@@ -30,7 +26,7 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
-function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
   const { signIn, signUp } = useModal()
   const Layout = Component.Layout || MainLayout
 

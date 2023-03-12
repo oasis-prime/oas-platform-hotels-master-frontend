@@ -12,7 +12,7 @@ import { useTranslation } from 'next-i18next'
 
 type HotelRoomCardProps = {
   data: Rooms | null
-  availability:AvailabilityRooms | null
+  availability: AvailabilityRooms | null
 }
 
 const HotelRoomCard = (props: HotelRoomCardProps) => {

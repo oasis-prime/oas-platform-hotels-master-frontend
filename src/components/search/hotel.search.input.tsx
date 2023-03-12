@@ -1,18 +1,18 @@
 import { Controller, useFormContext } from 'react-hook-form'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { getCheckIn, getCheckOut } from '@utils/func'
+import { useHotelsAutocomplete, useKeywordAutocomplete } from '@graphql/services/hotels'
 
 import { IHotelsSearch } from '@model/hotel-search'
 import { LanguageEnum } from '@/types'
 import { TextField } from '@components/misc/textField'
 import classNames from 'classnames'
 import { debounce } from 'lodash'
-import { useHotelsAutocomplete } from '@graphql/services/hotels'
 import { usePopper } from 'react-popper'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
-const HotelSearchInput = () => {
+const HotelSearchInput = (): JSX.Element => {
   const router = useRouter()
   const { locale } = router
 
@@ -23,8 +23,8 @@ const HotelSearchInput = () => {
   // const [value, setValue] = useState('')
   // const [selected, setSelected] = useState<Hotel>()
 
-  const [autocompleteQuery, { data: queryData, loading }] = useHotelsAutocomplete()
-
+  // const [autocompleteQuery, { data: queryData, loading }] = useHotelsAutocomplete()
+  const [autocompleteQuery, { data: queryData, loading }] = useKeywordAutocomplete()
   const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false)
   const referenceElement = useRef<HTMLInputElement>(null)
   const popperElement = useRef<HTMLDivElement>(null)
@@ -33,32 +33,38 @@ const HotelSearchInput = () => {
     placement: 'bottom-start',
   })
 
-  const handleDebounceFn = async (e: string) => {
+  const handleDebounceFn = async (e: string): Promise<void> => {
     handleQuery(e)
     setDropdownPopoverShow(true)
   }
 
   const debounceFn = useCallback(debounce(handleDebounceFn, 500), [])
 
-  const handleQuery = (keyword: string) => {
+  const handleQuery = (keyword: string): void => {
     autocompleteQuery({
       variables: {
         input: {
-          pagination: {
-            page: 0,
-            pageSize: 5,
-          },
+          // pagination: {
+          //   page: 0,
+          //   pageSize: 3,
+          // },
           language: locale === 'th' ? LanguageEnum.Tai : LanguageEnum.Eng,
-          keywords: {
-            keyword: [...keyword.split(' ')],
-          },
+          // keywords: {
+          //   keyword: [...keyword.split(' ')],
+          //   cities: [...keyword.split(' ')],
+          // },
+          keyword: [...keyword.split(' ')],
         },
+      },
+      onCompleted: () => {
+        setValue('latitude', undefined)
+        setValue('longitude', undefined)
       },
     })
   }
 
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
+    function handleClickOutside(event: MouseEvent): void {
       const a = event.target
       if (popperElement.current && !popperElement.current.contains(a as Node)) {
         setDropdownPopoverShow(false)
@@ -92,7 +98,7 @@ const HotelSearchInput = () => {
           render={({ field: { onChange, value }}) => (
             <TextField
               value={value}
-              placeholder={t('common:search.input_placeholder')}
+              placeholder={t('common:search.input_placeholder') || ''}
               ref={referenceElement}
               onChange={(e) => {
                 onChange(e)
@@ -133,21 +139,37 @@ const HotelSearchInput = () => {
               {
                 !loading &&
                 <div className="gird divide-y-[1px]">
-                  { queryData?.getHotels?.hotels.map((v) => (
+                  { queryData?.getKeyword?.keyword.map((v, i) => (
                     <div
-                      key={v.code}
-                      data-code={v.code}
-                      className="p-2 cursor-pointer hover:bg-gray-100"
+                      key={i}
+                      data-query={v.queryBy}
+                      className="p-2 cursor-pointer hover:bg-gray-100 flex gap-2"
                       onClick={() => {
                         // setSelected(v)
                         setDropdownPopoverShow(false)
-
-                        v.hotelName != null && setValue('name', v.hotelName)
+                        if (v.queryBy === 'cities') {
+                          setValue('latitude', v.latitude)
+                          setValue('longitude', v.longitude)
+                          v.name != null && setValue('name', v.name)
+                        } else {
+                          v.name != null && setValue('name', v.name)
+                        }
                       }}
                     >
-                      <div>{ v.hotelName }</div>
+                      <div>{ v.queryBy !== 'cities' ? <i className="bi bi-house" /> : <i className="bi bi-geo-alt-fill" /> }</div>
+                      <div>{ v.name }</div>
                     </div>
                   )) }
+
+                  { /* <div
+                    className="p-2 cursor-pointer hover:bg-gray-100 flex gap-2"
+                    onClick={() => {
+                      setDropdownPopoverShow(false)
+                    }}
+                  >
+                    <div>{ <i className="bi bi-filter" /> }</div>
+                    <div>{ data.name }</div>
+                  </div> */ }
                 </div>
               }
 

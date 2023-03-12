@@ -1,5 +1,4 @@
-import React, { ButtonHTMLAttributes, DetailedHTMLProps } from 'react'
-
+import React, {  } from 'react'
 import classNames from 'classnames'
 
 type TButton = React.DetailedHTMLProps<
@@ -9,24 +8,24 @@ HTMLButtonElement
 
 type CustomButton = TButton & {
   icons?: string
+  onClick?: () => void
+  className?: string
 }
 
 const ButtonIcons: React.FC<CustomButton> = (props) => {
-  const childProps = { ...props }
-  const classProps = childProps.className
-  delete childProps?.className
+  const { children, className = '', onClick } = props
 
   return (
     <button
-      onClick={props.onClick}
+      onClick={onClick}
       className={classNames(
         'w-full bg-transparent p-3 rounded-lg font-semibold outline-none',
         'placeholder-gray-400',
         'focus:border-free700 hover:text-primary',
-        classProps,
+        className,
       )}
     >
-      { childProps.children }
+      { children }
     </button>
   )
 }
