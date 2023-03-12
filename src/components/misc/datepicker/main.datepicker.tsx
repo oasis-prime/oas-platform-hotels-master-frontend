@@ -1,6 +1,5 @@
 import DatePicker from 'react-datepicker'
 import classNames from 'classnames'
-import { useState } from 'react'
 
 type MainDatepicker = {
   className?: string | undefined

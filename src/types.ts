@@ -312,7 +312,6 @@ export type GetPopularInput = {
 };
 
 export type GetTickerInput = {
-  id: Scalars['Int'];
   language: LanguageEnum;
 };
 
@@ -339,6 +338,7 @@ export type Hotel = {
   destinationCode?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   facilities?: Maybe<Array<Maybe<Facilities>>>;
+  hotelCity?: Maybe<Scalars['String']>;
   hotelName?: Maybe<Scalars['String']>;
   images?: Maybe<Array<Maybe<Images>>>;
   interestPoints?: Maybe<Array<Maybe<InterestPoints>>>;
@@ -348,6 +348,7 @@ export type Hotel = {
   name?: Maybe<Name>;
   phones?: Maybe<Array<Maybe<Phones>>>;
   postalCode?: Maybe<Scalars['String']>;
+  queryBy?: Maybe<Scalars['String']>;
   ranking?: Maybe<Scalars['Int']>;
   rooms?: Maybe<Array<Maybe<Rooms>>>;
   segmentCodes?: Maybe<Array<Maybe<Scalars['Int']>>>;
@@ -441,6 +442,7 @@ export type HotelsInput = {
 };
 
 export type HotelsKeywordsInput = {
+  cities?: InputMaybe<Array<Scalars['String']>>;
   keyword: Array<Scalars['String']>;
 };
 
@@ -486,6 +488,25 @@ export type Issues = {
   issueCode?: Maybe<Scalars['String']>;
   issueType?: Maybe<Scalars['String']>;
   order?: Maybe<Scalars['Int']>;
+};
+
+export type Keyword = {
+  __typename?: 'Keyword';
+  latitude: Scalars['Float'];
+  longitude: Scalars['Float'];
+  name?: Maybe<Scalars['String']>;
+  queryBy?: Maybe<Scalars['String']>;
+  radius: Scalars['Int'];
+};
+
+export type KeywordData = {
+  __typename?: 'KeywordData';
+  keyword: Array<Keyword>;
+};
+
+export type KeywordInput = {
+  keyword: Array<Scalars['String']>;
+  language: LanguageEnum;
 };
 
 export enum LanguageEnum {
@@ -638,6 +659,7 @@ export type Query = {
   getBookingsHistory: BookingData;
   getHotel: Hotel;
   getHotels: HotelsData;
+  getKeyword: KeywordData;
   getPayment: PaymentData;
   getPlaces: PlacesData;
   getPopular: Popular;
@@ -680,6 +702,11 @@ export type QueryGetHotelArgs = {
 
 export type QueryGetHotelsArgs = {
   input: HotelsInput;
+};
+
+
+export type QueryGetKeywordArgs = {
+  input: KeywordInput;
 };
 
 

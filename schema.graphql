@@ -334,7 +334,6 @@ input GetPopularInput {
 
 input GetTickerInput {
   language: LanguageEnum!
-  id: Int!
 }
 
 input GetTickersInput {
@@ -344,6 +343,8 @@ input GetTickersInput {
 
 type Hotel {
   hotelName: String
+  hotelCity: String
+  queryBy: String
   language: LanguageEnum!
   code: Int
   type: HotelTypeEnum!
@@ -425,6 +426,7 @@ input HotelsInput {
 
 input HotelsKeywordsInput {
   keyword: [String!]!
+  cities: [String!]
 }
 
 input HotelsOccupanciesInput {
@@ -472,6 +474,23 @@ type Issues {
   dateTo: String
   order: Int
   alternative: Boolean
+}
+
+type Keyword {
+  name: String
+  queryBy: String
+  latitude: Float!
+  longitude: Float!
+  radius: Int!
+}
+
+type KeywordData {
+  keyword: [Keyword!]!
+}
+
+input KeywordInput {
+  keyword: [String!]!
+  language: LanguageEnum!
 }
 
 enum LanguageEnum {
@@ -585,6 +604,7 @@ type Query {
   checkRate(input: CheckRateInput!): CheckRateData!
   getHotels(input: HotelsInput!): HotelsData!
   getHotel(input: HotelInput!): Hotel!
+  getKeyword(input: KeywordInput!): KeywordData!
   getPayment(input: GetPaymentInput!): PaymentData!
   getPopular(input: GetPopularInput!): Popular!
   getAllPopular(input: GetPopularInput!): PopularData!

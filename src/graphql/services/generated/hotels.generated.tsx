@@ -1,4 +1,4 @@
-import * as Types from '@/types';
+import * as Types from '@/types'
 
 export type HotelSearchQueryVariables = Types.Exact<{
   hotelImagesInput?: Types.InputMaybe<Types.ImagesInput>;
@@ -30,4 +30,11 @@ export type HotelsAutocompleteQueryVariables = Types.Exact<{
 }>;
 
 
-export type HotelsAutocompleteQuery = { __typename?: 'Query', getHotels: { __typename?: 'HotelsData', hotels: Array<{ __typename?: 'Hotel', hotelName?: string | null, language: Types.LanguageEnum, code?: number | null, countryCode?: string | null, stateCode?: string | null, destinationCode?: string | null, zoneCode?: number | null, categoryCode?: string | null, categoryGroupCode?: string | null, chainCode?: string | null, accommodationTypeCode?: string | null, postalCode?: string | null, email?: string | null, web?: string | null, lastUpdate?: string | null, S2C?: string | null, ranking?: number | null }>, pagination: { __typename?: 'PaginationType', page: number, pageSize: number, total: number } } };
+export type HotelsAutocompleteQuery = { __typename?: 'Query', getHotels: { __typename?: 'HotelsData', hotels: Array<{ __typename?: 'Hotel', queryBy?: string | null, hotelCity?: string | null, hotelName?: string | null, language: Types.LanguageEnum, code?: number | null, countryCode?: string | null, stateCode?: string | null, destinationCode?: string | null, zoneCode?: number | null, categoryCode?: string | null, categoryGroupCode?: string | null, chainCode?: string | null, accommodationTypeCode?: string | null, postalCode?: string | null, email?: string | null, web?: string | null, lastUpdate?: string | null, S2C?: string | null, ranking?: number | null }>, pagination: { __typename?: 'PaginationType', page: number, pageSize: number, total: number } } };
+
+export type GetKeywordQueryVariables = Types.Exact<{
+  input: Types.KeywordInput;
+}>;
+
+
+export type GetKeywordQuery = { __typename?: 'Query', getKeyword: { __typename: 'KeywordData', keyword: Array<{ __typename?: 'Keyword', name?: string | null, queryBy?: string | null, latitude: number, longitude: number, radius: number }> } };

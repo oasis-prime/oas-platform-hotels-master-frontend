@@ -38,11 +38,11 @@ const HotelsPage: NextPage = () => {
   const handlerQuery = () => {
     const query = getValues()
     const keywords = query.name && { keyword: [query.name] } || undefined
-    const geolocation = query.latitude && query.longitude && {
+    const geolocation = query.latitude && query.longitude ? {
       latitude: query.latitude,
       longitude: query.longitude,
-      radius: 30,
-    } || undefined
+      radius: 20,
+    } : undefined
     hotelsQuery({
       variables: {
         hotelsInput: {
@@ -51,7 +51,7 @@ const HotelsPage: NextPage = () => {
             children: query.children,
             rooms: query.rooms,
           },
-          keywords: keywords,
+          keywords: geolocation ? undefined : keywords,
           geolocation: geolocation,
           language: locale === 'th' ? LanguageEnum.Tai : LanguageEnum.Eng,
           pagination: {
@@ -90,6 +90,8 @@ const HotelsPage: NextPage = () => {
       const checkIn = router.query.checkIn && getCheckIn(parseDate(router.query.checkIn as string)) || getCheckIn(new Date())
       const children = router.query.children as string
       const rooms = router.query.rooms as string
+      const latitude = router.query.latitude as string
+      const longitude = router.query.longitude as string
 
       reset({
         name: name,
@@ -98,6 +100,8 @@ const HotelsPage: NextPage = () => {
         checkOut: checkOut && getCheckOut(checkOut, checkIn) || getCheckOut(new Date(), new Date()),
         children: children && parseInt(children) || 0,
         rooms: rooms && parseInt(rooms) || 1,
+        latitude: latitude && parseFloat(latitude) || undefined,
+        longitude: longitude && parseFloat(longitude) || undefined,
       })
 
       handlerQuery()

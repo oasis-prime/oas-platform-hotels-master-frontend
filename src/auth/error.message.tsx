@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const setErrorMessage = (error: any) => {
   let title, description
 

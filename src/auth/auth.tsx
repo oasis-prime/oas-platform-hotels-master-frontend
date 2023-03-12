@@ -1,7 +1,5 @@
 import {
   FacebookAuthProvider,
-  User,
-  createUserWithEmailAndPassword,
   confirmPasswordReset as fConfirmPasswordReset,
   sendPasswordResetEmail as fSendPasswordResetEmail,
   signOut as fSignOut,
@@ -10,7 +8,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from 'firebase/auth'
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect } from 'react'
 import { getApps, initializeApp } from 'firebase/app'
 
 import { AppConfig } from '@utils/app.config'
